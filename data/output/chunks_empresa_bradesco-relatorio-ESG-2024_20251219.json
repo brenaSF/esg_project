@@ -1,0 +1,736 @@
+{
+    "metadata": {
+        "empresa": "Bradesco",
+        "ano": 2024
+    },
+    "chunks": [
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...nada,\ndo qual muito nos orgulhamos. Desde\n2007, medimos e compensamos 100% das\nemissões operacionais de escopos 1 e 2.\nEm 2019, estendemos essa...",
+            "pagina": 7
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 24.5,
+            "contexto": "...nários1\n2,5 mil\nestagiários\n\n[QUEBRA_DE_COLUNA]\n\nNova Iorque\nNordeste\n24,5%\n20,3%\nSudeste\n46,3%\n14,2% México\nAgências\n6 mil\nagências, unidades de...",
+            "pagina": 10
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 20.3,
+            "contexto": "...1\n2,5 mil\nestagiários\n\n[QUEBRA_DE_COLUNA]\n\nNova Iorque\nNordeste\n24,5%\n20,3%\nSudeste\n46,3%\n14,2% México\nAgências\n6 mil\nagências, unidades de negóc...",
+            "pagina": 10
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 46.3,
+            "contexto": "...giários\n\n[QUEBRA_DE_COLUNA]\n\nNova Iorque\nNordeste\n24,5%\n20,3%\nSudeste\n46,3%\n14,2% México\nAgências\n6 mil\nagências, unidades de negócios\ne postos d...",
+            "pagina": 10
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 14.2,
+            "contexto": "...s\n\n[QUEBRA_DE_COLUNA]\n\nNova Iorque\nNordeste\n24,5%\n20,3%\nSudeste\n46,3%\n14,2% México\nAgências\n6 mil\nagências, unidades de negócios\ne postos de aten...",
+            "pagina": 10
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 90.0,
+            "contexto": "...Atendimento por chat integrado com a\nBIA GenAI, com resolutividade de 90%*\n• Hiperpersonalização de ofertas e ações\ncom base no perfil e compor...",
+            "pagina": 13
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...aboramos o nosso\nprimeiro inventário\nde emissões de GEE e\ncompensamos 100%\ndas emissões de\nEscopos 1 e 2.\n2019\ną Mensuramos nossas\nemissões fina...",
+            "pagina": 32
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...os 1 e 2.\n2019\ną Mensuramos nossas\nemissões financiadas\ną Compensamos\n100% das emissões\noperacionais (Escopos\n1, 2 e 3)\n2023\ną Divulgamos metas...",
+            "pagina": 32
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...20222 2023 Meta 2030\nCarvão 1, 2 e 3 R$ milhões 11,02 21,25 14,70 0 (-100%)\nGeração de\n1 e 2 kgCOe/MWh 60,65 90,56 84,20 23 (-62%)\neletricidade...",
+            "pagina": 37
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 62.0,
+            "contexto": "...,25 14,70 0 (-100%)\nGeração de\n1 e 2 kgCOe/MWh 60,65 90,56 84,20 23 (-62%)\neletricidade 2\nAlumínio 1 e 2 tCOe/t alumínio -- 2,32 -- 2,07 (-11%)...",
+            "pagina": 37
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 11.0,
+            "contexto": "...-62%)\neletricidade 2\nAlumínio 1 e 2 tCOe/t alumínio -- 2,32 -- 2,07 (-11%)\n2\nCimento 1 e 2 tCOe/t cimento -- 0,59 -- 0,47 (-20%)\n2\nFerro e Aço...",
+            "pagina": 37
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 25.0,
+            "contexto": "...bruto -- 1,85 -- 1,13 (-39%)\n2\nTransportes 3 gCOe/km -- 69,22 -- 52 (-25%)\n2\n1 Baseline para os setores de carvão e geração de eletricidade\n2 B...",
+            "pagina": 37
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 23.0,
+            "contexto": "...3)\nmeta realizado meta realizado\nEmissões de gases de efeito estufa1\n-23% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 41.5,
+            "contexto": "...ta realizado meta realizado\nEmissões de gases de efeito estufa1\n-23% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1,3%\nRes...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 4.6,
+            "contexto": "...izado meta realizado\nEmissões de gases de efeito estufa1\n-23% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1,3%\nResíduos...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 0.2,
+            "contexto": "...meta realizado\nEmissões de gases de efeito estufa1\n-23% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1,3%\nResíduos destin...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 30.0,
+            "contexto": "...eito estufa1\n-23% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1,3%\nResíduos destinados\n-47% -48% -4,6% -5,5%\na aterros...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 30.8,
+            "contexto": "...estufa1\n-23% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1,3%\nResíduos destinados\n-47% -48% -4,6% -5,5%\na aterros (t)\nCon...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 1.0,
+            "contexto": "...-23% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1,3%\nResíduos destinados\n-47% -48% -4,6% -5,5%\na aterros (t)\nConsumo...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 1.3,
+            "contexto": "...% -41,5% -4,6% -0,2%\n(tCO2)\nConsumo de energia (GWh) -30% -30,8% -1% -1,3%\nResíduos destinados\n-47% -48% -4,6% -5,5%\na aterros (t)\nConsumo de ág...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 31.6,
+            "contexto": "...s\n-47% -48% -4,6% -5,5%\na aterros (t)\nConsumo de água nova (m3) -30% -31,6% -2% -6,9%\n1 Nosso compromisso é reduzir 50% das nossas emissões opera...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 2.0,
+            "contexto": "...-48% -4,6% -5,5%\na aterros (t)\nConsumo de água nova (m3) -30% -31,6% -2% -6,9%\n1 Nosso compromisso é reduzir 50% das nossas emissões operacion...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 6.9,
+            "contexto": "...-4,6% -5,5%\na aterros (t)\nConsumo de água nova (m3) -30% -31,6% -2% -6,9%\n1 Nosso compromisso é reduzir 50% das nossas emissões operacionais at...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 50.0,
+            "contexto": "...de água nova (m3) -30% -31,6% -2% -6,9%\n1 Nosso compromisso é reduzir 50% das nossas emissões operacionais até 2030, o que representa uma meta...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 4.6,
+            "contexto": "...s emissões operacionais até 2030, o que representa uma meta anual de -4,6%,\nsubdividida entre as diversas fontes de emissões que compõem os esco...",
+            "pagina": 44
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 86.0,
+            "contexto": "...ra abranger também\nas emissões indiretas, que, em 2024,\nrepresentaram 86% das emissões totais.\nPara a seleção dos créditos de carbono,\n\n[QUEBRA...",
+            "pagina": 46
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 89.0,
+            "contexto": "...1\ncom a maior contribuição\nfoi a de emissões fugitivas,\nrepresentando 89% do escopo,\ne 13% das emissões totais.\nTrabalhamos continuamente com\na...",
+            "pagina": 47
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 13.0,
+            "contexto": "...tribuição\nfoi a de emissões fugitivas,\nrepresentando 89% do escopo,\ne 13% das emissões totais.\nTrabalhamos continuamente com\na substituição dos...",
+            "pagina": 47
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 26.0,
+            "contexto": "...ansporte de Continuamos incentivando nossos\nsocorro, responsáveis por 26% das clientes a utilizarem produtos e serviços\nemissões de Escopo 3. d...",
+            "pagina": 48
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 15.0,
+            "contexto": "...as\n3, implantamos um sistema de gestão contribuíram para a redução de 15% nas\nde transporte e mantemos projetos de emissões de transporte (malo...",
+            "pagina": 48
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 3.0,
+            "contexto": "...rio, papel, plástico e informática).\nAs emissões representam menos de 3% comparando com as emissões\noperacionais, sendo consideradas não relev...",
+            "pagina": 48
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...302-1\nReforçamos nosso compromisso com o\nconsumo de energia limpa em 100% das\nnossas operações por meio do mercado\nlivre de energia, geração di...",
+            "pagina": 49
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 99.5,
+            "contexto": "...autoatendimento, cabinas e equipamentos\neletrônicos), que representam 99,5%\n\n[QUEBRA_DE_COLUNA]\n\nda quantidade total desses resíduos.\nAlém disso,...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 90.0,
+            "contexto": "...lução\ncultural, a #SomosPelasPessoas, coloca Nossa meta era capacitar 90% do quadro\na diversidade e o desenvolvimento funcional em pelo menos t...",
+            "pagina": 61
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 75.0,
+            "contexto": "...licar as habilidades\naprendidas e atuar na área.\n• Antes do programa, 75% dos profissionais\nse consideravam proficientes ou\navançados na temáti...",
+            "pagina": 63
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 50.0,
+            "contexto": "...escumprimento das normas internas.\nDo público total elegível em 2024,\n50% eram mulheres e 50% eram\nhomens....",
+            "pagina": 65
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 50.0,
+            "contexto": "...rmas internas.\nDo público total elegível em 2024,\n50% eram mulheres e 50% eram\nhomens....",
+            "pagina": 65
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 81.0,
+            "contexto": "...a 100% dos nossos funcionários,\nregistramos o índice de satisfação de 81%.\nEngajamento (%)\nPOR GÊNERO\nHomens 81,1\nMulheres 80,9\nPOR POSIÇÃO DE...",
+            "pagina": 66
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 33.0,
+            "contexto": "...leo Cidade de Deus, em Osasco (SP),\ncorrespondendo a uma cobertura de 33%\ndo nosso quadro funcional. Contudo,\na estrutura de recepção e tratame...",
+            "pagina": 68
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 45.0,
+            "contexto": "...em, cada vez mais, cargos de\nliderança. Nosso objetivo é manter entre\n45% e 55% de mulheres no quadro\nfuncional em 2025.\nEm 2024, nosso Grupo d...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 55.0,
+            "contexto": "...da vez mais, cargos de\nliderança. Nosso objetivo é manter entre\n45% e 55% de mulheres no quadro\nfuncional em 2025.\nEm 2024, nosso Grupo de Afin...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 50.0,
+            "contexto": "...nstante mudança no\nmercado de trabalho.\n\n[QUEBRA_DE_COLUNA]\n\nEm 2024, 50% das promoções foram de\nmulheres e encerramos o ano com elas\nocupando...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 48.0,
+            "contexto": "...das promoções foram de\nmulheres e encerramos o ano com elas\nocupando 48% dos cargos de gestão e\n49% de gestão júnior, 19% dos cargos\nde alta l...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 30.2,
+            "contexto": "...issionais em cargos STEM2 em nosso\nquadro, que, em 2024, representava 30,20%.\nO tema equidade de gênero também é\npauta no encontro Conexão Mulhere...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 45.0,
+            "contexto": "...percepção de funcionárias.\nMetas para 2025\nStatus 20241\nManter entre 45% e 55% de mulheres no quadro 50%\nManter entre 34% e 40% de mulheres na...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 55.0,
+            "contexto": "...pção de funcionárias.\nMetas para 2025\nStatus 20241\nManter entre 45% e 55% de mulheres no quadro 50%\nManter entre 34% e 40% de mulheres na lider...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 50.0,
+            "contexto": "...s para 2025\nStatus 20241\nManter entre 45% e 55% de mulheres no quadro 50%\nManter entre 34% e 40% de mulheres na liderança 36%\nManter entre 46%...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 34.0,
+            "contexto": "...s 20241\nManter entre 45% e 55% de mulheres no quadro 50%\nManter entre 34% e 40% de mulheres na liderança 36%\nManter entre 46% e 50% de mulheres...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 40.0,
+            "contexto": "...1\nManter entre 45% e 55% de mulheres no quadro 50%\nManter entre 34% e 40% de mulheres na liderança 36%\nManter entre 46% e 50% de mulheres em ca...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 36.0,
+            "contexto": "...ulheres no quadro 50%\nManter entre 34% e 40% de mulheres na liderança 36%\nManter entre 46% e 50% de mulheres em cargos de gestão 48%\nManter ent...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 46.0,
+            "contexto": "...50%\nManter entre 34% e 40% de mulheres na liderança 36%\nManter entre 46% e 50% de mulheres em cargos de gestão 48%\nManter entre 46% e 50% de m...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 50.0,
+            "contexto": "...anter entre 34% e 40% de mulheres na liderança 36%\nManter entre 46% e 50% de mulheres em cargos de gestão 48%\nManter entre 46% e 50% de mulhere...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 48.0,
+            "contexto": "...liderança 36%\nManter entre 46% e 50% de mulheres em cargos de gestão 48%\nManter entre 46% e 50% de mulheres em cargos de gestão jr 49%\nManter...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 46.0,
+            "contexto": "...nter entre 46% e 50% de mulheres em cargos de gestão 48%\nManter entre 46% e 50% de mulheres em cargos de gestão jr 49%\nManter entre 15% e 22% d...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 50.0,
+            "contexto": "...ntre 46% e 50% de mulheres em cargos de gestão 48%\nManter entre 46% e 50% de mulheres em cargos de gestão jr 49%\nManter entre 15% e 22% de mulh...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 49.0,
+            "contexto": "...gestão 48%\nManter entre 46% e 50% de mulheres em cargos de gestão jr 49%\nManter entre 15% e 22% de mulheres em cargos de alta liderança 19%\nMa...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 15.0,
+            "contexto": "...r entre 46% e 50% de mulheres em cargos de gestão jr 49%\nManter entre 15% e 22% de mulheres em cargos de alta liderança 19%\nManter entre 45% e...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 22.0,
+            "contexto": "...e 46% e 50% de mulheres em cargos de gestão jr 49%\nManter entre 15% e 22% de mulheres em cargos de alta liderança 19%\nManter entre 45% e 55% de...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 19.0,
+            "contexto": "...jr 49%\nManter entre 15% e 22% de mulheres em cargos de alta liderança 19%\nManter entre 45% e 55% de mulheres em cargos de gestão que geram rece...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 45.0,
+            "contexto": "...re 15% e 22% de mulheres em cargos de alta liderança 19%\nManter entre 45% e 55% de mulheres em cargos de gestão que geram receita 52%\nManter en...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 55.0,
+            "contexto": "...e 22% de mulheres em cargos de alta liderança 19%\nManter entre 45% e 55% de mulheres em cargos de gestão que geram receita 52%\nManter entre 30...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 52.0,
+            "contexto": "...ter entre 45% e 55% de mulheres em cargos de gestão que geram receita 52%\nManter entre 30% e 40% de mulheres em cargos STEM2 30%\n1 Não são cons...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 30.0,
+            "contexto": "...5% de mulheres em cargos de gestão que geram receita 52%\nManter entre 30% e 40% de mulheres em cargos STEM2 30%\n1 Não são considerados os funci...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 40.0,
+            "contexto": "...mulheres em cargos de gestão que geram receita 52%\nManter entre 30% e 40% de mulheres em cargos STEM2 30%\n1 Não são considerados os funcionário...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 30.0,
+            "contexto": "...geram receita 52%\nManter entre 30% e 40% de mulheres em cargos STEM2 30%\n1 Não são considerados os funcionários do exterior, os expatriados e...",
+            "pagina": 79
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 31.0,
+            "contexto": "...uncionários do exterior, os expatriados e os colaboradores terceiros.\n31%\nde crescimento\nSAIBA MAIS\nno percentual de mulheres em\nem nosso Relat...",
+            "pagina": 80
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 4.7,
+            "contexto": "...no.\n\n[QUEBRA_DE_COLUNA]\n\nNa pesquisa de clima\norganizacional de 2024,\n4,7% dos respondentes se\nautodeclararam pertencentes\nà comunidade LGBTI+...",
+            "pagina": 85
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 21.0,
+            "contexto": "...m 2024, tivemos um distribuindo como premiação mais de 3,6\naumento de 21% na quantidade de contas milhões de pontos Livelo.\ne processamos mais...",
+            "pagina": 96
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 99.19,
+            "contexto": "...site de sustentabilidade.\nii. A soma de porcentagens no mapa\ntotaliza 99,19% porque os demais 0,81% dos\nfornecedores estão alocados no exterior....",
+            "pagina": 106
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 72.0,
+            "contexto": "...hecida como\nhotspot global de biodiversidade,\na Mata Atlântica abriga 72% da\npopulação brasileira e concentra\ncerca de 80% do PIB nacional....",
+            "pagina": 112
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 96.0,
+            "contexto": "...rmaram estar mais\nconscientes dos impactos ambientais\nde suas ações e 96% tiveram o primeiro\ncontato com temas de sustentabilidade\ne negócios s...",
+            "pagina": 116
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...em exercício na Assembleia Geral de diversidade, como gênero, etnia,\n100% 36% 18%\nnão executivos independentes mulheres\n(11 membros) (4 membros...",
+            "pagina": 123
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 36.0,
+            "contexto": "...xercício na Assembleia Geral de diversidade, como gênero, etnia,\n100% 36% 18%\nnão executivos independentes mulheres\n(11 membros) (4 membros) (2...",
+            "pagina": 123
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 18.0,
+            "contexto": "...ício na Assembleia Geral de diversidade, como gênero, etnia,\n100% 36% 18%\nnão executivos independentes mulheres\n(11 membros) (4 membros) (2 mem...",
+            "pagina": 123
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 99.0,
+            "contexto": "...iências fluidas, ágeis,\nseguras e com alta disponibilidade.\nNo total, 99% das transações de 2024 foram realizadas\nem canais digitais. No períod...",
+            "pagina": 147
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 98.2,
+            "contexto": "...COLUNA]\n\nIndicador 2024\nPercentual de funcionários treinados em ética 98,2%\nPercentual de funcionários treinados\n97,9%\nem prevenção à corrupção\nP...",
+            "pagina": 154
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 97.9,
+            "contexto": "...onários treinados em ética 98,2%\nPercentual de funcionários treinados\n97,9%\nem prevenção à corrupção\nPercentual de funcionários treinados\n98,1%\ne...",
+            "pagina": 154
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 98.1,
+            "contexto": "...s\n97,9%\nem prevenção à corrupção\nPercentual de funcionários treinados\n98,1%\nem prevenção à lavagem de dinheiro\nDivulgação anual, no Relatório ESG...",
+            "pagina": 154
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...do escopo 1,2 e 3\nMetas intermediárias até 2030 para carvão mineral (-100%),\nSetores com metas de descarbonização geração de eletricidade (-63%)...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 63.0,
+            "contexto": "...100%),\nSetores com metas de descarbonização geração de eletricidade (-63%), alumínio (-11%), cimento (-20%),\nferro e aço (-39%) e transportes -...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 11.0,
+            "contexto": "...m metas de descarbonização geração de eletricidade (-63%), alumínio (-11%), cimento (-20%),\nferro e aço (-39%) e transportes - veículos leves (...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 20.0,
+            "contexto": "...rbonização geração de eletricidade (-63%), alumínio (-11%), cimento (-20%),\nferro e aço (-39%) e transportes - veículos leves (-25%)\nPercentual...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 39.0,
+            "contexto": "...e eletricidade (-63%), alumínio (-11%), cimento (-20%),\nferro e aço (-39%) e transportes - veículos leves (-25%)\nPercentual de cobertura da car...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 50.0,
+            "contexto": "...tico\n- Monitoramento\n\n[QUEBRA_DE_COLUNA]\n\nclimáticas\nObjetivo\nReduzir 50% das nossas emissões\noperacionais até 2030\nManter 100% das nossas\noper...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...Objetivo\nReduzir 50% das nossas emissões\noperacionais até 2030\nManter 100% das nossas\noperações abastecidas por\nmeio de energia renovável\nCompen...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...nossas\noperações abastecidas por\nmeio de energia renovável\nCompensar 100% das emissões\noperacionais - Escopo 1,2 e 3\nNet Zero - Até 2050 temos...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 89.87,
+            "contexto": "...relação\n-23,00%\nao ano-base (%)\nRealizado em relação ao ano-base (%) 89,87%\nNeutralizamos nossas emissões de escopo 2, devido à\nPercentual de ene...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...m nossas instalações\nPercentual de compensação Desde 2019 compensamos 100% das emissões\ndas emissões operacionais operacionais do escopo 1,2 e 3...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 25.0,
+            "contexto": "..., cimento (-20%),\nferro e aço (-39%) e transportes - veículos leves (-25%)\nPercentual de cobertura da carteira PJ\n100%\nno cálculo das emissões...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...portes - veículos leves (-25%)\nPercentual de cobertura da carteira PJ\n100%\nno cálculo das emissões financiadas\nPercentual de cobertura da\ncartei...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 100.0,
+            "contexto": "...financiadas\nPercentual de cobertura da\ncarteira investida no cálculo 100%\ndas emissões investidas\nMonitoramos mensalmente todas as operações de...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...Objetivo\nReduzir 50% das nossas emissões\noperacionais até 2030\nManter 100% das nossas\noperações abastecidas por\nmeio de energia renovável\nCompen...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...nossas\noperações abastecidas por\nmeio de energia renovável\nCompensar 100% das emissões\noperacionais - Escopo 1,2 e 3\nNet Zero - Até 2050 temos...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...financiadas\nPercentual de cobertura da\ncarteira investida no cálculo 100%\ndas emissões investidas\nMonitoramos mensalmente todas as operações de...",
+            "pagina": 155
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 45.0,
+            "contexto": "...onários nas diferentes\nfrentes de atuação em Diversidade\nManter entre 45% e 55% de mulheres no quadro\nManter entre 34% e 40% de mulheres na lid...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 55.0,
+            "contexto": "...s nas diferentes\nfrentes de atuação em Diversidade\nManter entre 45% e 55% de mulheres no quadro\nManter entre 34% e 40% de mulheres na liderança...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 34.0,
+            "contexto": "...Diversidade\nManter entre 45% e 55% de mulheres no quadro\nManter entre 34% e 40% de mulheres na liderança\nDiversidade, Equidade\ne Inclusão\nMante...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 40.0,
+            "contexto": "...idade\nManter entre 45% e 55% de mulheres no quadro\nManter entre 34% e 40% de mulheres na liderança\nDiversidade, Equidade\ne Inclusão\nManter entr...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 30.0,
+            "contexto": "...e mulheres na liderança\nDiversidade, Equidade\ne Inclusão\nManter entre 30% e 40% de mulheres em cargos STEM\nmanter entre 28% e 33% de pessoas ne...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 40.0,
+            "contexto": "...eres na liderança\nDiversidade, Equidade\ne Inclusão\nManter entre 30% e 40% de mulheres em cargos STEM\nmanter entre 28% e 33% de pessoas negras n...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 28.0,
+            "contexto": "...clusão\nManter entre 30% e 40% de mulheres em cargos STEM\nmanter entre 28% e 33% de pessoas negras no quadro\nManter entre 20% e 30% de pessoas\nn...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 33.0,
+            "contexto": "...Manter entre 30% e 40% de mulheres em cargos STEM\nmanter entre 28% e 33% de pessoas negras no quadro\nManter entre 20% e 30% de pessoas\nnegras...",
+            "pagina": 157
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...elacionados à corrupção\npor meio do Programa de Integridade.\nEm 2024, 100% das nossas operações\nforam submetidas a avaliações de\nriscos relacion...",
+            "pagina": 164
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...elacionados à corrupção\npor meio do Programa de Integridade.\nEm 2024, 100% das nossas operações\nforam submetidas a avaliações de\nriscos relacion...",
+            "pagina": 164
+        }
+    ]
+}

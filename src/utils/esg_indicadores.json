@@ -1,0 +1,37 @@
+{
+    "GRI 405-1": {
+        "id_dashboard": "DIVERSIDADE_QUADRO_SOCIAL",
+        "categoria": "Social",
+        "subtemas": [
+            "mulheres",
+            "gênero",
+            "raça",
+            "etnia",
+            "idade",
+            "pcd"
+        ],
+        "unidade": "percentual"
+    },
+    "GRI 305-1": {
+        "id_dashboard": "EMISSOES_ESCOPO_1",
+        "categoria": "Ambiental",
+        "subtemas": [
+            "co2",
+            "emissões",
+            "gases",
+            "efeito estufa"
+        ],
+        "unidade": "tCO2e"
+    },
+    "GRI 205-1": {
+        "id_dashboard": "ANTICORRUPCAO_OPERACOES",
+        "categoria": "Governança",
+        "subtemas": [
+            "corrupção",
+            "suborno",
+            "integridade",
+            "operações"
+        ],
+        "unidade": "percentual"
+    }
+}
