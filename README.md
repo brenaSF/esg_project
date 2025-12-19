@@ -35,3 +35,7 @@ O fluxo de dados segue o padrão RAG (Retrieval-Augmented Generation):
 ├── app.py            # Portal de Curadoria (Streamlit)
 ├── main.py           # Orquestrador do Pipeline (Execução em lote)
 └── .env              # Chaves de API e credenciais
+
+## Interface auditoria
+
+Ondevisualziar : https://esgproject-daqzi9ycjpgvxjqbimpfna.streamlit.app/
