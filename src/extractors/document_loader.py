@@ -42,8 +42,8 @@ class ESGDocumentLoader:
 
         return "\n\n[QUEBRA_DE_COLUNA]\n\n".join(texto_final)
 
-    def extract_content(self,pdf_path, configuracao):
-        dados_finais = {"metadata": {"empresa": "Bradesco", "ano": 2024}, "chunks": []}
+    def extract_content(self,pdf_path, configuracao, empresa=None, ano=None):
+        dados_finais = {"metadata": {"empresa": empresa, "ano": ano}, "chunks": []}
         
         with pdfplumber.open(pdf_path) as pdf:
             for i, page in enumerate(pdf.pages):

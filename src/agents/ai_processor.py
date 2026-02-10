@@ -19,7 +19,7 @@ class ESGMetricProcessor:
     
     def discover_relevant_context(self, query, retriever):
         prompt = PromptTemplate(
-            template="""Você é um auditor especialista em GRI 405-1. Adcione um nome curto para cada métrica quantitativa relevante deste contexto. Retire pelo menos 20 métricas.
+            template="""Você é um auditor especialista em GRI 405-1. Adcione um nome curto para cada métrica quantitativa relevante deste contexto. Retire pelo menos 30 métricas.
             Analise o contexto e identifique APENAS métricas quantitativas de diversidade (ex: % de mulheres, negros, PCDs, faixas etárias).
             Ignore outros temas como emissões ou corrupção.
 
@@ -78,22 +78,30 @@ class ESGMetricProcessor:
         retriever = self.create_vector_db(documentos).as_retriever(search_kwargs={"k": 5})
 
         discovery_prompt = PromptTemplate(
+            template="""Você é um auditor sênior especialista em relatórios GRI (Global Reporting Initiative), focado na norma GRI 405-1.
+            Sua tarefa é extrair exatamente 20 métricas quantitativas de Diversidade e Descarbonização do contexto abaixo.
 
-            template="""Você é um auditor especialista em GRI 405-1. Adcione um nome curto para cada métrica quantitativa relevante deste contexto. Retire pelo menos 20 métricas.
+            ### DIRETRIZES DE EXTRAÇÃO:
+            1. **Precisão de Liderança:** Diferencie claramente 'quadro geral' de 'cargos de liderança/alta administração'.
+            2. **Faixas Etárias:** Extraia separadamente as categorias (Ex: <30, 30-50, >50). Se houver uma tabela, foque no ano mais recente (2024).
+            3. **Formato do Valor:** O valor no JSON deve ser uma PERGUNTA objetiva que, quando respondida, extraia apenas o número ou percentual específico.
+            4. **Filtro de Ruído:** Ignore cabeçalhos de tabelas ou sequências de números que não correspondam diretamente à métrica.
 
-            Analise o contexto e identifique APENAS métricas quantitativas de diversidade (ex: % de mulheres, negros, PCDs, faixas etárias).
+            ### TEMAS PERMITIDOS:
+            - Diversidade: Gênero, Raça/Etnia, PCD, Faixa Etária (Total e por Nível Hierárquico).
+            - Descarbonização: % Energia Renovável, % Redução de Emissões de Escopo 1, 2 ou 3.
 
-            Ignore outros temas como emissões ou corrupção.
-
-
-            Retorne um JSON onde a CHAVE é o nome curto da métrica (snake_case) e o VALOR é a pergunta para extração.
+            ### EXEMPLO DE SAÍDA ESPERADA:
+            {{
+                "percentual_mulheres_lideranca": "Qual o percentual de mulheres em cargos de liderança ou alta administração em 2024?",
+                "percentual_pcd_total": "Qual o percentual total de pessoas com deficiência (PCD) no quadro de funcionários?",
+                "percentual_geracao_renovavel": "Qual a porcentagem da capacidade instalada proveniente de fontes renováveis?"
+            }}
 
             Contexto: {context}
 
             {format_instructions}""",
-
             input_variables=["context"],
-
             partial_variables={"format_instructions": self.parser.get_format_instructions()}
         )
 
@@ -116,7 +124,7 @@ class ESGMetricProcessor:
         extraction_chain = extraction_prompt | self.model | self.parser
 
         metricas_descobertas = discovery_chain.invoke(
-            "GRI 405-1: Diversidade de empregados, gênero, raça, idade e composição do conselho"
+            "GRI 405-1: Diversidade de empregados, gênero, raça e pessoas com deficiência"
         )
 
         # --- NOVA ESTRUTURA: Lista de Auditoria ---
