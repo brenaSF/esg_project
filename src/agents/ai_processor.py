@@ -84,7 +84,7 @@ class ESGMetricProcessor:
             ### DIRETRIZES DE EXTRAÇÃO:
             1. **Precisão de Liderança:** Diferencie claramente 'quadro geral' de 'cargos de liderança/alta administração'.
             2. **Faixas Etárias:** Extraia separadamente as categorias (Ex: <30, 30-50, >50). Se houver uma tabela, foque no ano mais recente (2024).
-            3. **Formato do Valor:** O valor no JSON deve ser uma PERGUNTA objetiva que, quando respondida, extraia apenas o número ou percentual específico.
+            3. **Formato do Valor:** O valor no JSON deve ser uma PERGUNTA objetiva que, quando respondida, extraia apenas o número ou percentual específico. Caso seja um número : mostre o número inteiro (ex: 500 empregados com deficiência)
             4. **Filtro de Ruído:** Ignore cabeçalhos de tabelas ou sequências de números que não correspondam diretamente à métrica.
 
             ### TEMAS PERMITIDOS:
@@ -95,7 +95,7 @@ class ESGMetricProcessor:
             {{
                 "percentual_mulheres_lideranca": "Qual o percentual de mulheres em cargos de liderança ou alta administração em 2024?",
                 "percentual_pcd_total": "Qual o percentual total de pessoas com deficiência (PCD) no quadro de funcionários?",
-                "percentual_geracao_renovavel": "Qual a porcentagem da capacidade instalada proveniente de fontes renováveis?"
+                "quantidade_empregados_ate_30": "Qual a quantidade de empregados que possuem até 30 anos?",
             }}
 
             Contexto: {context}
@@ -142,8 +142,7 @@ class ESGMetricProcessor:
                 
                 # Criando a linha conforme sua solicitação
                 linha_metrica = {
-                    "empresa": "Bradesco",
-                    "ano": 2024,
+                
                     "Dado Extraído": coluna,
                     "Valor": self.formatar_para_numero(resultado.get("valor")),
                     "Fonte (Texto Original)": resultado.get("trecho_original"),

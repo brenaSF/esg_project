@@ -4,3 +4,5 @@ langchain
 langchain-openai
 chromadb
 openpyxl
+tabula-py
+camelot-py[cv]

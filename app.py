@@ -160,6 +160,8 @@ with aba_auditoria:
     DIR_PROCESSADOS = os.path.join(DIR_OUTPUT, "resultado_csv")
     CAMINHO_GOLD = os.path.join(DIR_OUTPUT, "auditado_NEOENERGIA_2024.csv")
 
+    caminho_excluidos = os.path.join(DIR_OUTPUT,"excluidos")
+
     # Garantir que as pastas existam
     for pasta in [DIR_OUTPUT, DIR_PROCESSADOS]:
         os.makedirs(pasta, exist_ok=True)
@@ -226,7 +228,7 @@ with aba_auditoria:
         with m2:
             st.metric("Indicadores", len(df))
         with m3:
-            st.metric("Ano", df['ano_relatorio'].iloc[0] if 'ano_relatorio' in df.columns else "N/A")
+            st.metric("Ano", df['ano'].iloc[0] if 'ano' in df.columns else "N/A")
 
         st.markdown(f"### 📋 Editando: `{arquivo_selecionado}`")
 
@@ -281,7 +283,7 @@ with aba_auditoria:
                 df_final.to_csv(CAMINHO_GOLD, index=False, sep=";", encoding="utf-8-sig")
                 
                 # Arquivamento (Mover arquivo para 'processados')
-                os.rename(caminho_completo, os.path.join(DIR_PROCESSADOS, arquivo_selecionado))
+                os.rename(caminho_excluidos, os.path.join(DIR_PROCESSADOS, arquivo_selecionado))
                 
                 st.toast(f"Relatório {arquivo_selecionado} aprovado!", icon="🚀")
                 st.balloons()
@@ -290,7 +292,7 @@ with aba_auditoria:
         with col2:
             
             if st.button("🗑️ Descartar", use_container_width=True):
-                os.remove(caminho_completo)
+                os.remove(caminho_excluidos)
                 st.warning("Relatório removido da fila.")
                 st.rerun()
 

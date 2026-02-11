@@ -1,0 +1,617 @@
+{
+    "metadata": {
+        "empresa": "ELETROBRAS",
+        "ano": 2023
+    },
+    "chunks": [
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 21.0,
+            "contexto": "...bilhões\ne o lucro líquido anual atingiu R$ 4,4 bilhões,\num aumento de 21% em relação a 2022.\nCom a capacidade de investimentos\nampliada, partic...",
+            "pagina": 6
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 99.96,
+            "contexto": "...ma\ndisponibilidade de geração de 1,027 e\ndas linhas de transmissão de 99,96%.\n\n[QUEBRA_DE_COLUNA]\n\nContinuamos avançando na construção da\nEletrobr...",
+            "pagina": 6
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 96.5,
+            "contexto": "...staques de 2023\nPROSPERIDADE\n» 146,9 mil GWh de energia gerada,\nsendo 96,5% de fontes renováveis\n» R$ 1,62 bilhão investido na\nmodernização, melh...",
+            "pagina": 15
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 99.96,
+            "contexto": "...ade de geração de 1,027\n» Índice de disponibilidade da\ntransmissão de 99,96%\n» Receita bruta de R$ 44,47 bilhões\n» R$ 9,02 bilhões em investimento...",
+            "pagina": 15
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 22.0,
+            "contexto": "...m 44,6 gigawatts (GW)\nde capacidade instalada, sendo responsáveis por 22%\nda capacidade nacional. Operamos também 73,8 mil\nquilômetros de linha...",
+            "pagina": 20
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 96.5,
+            "contexto": "...cional (SIN). GRI 2-1, 2-6\nDo total de energia gerada pela\ncompanhia, 96,5% são provenientes\nde fontes com baixo teor de emissão\nde gases do efei...",
+            "pagina": 20
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 67.0,
+            "contexto": "...rmelétricas;\n• 1 solar.\n44.654,5 MW de capacidade instalada, sendo:\n• 67% de empreendimentos corporativos e de\npropriedade compartilhadas*;\n• 3...",
+            "pagina": 21
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 42.76,
+            "contexto": "...as demais entidades que integram o grupo de acionistas\npúblicos detêm 42,76% das ações da companhia, com\nlimitação ao exercício do poder político...",
+            "pagina": 40
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...s pela Eletrobras\nPercentual ao qual foram comunicados as políticas e\n100% 100% 100% 100% 90,0%\nprocedimentos anticorrupção adotados pela Eletro...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...a Eletrobras\nPercentual ao qual foram comunicados as políticas e\n100% 100% 100% 100% 90,0%\nprocedimentos anticorrupção adotados pela Eletrobras...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...trobras\nPercentual ao qual foram comunicados as políticas e\n100% 100% 100% 100% 90,0%\nprocedimentos anticorrupção adotados pela Eletrobras\nTotal...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...as\nPercentual ao qual foram comunicados as políticas e\n100% 100% 100% 100% 90,0%\nprocedimentos anticorrupção adotados pela Eletrobras\nTotal que...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 90.0,
+            "contexto": "...rcentual ao qual foram comunicados as políticas e\n100% 100% 100% 100% 90,0%\nprocedimentos anticorrupção adotados pela Eletrobras\nTotal que recebe...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 91.3,
+            "contexto": "...42 651 2.901 4.058 -\nPercentual que recebeu treinamento anticorrupção 91,3% 93,53% 94,31% 89,07% -\nPROFISSIONAIS QUE RECEBERAM COMUNICAÇÃO E TREI...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 93.53,
+            "contexto": "...2.901 4.058 -\nPercentual que recebeu treinamento anticorrupção 91,3% 93,53% 94,31% 89,07% -\nPROFISSIONAIS QUE RECEBERAM COMUNICAÇÃO E TREINAMENTO...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 94.31,
+            "contexto": "...4.058 -\nPercentual que recebeu treinamento anticorrupção 91,3% 93,53% 94,31% 89,07% -\nPROFISSIONAIS QUE RECEBERAM COMUNICAÇÃO E TREINAMENTO EM POL...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 89.07,
+            "contexto": "...Percentual que recebeu treinamento anticorrupção 91,3% 93,53% 94,31% 89,07% -\nPROFISSIONAIS QUE RECEBERAM COMUNICAÇÃO E TREINAMENTO EM POLÍTICAS...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 90.3,
+            "contexto": "....273 924 2.340 1.085\nPercentual que recebeu treinamento anticorrupção 90,30% 90,81% 93,62% 89,66% 88,36%\n* As informações reportadas consideram a...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 90.81,
+            "contexto": "...4 2.340 1.085\nPercentual que recebeu treinamento anticorrupção 90,30% 90,81% 93,62% 89,66% 88,36%\n* As informações reportadas consideram a Eletrob...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 93.62,
+            "contexto": "...1.085\nPercentual que recebeu treinamento anticorrupção 90,30% 90,81% 93,62% 89,66% 88,36%\n* As informações reportadas consideram a Eletrobras Hol...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 89.66,
+            "contexto": "...Percentual que recebeu treinamento anticorrupção 90,30% 90,81% 93,62% 89,66% 88,36%\n* As informações reportadas consideram a Eletrobras Holding, C...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 88.36,
+            "contexto": "...ual que recebeu treinamento anticorrupção 90,30% 90,81% 93,62% 89,66% 88,36%\n* As informações reportadas consideram a Eletrobras Holding, Chesf, E...",
+            "pagina": 53
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...ridade de terceiros. Dessas, 566 foram de\nfornecedores, representando 100% dos nossos\nfornecedores críticos. GRI 205-1\nRealizamos também avaliaç...",
+            "pagina": 55
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...ridade de terceiros. Dessas, 566 foram de\nfornecedores, representando 100% dos nossos\nfornecedores críticos. GRI 205-1\nRealizamos também avaliaç...",
+            "pagina": 55
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 32.0,
+            "contexto": "...alidade das decisões.\nEm 2023, foram recebidas 345 denúncias*, sendo:\n32% 28%\nInfrações à moral, dignidade e honra pessoal\nInfrações a Leis ou...",
+            "pagina": 57
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 28.0,
+            "contexto": "...ade das decisões.\nEm 2023, foram recebidas 345 denúncias*, sendo:\n32% 28%\nInfrações à moral, dignidade e honra pessoal\nInfrações a Leis ou Norm...",
+            "pagina": 57
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 96.0,
+            "contexto": "...estações, sendo que\nse há necessidade de informações complementares e 96% foram atendidas dentro do prazo. GRI 2-26\nencaminha a demanda para a...",
+            "pagina": 59
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...ão a cinco metas:\n» Remuneração 100% íntegra da alta administração;\n» 100% da cadeia de valor de alto risco treinada em\nintegridade;\n» 100% de t...",
+            "pagina": 60
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...o;\n» 100% da cadeia de valor de alto risco treinada em\nintegridade;\n» 100% de transparência da estrutura de Compliance\ne Governança;\n» 100% de t...",
+            "pagina": 60
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...ão a cinco metas:\n» Remuneração 100% íntegra da alta administração;\n» 100% da cadeia de valor de alto risco treinada em\nintegridade;\n» 100% de t...",
+            "pagina": 60
+        },
+        {
+            "indicador_id": "GRI 205-1",
+            "chave": "ANTICORRUPCAO_OPERACOES",
+            "valor": 100.0,
+            "contexto": "...o;\n» 100% da cadeia de valor de alto risco treinada em\nintegridade;\n» 100% de transparência da estrutura de Compliance\ne Governança;\n» 100% de t...",
+            "pagina": 60
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 22.0,
+            "contexto": "...m 44,6 gigawatts (GW) de\ncapacidade instalada, sendo responsáveis por 22% da\ncapacidade nacional. GRI EU1, EU2, EU4\nDe toda a energia gerada pe...",
+            "pagina": 66
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 4.9,
+            "contexto": "...as, nove térmicas e uma\nsolar. Ao longo do ano, tivemos um aumento de 4,9% em\nnossa capacidade instalada, chegando a 44,6 GW, devido\nprincipalme...",
+            "pagina": 67
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 67.0,
+            "contexto": "...a\nmais na página 23). GRI EU1\nDo total de nossa capacidade instalada, 67% são de\nempreendimentos corporativos e 33% de SPEs. GRI EU1\nAo longo d...",
+            "pagina": 67
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 33.0,
+            "contexto": "...nossa capacidade instalada, 67% são de\nempreendimentos corporativos e 33% de SPEs. GRI EU1\nAo longo do ano, geramos 146.946,6 GWh de energia, s...",
+            "pagina": 67
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 1.0,
+            "contexto": "...P&D+I seguem a Lei\n9.991/2000, que exige a destinação de, no mínimo,\n1% da Receita Operacional (ROL) para atividades de\nPesquisa e Desenvolvi...",
+            "pagina": 80
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 28.76,
+            "contexto": "...ocais e a geração de emprego nas\ncomunidades. GRI 2-6, 204-1\nEm 2023, 28,76% das compras foram realizadas com\nfornecedores locais, considerados aq...",
+            "pagina": 87
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 82.0,
+            "contexto": "...soas.\nAo final de 2023, contávamos com 8.328 profissionais,\nsendo que 82% identificam-se como homens e 18%\ncomo mulheres. Além disso, 39% se id...",
+            "pagina": 90
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 18.0,
+            "contexto": "...s com 8.328 profissionais,\nsendo que 82% identificam-se como homens e 18%\ncomo mulheres. Além disso, 39% se identificavam como\npretos, pardos,...",
+            "pagina": 90
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 39.0,
+            "contexto": "...o que 82% identificam-se como homens e 18%\ncomo mulheres. Além disso, 39% se identificavam como\npretos, pardos, amarelos e indígenas. GRI 2-7,...",
+            "pagina": 90
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 82.0,
+            "contexto": "...UEBRA_DE_COLUNA]\n\nPerfil dos profissionais\n8.328\nProfissionais ativos\n82% 18%\nHomens Mulheres\n39%\npretos, pardos,\namarelos e indígenas\n* Os dad...",
+            "pagina": 91
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 18.0,
+            "contexto": "...A_DE_COLUNA]\n\nPerfil dos profissionais\n8.328\nProfissionais ativos\n82% 18%\nHomens Mulheres\n39%\npretos, pardos,\namarelos e indígenas\n* Os dados d...",
+            "pagina": 91
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 39.0,
+            "contexto": "...dos profissionais\n8.328\nProfissionais ativos\n82% 18%\nHomens Mulheres\n39%\npretos, pardos,\namarelos e indígenas\n* Os dados da figura incluem o q...",
+            "pagina": 91
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 90.0,
+            "contexto": "...dois\nprogramas. Dos 1.255 empregados que ainda devem\nser desligados, 90% estão em atividades de operação,\nmanutenção e suprimentos. As duas pr...",
+            "pagina": 93
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 22.9,
+            "contexto": "...ade GRI 3-3\nAo longo de 2023, registramos uma\ntaxa de rotatividade de 22,9%, valor\naproximadamente 11 pontos percentuais\nsuperior ao do ano anter...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 3.66,
+            "contexto": "...BRA_DE_COLUNA]\n\nTAXA DE ROTATIVIDADE GLOBAL* GRI 401-1\n2021 2022 2023\n3,66% 12,06% 22,90%\nTAXA DE ROTATIVIDADE POR GÊNERO* GRI 401-1\n2021 2022 20...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 12.06,
+            "contexto": "..._COLUNA]\n\nTAXA DE ROTATIVIDADE GLOBAL* GRI 401-1\n2021 2022 2023\n3,66% 12,06% 22,90%\nTAXA DE ROTATIVIDADE POR GÊNERO* GRI 401-1\n2021 2022 2023\nHome...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 22.9,
+            "contexto": "...]\n\nTAXA DE ROTATIVIDADE GLOBAL* GRI 401-1\n2021 2022 2023\n3,66% 12,06% 22,90%\nTAXA DE ROTATIVIDADE POR GÊNERO* GRI 401-1\n2021 2022 2023\nHomens Mulh...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 0.6,
+            "contexto": "...mens Mulheres\nTotal de admissões 67 21 41 22 667 155\nTaxa de admissão 0,60% 0,79% 0,51% 1,19% 9,68% 10,50%\nTotal de desligamentos 419 87 922 270...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 10.5,
+            "contexto": "...es 67 21 41 22 667 155\nTaxa de admissão 0,60% 0,79% 0,51% 1,19% 9,68% 10,50%\nTotal de desligamentos 419 87 922 270 1.493 423\nTaxa de rotatividade...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 3.74,
+            "contexto": "...Total de desligamentos 419 87 922 270 1.493 423\nTaxa de rotatividade 3,74% 3,28% 11,41% 14,65% 21,67% 28,66%\nTAXA DE ROTATIVIDADE POR FAIXA ETÁR...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 3.28,
+            "contexto": "...de desligamentos 419 87 922 270 1.493 423\nTaxa de rotatividade 3,74% 3,28% 11,41% 14,65% 21,67% 28,66%\nTAXA DE ROTATIVIDADE POR FAIXA ETÁRIA* GR...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 11.41,
+            "contexto": "...sligamentos 419 87 922 270 1.493 423\nTaxa de rotatividade 3,74% 3,28% 11,41% 14,65% 21,67% 28,66%\nTAXA DE ROTATIVIDADE POR FAIXA ETÁRIA* GRI 401-1...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 14.65,
+            "contexto": "...ntos 419 87 922 270 1.493 423\nTaxa de rotatividade 3,74% 3,28% 11,41% 14,65% 21,67% 28,66%\nTAXA DE ROTATIVIDADE POR FAIXA ETÁRIA* GRI 401-1\n2021 2...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 21.67,
+            "contexto": "...9 87 922 270 1.493 423\nTaxa de rotatividade 3,74% 3,28% 11,41% 14,65% 21,67% 28,66%\nTAXA DE ROTATIVIDADE POR FAIXA ETÁRIA* GRI 401-1\n2021 2022 202...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 28.66,
+            "contexto": "...2 270 1.493 423\nTaxa de rotatividade 3,74% 3,28% 11,41% 14,65% 21,67% 28,66%\nTAXA DE ROTATIVIDADE POR FAIXA ETÁRIA* GRI 401-1\n2021 2022 2023\nAbaix...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 1.2,
+            "contexto": "...desligamentos 2 59 445 14 112 1.066 2 401 1.513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados considera...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 0.71,
+            "contexto": "...gamentos 2 59 445 14 112 1.066 2 401 1.513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a El...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 8.21,
+            "contexto": "...os 2 59 445 14 112 1.066 2 401 1.513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a Eletrobr...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 19.18,
+            "contexto": "...9 445 14 112 1.066 2 401 1.513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a Eletrobras hold...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 1.89,
+            "contexto": "...4 112 1.066 2 401 1.513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a Eletrobras holding, F...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 27.18,
+            "contexto": "...1.066 2 401 1.513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a Eletrobras holding, Furnas,...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 0.74,
+            "contexto": "...401 1.513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a Eletrobras holding, Furnas, Eletro...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 7.4,
+            "contexto": "....513\nTaxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a Eletrobras holding, Furnas, Eletrosul,...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 56.6,
+            "contexto": "...Taxa de rotatividade 1,20% 0,71% 8,21% 19,18% 1,89% 27,18% 0,74% 7,4% 56,6%\n* Os dados consideram a Eletrobras holding, Furnas, Eletrosul, Chesf...",
+            "pagina": 94
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 8.6,
+            "contexto": "...0\nTaxa de admissão 0\nTotal de desligamentos 114\nTaxa de rotatividade 8,60%\nNorte\nTotal de admissões 27\nTaxa de admissão 1,84%\nTotal de desligame...",
+            "pagina": 95
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 1.84,
+            "contexto": "...xa de rotatividade 8,60%\nNorte\nTotal de admissões 27\nTaxa de admissão 1,84%\nTotal de desligamentos 178\nTaxa de rotatividade 12,12%\nNorte\nTotal de...",
+            "pagina": 95
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 12.12,
+            "contexto": "...axa de admissão 1,84%\nTotal de desligamentos 178\nTaxa de rotatividade 12,12%\nNorte\nTotal de admissões 83\nTaxa de admissão 8,19%\nTotal de desligame...",
+            "pagina": 95
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 8.19,
+            "contexto": "...a de rotatividade 12,12%\nNorte\nTotal de admissões 83\nTaxa de admissão 8,19%\nTotal de desligamentos 244\nTaxa de rotatividade 24,1%\n\n[QUEBRA_DE_COL...",
+            "pagina": 95
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 24.1,
+            "contexto": "...axa de admissão 8,19%\nTotal de desligamentos 244\nTaxa de rotatividade 24,1%\n\n[QUEBRA_DE_COLUNA]\n\n2021\nNordeste\n6\n0,18%\n139\n4,18%\n2022\nNordeste\n3...",
+            "pagina": 95
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 0.18,
+            "contexto": "...s 244\nTaxa de rotatividade 24,1%\n\n[QUEBRA_DE_COLUNA]\n\n2021\nNordeste\n6\n0,18%\n139\n4,18%\n2022\nNordeste\n3\n0,10%\n438\n15,12%\n2023\nNordeste\n244\n9,68%\n59...",
+            "pagina": 95
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 4.18,
+            "contexto": "...de rotatividade 24,1%\n\n[QUEBRA_DE_COLUNA]\n\n2021\nNordeste\n6\n0,18%\n139\n4,18%\n2022\nNordeste\n3\n0,10%\n438\n15,12%\n2023\nNordeste\n244\n9,68%\n596\n23,6%\n\n[...",
+            "pagina": 95
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 93.3,
+            "contexto": "...143 147\n40 33 18\n100% 100% 100%\n100% 91,7% 100%\n167 156 130\n49 34 29\n93,3% 99,3% 94%\n83,2% 95,5% 100%\na comparabilidade com os resultados consol...",
+            "pagina": 96
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 99.3,
+            "contexto": "...47\n40 33 18\n100% 100% 100%\n100% 91,7% 100%\n167 156 130\n49 34 29\n93,3% 99,3% 94%\n83,2% 95,5% 100%\na comparabilidade com os resultados consolidados...",
+            "pagina": 96
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 94.0,
+            "contexto": "...33 18\n100% 100% 100%\n100% 91,7% 100%\n167 156 130\n49 34 29\n93,3% 99,3% 94%\n83,2% 95,5% 100%\na comparabilidade com os resultados consolidados em...",
+            "pagina": 96
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 83.2,
+            "contexto": "...8\n100% 100% 100%\n100% 91,7% 100%\n167 156 130\n49 34 29\n93,3% 99,3% 94%\n83,2% 95,5% 100%\na comparabilidade com os resultados consolidados em 2023....",
+            "pagina": 96
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 95.5,
+            "contexto": "...100% 100%\n100% 91,7% 100%\n167 156 130\n49 34 29\n93,3% 99,3% 94%\n83,2% 95,5% 100%\na comparabilidade com os resultados consolidados em 2023.\n96...",
+            "pagina": 96
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 100.0,
+            "contexto": "...100%\n100% 91,7% 100%\n167 156 130\n49 34 29\n93,3% 99,3% 94%\n83,2% 95,5% 100%\na comparabilidade com os resultados consolidados em 2023.\n96...",
+            "pagina": 96
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 0.033,
+            "contexto": "...o\nda TI (70 m de largura nos 122 km de traçado)\ncorresponde a somente 0,033% de sua área total;\nnão haverá supressão vegetal ou abertura de faixas...",
+            "pagina": 128
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 98.7,
+            "contexto": "...COLUNA]\n\nGRI 3-3\nAtualmente, a Eletrobras Chesf conta com registro\nde 98,7% da capacidade instalada de seu parque\ngerador para a emissão de I-REC...",
+            "pagina": 140
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 0.65,
+            "contexto": "...3.886 289.121 -7,89%\n2\nEscopo 3 (tCO E) 1.380.914 1.368.077 1.376.948 0,65%\n2\nTotal (tCOE) 8.271.800 5.640.060 5.665.409 0,45%\n2\nINTENSIDADE DE E...",
+            "pagina": 146
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 0.45,
+            "contexto": "....368.077 1.376.948 0,65%\n2\nTotal (tCOE) 8.271.800 5.640.060 5.665.409 0,45%\n2\nINTENSIDADE DE EMISSÕES DE GEE GRI 305-4\nEscopo 1, 2 e 3 2021 2022...",
+            "pagina": 146
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 1.04,
+            "contexto": "...relação\nao total emitido e do leve aumento das emissões de Escopo 1\n(1,04%) e Escopo 3 (0,65%), as emissões de Escopo 2 foram 7,89%\nmenores do q...",
+            "pagina": 146
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 0.65,
+            "contexto": "...mitido e do leve aumento das emissões de Escopo 1\n(1,04%) e Escopo 3 (0,65%), as emissões de Escopo 2 foram 7,89%\nmenores do que em 2022.\n\n[QUEBR...",
+            "pagina": 146
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 7.89,
+            "contexto": "...de Escopo 1\n(1,04%) e Escopo 3 (0,65%), as emissões de Escopo 2 foram 7,89%\nmenores do que em 2022.\n\n[QUEBRA_DE_COLUNA]\n\nEMISSÕES GRI 305-1, 305-...",
+            "pagina": 146
+        },
+        {
+            "indicador_id": "GRI 305-1",
+            "chave": "EMISSOES_ESCOPO_1",
+            "valor": 0.45,
+            "contexto": "....368.077 1.376.948 0,65%\n2\nTotal (tCOE) 8.271.800 5.640.060 5.665.409 0,45%\n2\nINTENSIDADE DE EMISSÕES DE GEE GRI 305-4\nEscopo 1, 2 e 3 2021 2022...",
+            "pagina": 146
+        },
+        {
+            "indicador_id": "GRI 405-1",
+            "chave": "DIVERSIDADE_QUADRO_SOCIAL",
+            "valor": 80.0,
+            "contexto": "...me usado nas estações de piscicultura e nas áreas protegidas, além de 80% do volume de água captada para as\natividades administrativas, seguind...",
+            "pagina": 153
+        }
+    ]
+}

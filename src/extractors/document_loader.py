@@ -1,14 +1,46 @@
 import pdfplumber
-import pandas as pd
 import re
-import json
+import tabula
+import camelot
 
+from typing import Dict, List, Any
 
 class ESGDocumentLoader:
     def __init__(self, configuracao, x_tolerance=3, y_tolerance=3):
         self.config = configuracao
         self.x_tolerance = x_tolerance
         self.y_tolerance = y_tolerance
+    
+    def _extract_tables_per_page(
+        self, 
+        pdf_path: str, 
+        page_number: int
+    ) -> List[Dict[str, Any]]: # Mudamos para retornar apenas a lista daquela página
+        """
+        Extrai tabelas de UMA página específica. 
+        Isso evita o pico de processamento (CPU) e uso de memória.
+        """
+        tables_list = []
+
+        try:
+            # Importante: pages=str(page_number) foca a CPU apenas no que importa agora
+            # flavor="stream" é muito mais leve que "lattice", use se o PDF permitir
+            cam_tables = camelot.read_pdf(
+                pdf_path, 
+                pages=str(page_number), 
+                flavor="lattice"
+            )
+            
+            for t in cam_tables:
+                tables_list.append({
+                    "source": "camelot_lattice",
+                    "data": t.df.values.tolist(),
+                })
+                
+        except Exception as e:
+            print(f"Erro na extração de tabelas da pág {page_number}: {e}")
+        
+        return tables_list
 
     def _extrair_texto_estruturado(self, page):
         words = page.extract_words(x_tolerance=self.x_tolerance, y_tolerance=self.y_tolerance)
@@ -41,8 +73,49 @@ class ESGDocumentLoader:
             texto_final.append("\n".join(texto_col))
 
         return "\n\n[QUEBRA_DE_COLUNA]\n\n".join(texto_final)
+    
+    def extract_all_text(self, pdf_path, empresa, ano):
+        dados_finais = {
+            "metadata": {"empresa": empresa, "ano": ano, "tipo_extracao": "full_text"}, 
+            "chunks": []
+        }
+        
+        with pdfplumber.open(pdf_path) as pdf:
+            # REMOVIDO: a chamada fora do loop que processava tudo de uma vez
+            
+            for i, page in enumerate(pdf.pages):
+                num_pagina = i + 1
+                print(f"Processando página {num_pagina}...")
+                
+                # 1. Extrai o texto estruturado da página (pdfplumber)
+                texto_pag = self._extrair_texto_estruturado(page)
+                
+                # 2. Extrai as tabelas APENAS desta página (Camelot)
+                # Retorna uma lista simples: [ {"source":..., "data":...}, ... ]
+                tabelas_da_pagina = self._extract_tables_per_page(pdf_path, num_pagina)
+                
+                # 3. Formata as tabelas para texto
+                texto_tabelas = ""
+                if tabelas_da_pagina:
+                    for tab in tabelas_da_pagina:
+                        # tab["data"] já é a lista de listas (linhas da tabela)
+                        linhas_tab = [" | ".join(map(str, linha)) for linha in tab["data"]]
+                        texto_tabelas += "\n[TABELA_DATA]\n" + "\n".join(linhas_tab)
 
-    def extract_content(self,pdf_path, configuracao, empresa=None, ano=None):
+                # 4. Cria o chunk
+                chunk = {
+                    "indicador_id": "RAW_TEXT",
+                    "chave": f"pg_{num_pagina}",
+                    "valor": None,
+                    "contexto": (texto_pag + texto_tabelas).strip(),
+                    "pagina": num_pagina
+                }
+                
+                dados_finais["chunks"].append(chunk)
+
+        return dados_finais
+
+    def extract_content(self,pdf_path, configuracao, empresa, ano):
         dados_finais = {"metadata": {"empresa": empresa, "ano": ano}, "chunks": []}
         
         with pdfplumber.open(pdf_path) as pdf:
