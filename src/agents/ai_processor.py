@@ -69,7 +69,7 @@ class ESGMetricProcessor:
         except (ValueError, IndexError):
             return 0
     
-    def _extrair_texto_estruturado_csv(self, chunks):
+    def _extrair_texto_estruturado_csv(self, metadata, chunks):
         documentos = [
             Document(page_content=c['contexto'], metadata={"pg": c.get('pagina', 'N/A')}) 
             for c in chunks
@@ -107,10 +107,11 @@ class ESGMetricProcessor:
 
         # --- PROMPT COM FOCO EM EVIDÊNCIA ---
         extraction_prompt = PromptTemplate(
-            template="""Extraia o valor numérico e o trecho comprobatório.
+            template="""Extraia o valor numérico, a unidade de medida e o trecho comprobatório.
             Responda em formato JSON:
             {{
                 "valor": "o número encontrado",
+                "unidade": "a unidade de medida (ex: %, toneladas, absoluto)",
                 "trecho_original": "a frase exata de onde tirou a informação"
             }}
             Contexto: {context}
@@ -142,9 +143,12 @@ class ESGMetricProcessor:
                 
                 # Criando a linha conforme sua solicitação
                 linha_metrica = {
-                
+
+                    "Empresa" : metadata.get("empresa"),
+                    "Ano" : metadata.get("ano"),
                     "Dado Extraído": coluna,
                     "Valor": self.formatar_para_numero(resultado.get("valor")),
+                    "Unidade": resultado.get("unidade"),
                     "Fonte (Texto Original)": resultado.get("trecho_original"),
                     "Página": ", ".join(paginas)
                 }

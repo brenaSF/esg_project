@@ -12,6 +12,9 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uvicorn
 
+import chromadb
+from chromadb.utils import embedding_functions
+
 dotenv.load_dotenv()
 
 # Configuração de Diretórios
@@ -43,11 +46,26 @@ class ESGAutomationOrchestrator:
         self.loader = ESGDocumentLoader(CONFIG_ESG)
         self.processor = ESGMetricProcessor(self.api_key)
 
+        # --- Configuração do ChromaDB ---
+        # Persistência local no diretório de saída
+        self.chroma_client = chromadb.PersistentClient(path=os.path.join(DIR_OUTPUT, "chroma_db"))
+        
+        # Usando modelo default (all-MiniLM-L6-v2) ou OpenAI se preferir
+        self.emb_fn = embedding_functions.DefaultEmbeddingFunction()
+        
+        # Criar ou obter a coleção
+        self.collection = self.chroma_client.get_or_create_collection(
+            name="esg_documents",
+            embedding_function=self.emb_fn
+        )
+
     def run_pipeline(self):
         print(f"\n{'-'*50}\n🚀 Processando arquivo: {self.filename}")
         
         # Etapa 1: Extração de conteúdo do PDF
         raw_data = self.loader.extract_all_text(self.pdf_path, empresa=self.empresa, ano=self.ano)
+
+        print(raw_data)
         
         if not raw_data or not raw_data.get("chunks"):
             print(f" {self.filename}: Nenhum conteúdo relevante.")
@@ -55,6 +73,10 @@ class ESGAutomationOrchestrator:
    
         # Etapa 2: Salvar o JSON específico desta empresa/arquivo
         json_path = self._save_json_chunks(raw_data)
+
+        # --- NOVO: Etapa 3: Indexar no Banco Vetorial ---
+        print(f"🧠 Indexando no ChromaDB...")
+        self._index_to_vector_db(raw_data)
      
         print(f"📖 Lendo dados a partir do JSON: {os.path.basename(json_path)}")
         with open(json_path, "r", encoding="utf-8") as f:
@@ -62,10 +84,41 @@ class ESGAutomationOrchestrator:
         
         print(f"⌛ Etapa 4: Analisando chunks via LLM...")
         # Etapa 4: Análise LLM para extração de métricas
-        resultado_llm = self.processor._extrair_texto_estruturado_csv(dados_para_processar["chunks"])
+        resultado_llm = self.processor._extrair_texto_estruturado_csv(dados_para_processar["metadata"],dados_para_processar["chunks"])
         
-        self._export_final_csv(resultado_llm, dados_para_processar["metadata"])
+        self._export_final_csv(resultado_llm)
         return True
+    
+    def _index_to_vector_db(self, raw_data):
+        """Insere os chunks de texto e metadados no ChromaDB."""
+        documents = []
+        metadatas = []
+        ids = []
+
+        for i, chunk in enumerate(raw_data["chunks"]):
+            documents.append(chunk["contexto"])
+
+            texto = chunk["contexto"]
+            print(f"DEBUG: Indexando ID {i} | Caracteres: {len(texto)} | Começo: {texto[:50]}... | Fim: {texto[-50:]}")
+
+            print(chunk['contexto'])
+            
+            metadatas.append({
+                "empresa": self.empresa,
+                "ano": self.ano,
+                "pagina": chunk.get("page", 0),
+                "source": self.filename
+            })
+            
+            ids.append(f"{self.empresa}_{self.ano}_{i}")
+
+        self.collection.upsert(
+            documents=documents,
+            metadatas=metadatas,
+            ids=ids
+        )
+        print(f"✅ {len(ids)} fragmentos indexados no banco vetorial.")
+
 
     def _save_json_chunks(self, raw_data):
        
@@ -82,24 +135,25 @@ class ESGAutomationOrchestrator:
         print(f"📂 JSON de auditoria criado com sucesso.")
         return path 
 
-    def _export_final_csv(self, dados_llm, metadata):
-        #criar tabela
+    def _export_final_csv(self, dados_llm):
+        # 1. Cria o DataFrame com os dados retornados pelo LLM
         df = pd.DataFrame(dados_llm)
 
-        #reordenar
-        cols_priority = ["empresa", "ano_relatorio", "Dado Extraído", "Valor", "Fonte (Texto Original)", "Página"]
-        cols = [c for c in cols_priority if c in df.columns] + [c for c in df.columns if c not in cols_priority]
-        df = df[cols]
+        # 3. Reordenar colunas (incluindo as novas colunas injetadas)
+        cols_priority = ["Empresa", "Ano", "Dado Extraído", "Valor", "Fonte (Texto Original)", "Página"]
+        
+        # Filtra apenas colunas que realmente existem no DF
+        existentes = [c for c in cols_priority if c in df.columns]
+        outras = [c for c in df.columns if c not in cols_priority]
+        df = df[existentes + outras]
 
-        #nomear
+        # 4. Configurar caminhos e salvar
         csv_filename = f"resultado_{self.empresa}_{self.ano}.csv"
-
-        #salvar
         csv_dir = os.path.join(self.output_dir, "resultado_csv")
         os.makedirs(csv_dir, exist_ok=True)
         csv_path = os.path.join(csv_dir, csv_filename)
 
-        # Salvamento com separador ';' e encoding UTF-8 com BOM para Excel
+        # 5. Salvamento com encoding para Excel
         df.to_csv(csv_path, index=False, sep=";", encoding="utf-8-sig")
         print(f"✅ Tabela de auditoria salva: {csv_filename}")
 

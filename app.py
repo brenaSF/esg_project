@@ -5,6 +5,7 @@ from datetime import datetime
 import getpass
 import logging
 import requests
+import shutil
 
 logging.getLogger("streamlit.runtime.scriptrunner.script_run_context").setLevel(logging.ERROR)
 
@@ -158,9 +159,9 @@ with aba_auditoria:
     # --- Configuração de Caminhos ---
     DIR_OUTPUT = "data/output"
     DIR_PROCESSADOS = os.path.join(DIR_OUTPUT, "resultado_csv")
+    DIR_EXCLUIDOS = os.path.join(DIR_OUTPUT, "excluidos") # Pasta para descartes
     CAMINHO_GOLD = os.path.join(DIR_OUTPUT, "auditado_NEOENERGIA_2024.csv")
 
-    caminho_excluidos = os.path.join(DIR_OUTPUT,"excluidos")
 
     # Garantir que as pastas existam
     for pasta in [DIR_OUTPUT, DIR_PROCESSADOS]:
@@ -214,21 +215,23 @@ with aba_auditoria:
 
     if arquivo_selecionado:
 
-        resultado_csv_path = os.path.join(DIR_PROCESSADOS, arquivo_selecionado)
-        if not os.path.exists(resultado_csv_path):
+        caminho_arquivo_atual = os.path.join(DIR_PROCESSADOS, arquivo_selecionado)
+
+        if not os.path.exists(caminho_arquivo_atual):
             st.error("Arquivo selecionado não encontrado. Por favor, sincronize os dados.")
             st.stop() 
 
-        df = pd.read_csv(resultado_csv_path, sep=";")
+        df = pd.read_csv(caminho_arquivo_atual, sep=";")
         
         # --- Painel de Métricas Rápidas ---
         m1, m2, m3 = st.columns(3)
         with m1:
             st.metric("Empresa", df['empresa'].iloc[0] if 'empresa' in df.columns else "N/A")
         with m2:
-            st.metric("Indicadores", len(df))
+            st.metric("Métricas", len(df))
         with m3:
             st.metric("Ano", df['ano'].iloc[0] if 'ano' in df.columns else "N/A")
+
 
         st.markdown(f"### 📋 Editando: `{arquivo_selecionado}`")
 
@@ -241,7 +244,7 @@ with aba_auditoria:
         df_editado = st.data_editor(
             df, 
             num_rows="dynamic", 
-            width="stretch",  # FIXED: replaced use_container_width=True
+            width="stretch",  
             hide_index=True,
             column_config={
                 "status_auditoria": st.column_config.SelectboxColumn(
@@ -251,7 +254,7 @@ with aba_auditoria:
                 ),
                 "notas_auditor": st.column_config.TextColumn(
                     "Notas de Auditoria ",
-                    help="Ex: Valor corrigido conforme página 42", # Substitua placeholder por help
+                    help="Ex: Valor corrigido conforme página 42",
                     width="large"
                 ),
                 "valor": st.column_config.NumberColumn("Valor IA", format="%.4f"),
@@ -268,12 +271,7 @@ with aba_auditoria:
         
         with col1:
             if st.button("✅ Aprovar e Consolidar", use_container_width=True, type="primary"):
-                # Metadados de Governança
-                df_editado["auditado_por"] = getpass.getuser()
-                df_editado["data_auditoria"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                df_editado["arquivo_origem"] = arquivo_selecionado
                 
-                # Consolidação na base GOLD
                 if os.path.exists(CAMINHO_GOLD):
                     df_gold = pd.read_csv(CAMINHO_GOLD, sep=";")
                     df_final = pd.concat([df_gold, df_editado], ignore_index=True)
@@ -282,19 +280,23 @@ with aba_auditoria:
                 
                 df_final.to_csv(CAMINHO_GOLD, index=False, sep=";", encoding="utf-8-sig")
                 
-                # Arquivamento (Mover arquivo para 'processados')
-                os.rename(caminho_excluidos, os.path.join(DIR_PROCESSADOS, arquivo_selecionado))
-                
+           
                 st.toast(f"Relatório {arquivo_selecionado} aprovado!", icon="🚀")
                 st.balloons()
                 st.rerun()
                 
         with col2:
-            
             if st.button("🗑️ Descartar", use_container_width=True):
-                os.remove(caminho_excluidos)
-                st.warning("Relatório removido da fila.")
-                st.rerun()
+                try:
+                    caminho_destino = os.path.join(DIR_EXCLUIDOS, arquivo_selecionado)
+                    
+                    shutil.move(caminho_arquivo_atual, caminho_destino)
+                    
+                    st.warning(f"Relatório `{arquivo_selecionado}` movido para excluídos.")
+                    st.rerun()
+                    
+                except Exception as e:
+                    st.error(f"Erro ao descartar: {e}")
 
         
 

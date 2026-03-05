@@ -116,7 +116,7 @@ class ESGDocumentLoader:
         return dados_finais
 
     def extract_content(self,pdf_path, configuracao, empresa, ano):
-        dados_finais = {"metadata": {"empresa": empresa, "ano": ano}, "chunks": []}
+        dados_finais = {"metadata": {"Empresa": empresa, "Ano": ano}, "chunks": []}
         
         with pdfplumber.open(pdf_path) as pdf:
             for i, page in enumerate(pdf.pages):
