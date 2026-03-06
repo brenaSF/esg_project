@@ -252,11 +252,6 @@ with aba_auditoria:
                     options=["Pendente", "Validado", "Corrigido", "Inconsistente"],
                     required=True
                 ),
-                "notas_auditor": st.column_config.TextColumn(
-                    "Notas de Auditoria ",
-                    help="Ex: Valor corrigido conforme página 42",
-                    width="large"
-                ),
                 "valor": st.column_config.NumberColumn("Valor IA", format="%.4f"),
                 "contexto": st.column_config.TextColumn("Evidência do PDF", width="large"),
                 "id_dashboard": st.column_config.TextColumn("Métrica", disabled=True),
