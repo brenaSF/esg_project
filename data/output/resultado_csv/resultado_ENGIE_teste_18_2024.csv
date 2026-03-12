@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ENGIE_teste_18;2024;percentual_mulheres_lideranca;31.4;%;Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%. O incremento também foi observado nas posições de liderança: +6,7% de 27,7% em 2023 para 31,4% em 2024.;57
+ENGIE_teste_18;2024;percentual_pcd_total;1.173;colaboradores;1.173 colaboradores;47
+ENGIE_teste_18;2024;quantidade_empregados_ate_30;182.0;empregados;Até 29 anos 97 85;136
+ENGIE_teste_18;2024;quantidade_empregados_30_50;624.0;empregados;Entre 30 e 50 anos 624 279;136
+ENGIE_teste_18;2024;quantidade_empregados_acima_50;88.0;empregados;Mais de 50 anos 76 12;136
+ENGIE_teste_18;2024;percentual_mulheres_total;32.1;%;Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%.;57
+ENGIE_teste_18;2024;percentual_homens_total;67.9;%;% na força de trabalho 67,9% 32,1%;57
+ENGIE_teste_18;2024;quantidade_empregados_negros;218.0;colaboradores;Total 897 47 218 10 1 1.173;136
+ENGIE_teste_18;2024;quantidade_empregados_brancos;8.0;empregados;Diretores (estatutário e funcional) 8 0 0 1 0 9;136
+ENGIE_teste_18;2024;quantidade_empregados_pcd;60.0;colaboradores;Em 2024, os resultados obtidos levaram o programa à classificação como finalista do Prêmio Ser Humano (PSH), da Associação Brasileira de Recursos Humanos (ABRH).;55
+ENGIE_teste_18;2024;emissoes_totais_2024;259.87576;tCO2e;Em 2024, a Companhia emitiu 259.875,76 tCO e;72
+ENGIE_teste_18;2024;emissoes_diretas_escopo_1;17361.38;tCO;As emissões diretas da Companhia em 2024 totalizaram 17.361,38 tCO;73
+ENGIE_teste_18;2024;emissoes_indiretas_escopo_2;0.0;tCO e;As emissões indiretas em 2024 foram realizadas na abordagem escolha de compra, sendo as emissões do Escopo 2 zeradas através de certificados de origem (I-RECs), atestando que o consumo de energia da Companhia foi 100% oriunda de fontes renováveis;72
+ENGIE_teste_18;2024;emissoes_indiretas_escopo_3;242514.38;tCO2;As emissões do Escopo 3 da ENGIE Brasil Energia totalizaram, em 2024, 242.514,38 tCO;72
+ENGIE_teste_18;2024;intensidade_emissoes_operacional;0.008;tCO2e/MWh;em 2024, o indicador de emissões por geração — quantidade de gás carbônico equivalente emitido para a geração de 1 MWh — atingiu 0,008 tCO e/MWh no controle operacional;74
+ENGIE_teste_18;2024;intensidade_emissoes_participacao;0.006;tCO2e/MWh;0,006 tCO e/MWh na abordagem de participação societária, uma redução em relação a 2023;74
+ENGIE_teste_18;2024;reduz_emissoes_2024;61.0;%;A Companhia emitiu 259.875,76 tCO e na abordagem por controle operacional e 258.914,16 tCO e na abordagem por participação societária — redução de cerca de 61% em relação ao ano anterior.;72
+ENGIE_teste_18;2024;percentual_renovaveis;43.0;%;Ampliar para patamar entre 40% e 60% a participação de fontes renováveis no mix de capacidade de produção de energia mundialmente — ante os 28% registrados em 2019.;10
+ENGIE_teste_18;2024;quantidade_fornecedores_engajados;109.0;fornecedores;Ao final de 2024, a iniciativa recebeu o Prêmio do Pacto Global ONU – Rede Brasil na categoria “Guardiões Pelo Clima”, durante a 29ª Conferência do Clima (COP 29).;81
+ENGIE_teste_18;2024;percentual_energia_renovavel;100.0;%;As emissões indiretas em 2024 foram realizadas na abordagem escolha de compra, sendo as emissões do Escopo 2 zeradas através de certificados de origem (I-RECs), atestando que o consumo de energia da Companhia foi 100% oriunda de fontes renováveis.;73

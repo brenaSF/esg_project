@@ -32,8 +32,8 @@ O fluxo de dados segue o padrão RAG (Retrieval-Augmented Generation):
 │   ├── agents/       # ESGMetricProcessor (Lógica da IA)
 │   ├── extractors/   # ESGDocumentLoader (Leitura de PDF)
 │   └── utils/        # Configurações de métricas e indicadores JSON
-├── app.py            # Portal de Curadoria (Streamlit)
-├── main.py           # Orquestrador do Pipeline (Execução em lote)
+├── main.py           # Portal de Curadoria (Streamlit)
+├── api.py            # API de extração e busca semântica
 └── .env              # Chaves de API e credenciais
 
 ## Interface auditoria

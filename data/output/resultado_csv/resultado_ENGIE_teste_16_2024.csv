@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ENGIE_teste_16;2024;percentual_mulheres_lideranca;31.4;%;aumentado na ENGIE Brasil Energia. Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%. O incremento também foi observado nas posições de liderança: +6,7% de 27,7% em 2023 para 31,4% em 2024, aumento de 3,8 p.p.;57
+ENGIE_teste_16;2024;percentual_pcd_total;1.173;colaboradores;Total 897 (homens) + 47 (mulheres) + 218 (brancos) + 10 (negros) + 1 (pardos) + 1 (amarelos) + 1 (indígenas) = 1.173;136
+ENGIE_teste_16;2024;quantidade_empregados_ate_30;97.0;empregados;Até 29 anos 97 85;136
+ENGIE_teste_16;2024;quantidade_empregados_30_50;103.0;empregados;Entre 30 e 50 anos 57 46 103;136
+ENGIE_teste_16;2024;quantidade_empregados_acima_50;76.0;empregados;Mais de 50 anos 76 12;136
+ENGIE_teste_16;2024;percentual_mulheres_total;32.1;%;a presença feminina tem aumentado na ENGIE Brasil Energia. Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%.;57
+ENGIE_teste_16;2024;percentual_negros_total;9.0;%;Total de empregados que se identificam como negros: 9%;131
+ENGIE_teste_16;2024;percentual_pcd_lideranca;60.0;%;2022 54 2023 54 2024 60;55
+ENGIE_teste_16;2024;quantidade_empregados_negros;218.0;empregados;Total Categoria funcional Brancos Negros Pardos Amarelos Indígenas Total 9 1 218 10 1 1.173;136
+ENGIE_teste_16;2024;quantidade_empregados_pcd;60.0;colaboradores;Ao longo do ano, foi encerrada a primeira edição do Programa, com dez pessoas contratadas dentre os 18 participantes. Em 2024, os resultados obtidos levaram o programa à classificação como finalista do Prêmio Ser Humano (PSH), da Associação Brasileira de Recursos Humanos (ABRH). Ao todo, foram selecionados 12 participantes.;55
+ENGIE_teste_16;2024;emissoes_gases_efeito_estufa;17.361;tCO₂;As emissões diretas da Companhia em 2024 totalizaram 17.361,38 tCO₂ na abordagem por controle operacional;73
+ENGIE_teste_16;2024;emissoes_gases_efeito_estufa_controle_operacional;259.875;tCO;Em 2024, a Companhia emitiu 259.875,76 tCO e na abordagem por controle operacional;72
+ENGIE_teste_16;2024;emissoes_gases_efeito_estufa_participacao_societaria;258.914;tCO e;em 2024, a Companhia emitiu 259.875,76 tCO e na abordagem por controle operacional e 258.914,16 tCO e na abordagem por participação societária;72
+ENGIE_teste_16;2024;intensidade_emissoes_gas_carbonico;0.008;tCO2e/MWh;em 2024, o indicador de emissões por geração — quantidade de gás carbônico equivalente emitido para a geração de 1 MWh — atingiu 0,008 tCO2e/MWh;74
+ENGIE_teste_16;2024;percentual_reducao_emissoes;61.0;%;A redução de cerca de 61% em relação ao ano anterior.;72
+ENGIE_teste_16;2024;quantidade_tco2_emissoes;259.875;tCO2;Em 2024, a Companhia emitiu 259.875,76 tCO2;72
+ENGIE_teste_16;2024;percentual_fontes_renovaveis;100.0;%;As emissões indiretas em 2024 foram realizadas na abordagem escolha de compra, sendo as emissões do Escopo 2 zeradas através de certificados de origem (I-RECs), atestando que o consumo de energia da Companhia foi 100% oriunda de fontes renováveis.;73
+ENGIE_teste_16;2024;quantidade_tco2_reducao;259.875;tCO2;Em 2024, a Companhia emitiu 259.875,76 tCO e na abordagem por controle operacional e 258.914,16 tCO e na abordagem por participação societária — uma redução de cerca de 61% em relação ao ano anterior.;72
+ENGIE_teste_16;2024;percentual_energia_renovavel;100.0;%;As emissões indiretas em 2024 foram realizadas na abordagem escolha de compra, sendo as emissões do Escopo 2 zeradas através de certificados de origem (I-RECs), atestando que o consumo de energia da Companhia foi 100% oriunda de fontes renováveis.;73
+ENGIE_teste_16;2024;percentual_perda_transmissao;0.84;%;As perdas de energia elétrica na transmissão foram de 0,84% em 2024;137

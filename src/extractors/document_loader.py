@@ -12,74 +12,53 @@ class ESGDocumentLoader:
                              "diversidade", "idade", "emissões", "escopo", "%"]
 
     def _extrair_texto_estruturado(self, page):
-        """
-        Extrai texto ignorando as bordas (menus laterais e cabeçalhos).
-        """
-        largura = page.width
-        altura = page.height
+        area_util = page.within_bbox((55, 40, page.width - 40, page.height - 40)) 
+        # Em vez de ordenar por X primeiro, vamos ordenar por Y (linha)
+        words = area_util.extract_words(x_tolerance=3, y_tolerance=3)
         
-        # CROP: Ignora 80px da esquerda (menu), 40px do topo e 40px do rodapé
-        # Formato: (x0, top, x1, bottom)
-        area_util = page.within_bbox((55, 40, largura - 40, altura - 40)) 
-        
-        words = area_util.extract_words(x_tolerance=self.x_tolerance, y_tolerance=self.y_tolerance)
         if not words: return ""
 
-        # Ordenação e agrupamento por colunas
-        words_sorted = sorted(words, key=lambda x: x['x0'])
-        colunas = []
-        if words_sorted:
-            curr_col = [words_sorted[0]]
-            for i in range(1, len(words_sorted)):
-                if words_sorted[i]['x0'] - words_sorted[i-1]['x1'] > 20:
-                    colunas.append(curr_col)
-                    curr_col = []
-                curr_col.append(words_sorted[i])
-            colunas.append(curr_col)
+        # Agrupar por linhas primeiro (eixo Y)
+        linhas = {}
+        for w in words:
+            y = round(w['top'])
+            encontrou_linha = False
+            for r_y in linhas.keys():
+                if abs(y - r_y) <= 3: # Tolerância para mesma linha
+                    linhas[r_y].append(w)
+                    encontrou_linha = True
+                    break
+            if not encontrou_linha:
+                linhas[y] = [w]
 
+        # Montar o texto linha por linha
         texto_final = []
-        for col in colunas:
-            linhas = {}
-            for w in col:
-                y = round(w['top'])
-                found = False
-                for r_y in linhas.keys():
-                    if abs(y - r_y) <= 3:
-                        linhas[r_y].append(w)
-                        found = True
-                        break
-                if not found: 
-                    linhas[y] = [w]
-            
-            texto_col = [" ".join([w['text'] for w in sorted(linhas[y], key=lambda x: x['x0'])]) 
-                         for y in sorted(linhas.keys())]
-            texto_final.append("\n".join(texto_col))
+        for y in sorted(linhas.keys()):
+            # Ordena as palavras dentro da linha pelo X
+            linha_ordenada = sorted(linhas[y], key=lambda x: x['x0'])
+            texto_linha = " ".join([w['text'] for w in linha_ordenada])
+            texto_final.append(texto_linha)
 
-        return "\n\n[QUEBRA_DE_COLUNA]\n\n".join(texto_final)
+        return "\n".join(texto_final)
 
     def _extract_tables_fast(self, page):
-        """
-        Extração de tabelas nativa do pdfplumber (Alta Performance).
-        """
         try:
-            tables = page.extract_tables()
-            if not tables:
-                return ""
+            tables = page.extract_tables({
+                "vertical_strategy": "lines", 
+                "horizontal_strategy": "lines",
+                "intersection_y_tolerance": 5, # Ajuda a não quebrar linhas de tabelas ESG
+            })
+            if not tables: return ""
             
-            texto_tabelas = ""
+            output = []
             for table in tables:
-                # Remove linhas totalmente vazias (None ou string vazia)
-                linhas_limpas = [linha for linha in table if any(celula for celula in linha)]
-                
-                # Formata cada linha separando colunas por " | "
-                linhas_str = [
-                    " | ".join([str(celula).replace('\n', ' ') if celula else "---" for celula in linha]) 
-                    for linha in linhas_limpas
-                ]
-                texto_tabelas += "\n\n[TABELA_DATA]\n" + "\n".join(linhas_str) + "\n"
-            return texto_tabelas
-        except Exception as e:
-            print(f"Erro rápido na tabela: {e}")
+                for row in table:
+                    # Limpa None e substitui por "0" ou "N/A"
+                    row_cleaned = [str(c).replace("\n", " ").strip() if c else "0" for c in row]
+                    output.append("| " + " | ".join(row_cleaned) + " |")
+            
+            return "\n".join(output)
+        except:
             return ""
 
     def extract_all_text(self, pdf_path, empresa, ano):
@@ -106,20 +85,32 @@ class ESGDocumentLoader:
 
                 # 2. Decisão de Extração de Tabela (Otimização de Velocidade)
                 # Só roda o extrator de tabela se a página parecer ter dados relevantes
-                texto_tabelas = ""
-                if any(k in texto_pag.lower() for k in self.keywords_esg):
-                    texto_tabelas = self._extract_tables_fast(page)
+                #texto_tabelas = ""
+                #if any(k in texto_pag.lower() for k in self.keywords_esg):
+                #    texto_tabelas = self._extract_tables_fast(page)
                 
                 # 3. Consolidação do Chunk
+
+                # 2. Extração de Tabela PRIORITÁRIA
+                texto_tabelas = self._extract_tables_fast(page)
+
+                # 3. Consolidação Inteligente
+                # Se houver tabela, colocamos ela no topo do contexto do chunk
+                if texto_tabelas:
+                    contexto_final = f"{texto_tabelas}\n\n--- TEXTO DA PÁGINA ---\n\n{texto_pag}"
+                else:
+                    contexto_final = texto_pag
+
                 chunk = {
                     "indicador_id": "RAW_TEXT",
                     "chave": f"pg_{num_pagina}",
                     "valor": None,
-                    "contexto": (texto_pag + texto_tabelas).strip(),
+                    "contexto": contexto_final.strip(),
                     "pagina": num_pagina,
                     "empresa": empresa,
                     "ano": ano
                 }
+
                 
                 dados_finais["chunks"].append(chunk)
                 

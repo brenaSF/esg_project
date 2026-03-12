@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ENGIE_teste_19;2024;percentual_mulheres_lideranca;31.4;%;Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%. O incremento também foi observado nas posições de liderança: +6,7% de 27,7% em 2023 para 31,4% em 2024.;57
+ENGIE_teste_19;2024;percentual_pcd_total;1.173;colaboradores;1.173 colaboradores;47
+ENGIE_teste_19;2024;quantidade_empregados_ate_30;182.0;empregados;Até 29 anos 97 85;136
+ENGIE_teste_19;2024;quantidade_empregados_30_50;624.0;empregados;Entre 30 e 50 anos 624 279;136
+ENGIE_teste_19;2024;quantidade_empregados_acima_50;88.0;empregados;Mais de 50 anos 76 12;136
+ENGIE_teste_19;2024;percentual_mulheres_total;32.1;%;Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%.;57
+ENGIE_teste_19;2024;percentual_homens_total;67.9;%;% na força de trabalho 67,9% 32,1%;57
+ENGIE_teste_19;2024;quantidade_empregados_ate_30_lideranca;182.0;colaboradores;Até 29 anos 97 85;136
+ENGIE_teste_19;2024;quantidade_empregados_30_50_lideranca;56.0;empregados;Entre 30 e 50 anos 56;136
+ENGIE_teste_19;2024;quantidade_empregados_acima_50_lideranca;8.0;colaboradores;Mais de 50 anos 7 1;131
+ENGIE_teste_19;2024;emissoes_totais_2024;259.87576;tCO2e;Em 2024, a Companhia emitiu 259.875,76 tCO e;72
+ENGIE_teste_19;2024;emissoes_diretas_escopo_1_2024;17361.38;tCO;As emissões diretas da Companhia em 2024 totalizaram 17.361,38 tCO;73
+ENGIE_teste_19;2024;emissoes_indiretas_escopo_2_2024;0.0;tCO e;As emissões indiretas em 2024 foram realizadas na abordagem escolha de compra, sendo as emissões do Escopo 2 zeradas através de certificados de origem (I-RECs), atestando que o consumo de energia da Companhia foi 100% oriunda de fontes renováveis;73
+ENGIE_teste_19;2024;emissoes_indiretas_escopo_3_2024;242514.38;tCO2;As emissões do Escopo 3 da ENGIE Brasil Energia totalizaram, em 2024, 242.514,38 tCO;73
+ENGIE_teste_19;2024;intensidade_emissoes_operacional_2024;0.008;tCO e/MWh;em 2024, o indicador de emissões por geração — quantidade de gás carbônico equivalente emitido para a geração de 1 MWh — atingiu 0,008 tCO e/MWh no controle operacional;74
+ENGIE_teste_19;2024;intensidade_emissoes_participacao_2024;0.006;tCO e/MWh;0,006 tCO e/MWh na abordagem de participação societária;74
+ENGIE_teste_19;2024;reduz_emissoes_2024;61.0;%;A Companhia emitiu 259.875,76 tCO e na abordagem por controle operacional e 258.914,16 tCO e na abordagem por participação societária — redução de cerca de 61% em relação ao ano anterior.;72
+ENGIE_teste_19;2024;percentual_renovaveis_2024;43.0;%;Ampliar para patamar entre 40% e 60% a participação de mulheres na administração do Grupo — em 2019, elas ocupavam 24% das posições de liderança.;10
+ENGIE_teste_19;2024;quantidade_fornecedores_engajados;108.0;fornecedores;Número total de fornecedores significativos em programas de capacitação 108;148
+ENGIE_teste_19;2024;percentual_compra_responsavel;0.59;percentual;Atingimento de 100%, até 2030, do índice de compras responsáveis (excluída a aquisição de energia), que envolvem avaliações socioambientais 59% / 44%;10

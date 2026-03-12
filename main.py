@@ -1,221 +1,207 @@
-
-import os
+import streamlit as st
 import pandas as pd
-import json
-import shutil
+import os
 from datetime import datetime
-from src.extractors.document_loader import ESGDocumentLoader
-from src.agents.ai_processor import ESGMetricProcessor
-import dotenv
-import json
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-import uvicorn
+import getpass
+import logging
+import requests
+import shutil
+from src.utils.style import apply_vitality_style
+from src.utils.audit import obter_arquivos_pendentes, calcular_progresso
 
-import chromadb
-from chromadb.utils import embedding_functions
+logging.getLogger("streamlit.runtime.scriptrunner.script_run_context").setLevel(logging.ERROR)
 
-dotenv.load_dotenv()
-
-# Configuração de Diretórios
-DIR_RAW = "./data/raw"
-DIR_PROCESSED = "./data/processed"
-DIR_OUTPUT = "./data/output"
-
-# Criar pastas caso não existam
-for folder in [DIR_RAW, DIR_PROCESSED, DIR_OUTPUT]:
-    os.makedirs(folder, exist_ok=True)
+st.set_page_config(
+    page_title="ESG Curator Portal",
+    layout="wide",
+    page_icon="🛡️",
+    initial_sidebar_state="expanded"
+)
+apply_vitality_style()
 
 
-def carregar_configuracao():
-    caminho_config = "src/utils/esg_indicadores.json"
-    with open(caminho_config, "r", encoding="utf-8") as f:
-        return json.load(f)
+aba_principal, aba_extracao, aba_auditoria = st.tabs(["Principal","🚀 Nova Extração", "🛡️ Auditoria de Dados"])
 
-CONFIG_ESG = carregar_configuracao()
+with aba_principal:
+    st.markdown("""
+        <div class="main-card">
+            <h1>Bem-vindo ao ESG Curator Portal</h1>
+            <p>Gerencie a extração e auditoria de relatórios ESG com inteligência artificial.</p>
+        </div>
+    """, unsafe_allow_html=True)
 
-class ESGAutomationOrchestrator:
-    def __init__(self, pdf_path, empresa, ano):
-        self.pdf_path = pdf_path
-        self.filename = os.path.basename(pdf_path)
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        self.empresa = empresa
-        self.ano = ano
-        self.output_dir = DIR_OUTPUT 
-        
-        self.loader = ESGDocumentLoader(CONFIG_ESG)
-        self.processor = ESGMetricProcessor(self.api_key)
-
-        # --- Configuração do ChromaDB ---
-        # Persistência local no diretório de saída
-        self.chroma_client = chromadb.PersistentClient(path=os.path.join(DIR_OUTPUT, "chroma_db"))
-        
-        # Usando modelo default (all-MiniLM-L6-v2) ou OpenAI se preferir
-        self.emb_fn = embedding_functions.DefaultEmbeddingFunction()
-        
-        # Criar ou obter a coleção
-        self.collection = self.chroma_client.get_or_create_collection(
-            name="esg_documents",
-            embedding_function=self.emb_fn
-        )
-
-    def run_pipeline(self):
-        print(f"\n{'-'*50}\n🚀 Processando arquivo: {self.filename}")
-        
-        # Etapa 1: Extração de conteúdo do PDF
-        raw_data = self.loader.extract_all_text(self.pdf_path, empresa=self.empresa, ano=self.ano)
-
-        print(raw_data)
-        
-        if not raw_data or not raw_data.get("chunks"):
-            print(f" {self.filename}: Nenhum conteúdo relevante.")
-            return False
-   
-        # Etapa 2: Salvar o JSON específico desta empresa/arquivo
-        json_path = self._save_json_chunks(raw_data)
-
-        # --- NOVO: Etapa 3: Indexar no Banco Vetorial ---
-        print(f"🧠 Indexando no ChromaDB...")
-        self._index_to_vector_db(raw_data)
-     
-        print(f"📖 Lendo dados a partir do JSON: {os.path.basename(json_path)}")
-        with open(json_path, "r", encoding="utf-8") as f:
-            dados_para_processar = json.load(f)
-        
-        print(f"⌛ Etapa 4: Analisando chunks via LLM...")
-        # Etapa 4: Análise LLM para extração de métricas
-        resultado_llm = self.processor._extrair_texto_estruturado_csv(dados_para_processar["metadata"],dados_para_processar["chunks"])
-        
-        self._export_final_csv(resultado_llm)
-        return True
+    st.markdown("""
+        <div class="white-card">
+            <h2>Sobre o Portal</h2>
+            <p>Este portal foi desenvolvido para facilitar a gestão de relatórios ESG, utilizando técnicas avançadas de inteligência artificial para extração e auditoria de dados.</p>
+        </div>
+    """, unsafe_allow_html=True)
     
-    def _index_to_vector_db(self, raw_data):
-        """Insere os chunks de texto e metadados no ChromaDB."""
-        documents = []
-        metadatas = []
-        ids = []
+with aba_extracao:
+    DIR_RAW = "data/raw"
+    # Certifique-se de que a pasta existe antes de tentar salvar
+    os.makedirs(DIR_RAW, exist_ok=True)
+    
+    API_URL = "http://localhost:8000/process-file"
 
-        for i, chunk in enumerate(raw_data["chunks"]):
-            documents.append(chunk["contexto"])
-
-            texto = chunk["contexto"]
-            print(f"DEBUG: Indexando ID {i} | Caracteres: {len(texto)} | Começo: {texto[:50]}... | Fim: {texto[-50:]}")
-
-            print(chunk['contexto'])
+    st.markdown("""
+        <div class="main-card">
+            <h2>Extração de Relatórios ESG</h2>
+            <p>Carregue os PDFs para processamento via IA e geração de evidências.</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col_input, col_info = st.columns([1, 1])
+    
+    with col_input:
+        with st.container(border=True):
+            upload_files = st.file_uploader("Arraste os relatórios PDF aqui", type=["pdf"], accept_multiple_files=True)
+            empresa_nome = st.text_input("Nome da Empresa")
+            ano_ref = st.number_input("Ano de Referência", min_value=2000, max_value=2030, value=2024)
             
-            metadatas.append({
-                "empresa": self.empresa,
-                "ano": self.ano,
-                "pagina": chunk.get("page", 0),
-                "source": self.filename
-            })
-            
-            ids.append(f"{self.empresa}_{self.ano}_{i}")
+            if st.button("▶️ Iniciar Processamento", use_container_width=True):
+                if upload_files and empresa_nome:
+                    with st.spinner("Enviando documentos para processamento..."):
+                        for uploaded_file in upload_files:
+                            file_path = os.path.join(DIR_RAW, uploaded_file.name)
+                            with open(file_path, "wb") as f:
+                                f.write(uploaded_file.getbuffer())
 
-        self.collection.upsert(
-            documents=documents,
-            metadatas=metadatas,
-            ids=ids
-        )
-        print(f"✅ {len(ids)} fragmentos indexados no banco vetorial.")
+                            payload = {
+                                "filename": uploaded_file.name,
+                                "empresa": empresa_nome,
+                                "ano": int(ano_ref)
+                            }
+                   
+                            try:
+                                response = requests.post(API_URL, json=payload, timeout=300) # Timeout longo para LLM
+                                
+                                if response.status_code == 200:
+                                    st.success(f"✅ {uploaded_file.name} processado com sucesso!")
+                                else:
+                                    # CORREÇÃO DO JSONDECODEERROR:
+                                    try:
+                                        erro_info = response.json().get('detail', 'Erro interno no servidor')
+                                    except:
+                                        erro_info = f"Resposta inválida do servidor (Status {response.status_code})"
+                                    
+                                    st.error(f"❌ Falha ao processar {uploaded_file.name}: {erro_info}")
+                            
+                            except requests.exceptions.ConnectionError:
+                                st.error("🚨 Erro: API Offline. Inicie o backend (Uvicorn).")
+                else:
+                    st.error("Por favor, preencha o nome da empresa e suba os arquivos.")
 
+with aba_auditoria:
+    DIR_OUTPUT = "data/output"
+    DIR_AUDITADOS = os.path.join(DIR_OUTPUT, "auditados")
+    DIR_CSV = os.path.join(DIR_OUTPUT, "resultado_csv")
+    DIR_EXCLUIDOS = os.path.join(DIR_OUTPUT, "excluidos")
+    CAMINHO_GOLD = os.path.join(DIR_OUTPUT, "base_consolidada_esg.csv")
 
-    def _save_json_chunks(self, raw_data):
-       
-        json_filename = f"chunks_{self.empresa}_{self.ano}.json"
+    for pasta in [DIR_AUDITADOS, DIR_EXCLUIDOS,DIR_CSV]:
+        os.makedirs(pasta, exist_ok=True)
 
-        chunks_dir = os.path.join(self.output_dir, "chunks")
-    
-        os.makedirs(chunks_dir, exist_ok=True)
+  
+
+    # --- Sidebar com Barra de Progresso ---
+    with st.sidebar:
+        st.image("https://cdn-icons-png.flaticon.com/512/3950/3950815.png", width=80)
+        st.title("🛡️ ESG Control Panel")
+        st.info(f"👤 **Usuário:** {getpass.getuser()}")
+        st.divider()
+
+        # Seção de Progresso
+        n_pend, n_conc, n_total, pct = calcular_progresso(DIR_AUDITADOS)
+        st.subheader("📈 Progresso da Auditoria")
+        st.progress(pct)
+        st.write(f"**{n_conc} de {n_total}** relatórios revisados")
         
-        path = os.path.join(chunks_dir, json_filename)
+        st.divider()
         
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(raw_data, f, indent=4, ensure_ascii=False)
-        print(f"📂 JSON de auditoria criado com sucesso.")
-        return path 
-
-    def _export_final_csv(self, dados_llm):
-        # 1. Cria o DataFrame com os dados retornados pelo LLM
-        df = pd.DataFrame(dados_llm)
-
-        # 3. Reordenar colunas (incluindo as novas colunas injetadas)
-        cols_priority = ["Empresa", "Ano", "Dado Extraído", "Valor", "Fonte (Texto Original)", "Página"]
-        
-        # Filtra apenas colunas que realmente existem no DF
-        existentes = [c for c in cols_priority if c in df.columns]
-        outras = [c for c in df.columns if c not in cols_priority]
-        df = df[existentes + outras]
-
-        # 4. Configurar caminhos e salvar
-        csv_filename = f"resultado_{self.empresa}_{self.ano}.csv"
-        csv_dir = os.path.join(self.output_dir, "resultado_csv")
-        os.makedirs(csv_dir, exist_ok=True)
-        csv_path = os.path.join(csv_dir, csv_filename)
-
-        # 5. Salvamento com encoding para Excel
-        df.to_csv(csv_path, index=False, sep=";", encoding="utf-8-sig")
-        print(f"✅ Tabela de auditoria salva: {csv_filename}")
-
-
-app = FastAPI(title="ESG Extractor API")
-
-class FilePayload(BaseModel):
-    filename: str
-    empresa: str
-    ano: int
-
-def executar_processamento(arquivo: str, empresa: str , ano: int ):
-    """Lógica central de processamento de arquivos."""
-    caminho_completo = os.path.join(DIR_RAW, arquivo)
-    
-    if not os.path.exists(caminho_completo):
-        return {"status": "not_found", "message": "Arquivo não existe no DIR_RAW"}
-
-    try:
-        orchestrator = ESGAutomationOrchestrator(caminho_completo,empresa, ano)
-        sucesso = orchestrator.run_pipeline()
-
-        if sucesso:
-            destino = os.path.join(DIR_PROCESSED, arquivo)
-            shutil.move(caminho_completo, destino)
-            return {"status": "processed", "message": f"Movido para {DIR_PROCESSED}"}
+        # Seleção de Arquivo
+        arquivos_lista = obter_arquivos_pendentes()
+        if arquivos_lista:
+            arquivo_selecionado = st.selectbox(
+                "Selecione o relatório para auditar:",
+                arquivos_lista,
+                help="Arquivos aguardando revisão humana"
+            )
         else:
-            return {"status": "skipped", "message": "Nenhum conteúdo relevante"}
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
+            st.success("✅ Nenhum arquivo pendente!")
+            arquivo_selecionado = None
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-@app.post("/process-all")
-def process_all():
-    """Processa todos os arquivos .pdf presentes em DIR_RAW e retorna um resumo do processamento."""
-    arquivos = [f for f in os.listdir(DIR_RAW) if f.lower().endswith(".pdf")]
-    if not arquivos:
-        return {"processed": 0, "details": {}}
-
-    details = {}
-    for arquivo in arquivos:
-        details[arquivo] = executar_processamento(arquivo)
-    return {"processed": len([v for v in details.values() if v["status"] == "processed"]), "details": details}
-
-@app.post("/process-file")
-def process_file(payload: FilePayload):
-    arquivo = payload.filename
     
-    if not arquivo.lower().endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Apenas arquivos .pdf são aceitos")
+
+    # --- Área Principal ---
+    st.title("🛡️ Portal de Governança ESG")
     
-    result = executar_processamento(arquivo, payload.empresa, payload.ano)
-    
-    if result["status"] == "not_found":
-        raise HTTPException(status_code=404, detail=result["message"])
-    if result["status"] == "error":
-        raise HTTPException(status_code=500, detail=result["message"])
+
+    if arquivo_selecionado:
+
+        caminho_arquivo_atual = os.path.join(DIR_CSV, arquivo_selecionado)
+
+        if not os.path.exists(caminho_arquivo_atual):
+            st.error("Arquivo selecionado não encontrado. Por favor, sincronize os dados.")
+            st.stop() 
+
+        df = pd.read_csv(caminho_arquivo_atual, sep=";")
         
-    return result
+        # --- Painel de Métricas Rápidas ---
+        m1, m2, m3 = st.columns(3)
+        with m1:
+            nome_empresa = df['Empresa'].iloc[0] if 'Empresa' in df.columns else "N/A"
+            st.metric("Empresa", nome_empresa)
+        with m2:
+            st.metric("Métricas", len(df))
+        with m3:
+            ano = df['Ano'].iloc[0] if 'Ano' in df.columns else "N/A"
+            st.metric("Ano de Referência", ano)
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+        st.markdown(f"### 📋 Editando: `{arquivo_selecionado}`")
+        
+        # Injeção de colunas de auditoria se não existirem
+        #if 'status_auditoria' not in df.columns: df['status_auditoria'] = 'Pendente'
+        #if 'notas_auditor' not in df.columns: df['notas_auditor'] = ''
+
+        df['Página'] = df['Página'].astype(str)
+
+        df_editado = st.data_editor(
+            df,
+            num_rows="dynamic",
+            width="stretch",
+            hide_index=True,
+            column_config={
+                "status_auditoria": st.column_config.SelectboxColumn(
+                    "Status", options=["Pendente", "Validado", "Corrigido", "Inconsistente"]
+                ),
+                "Empresa": st.column_config.TextColumn("Empresa", disabled=True),
+                "Ano": st.column_config.NumberColumn("Ano", disabled=True),
+                "Dado Extraído": st.column_config.TextColumn("Métrica IA", width="medium"),
+                "Valor": st.column_config.NumberColumn("Valor", format="%.2f"),
+                "Unidade": st.column_config.TextColumn("Unid.", width="small"),
+                "Fonte (Texto Original)": st.column_config.TextColumn("Evidência (RAG)", width="large"),
+                "Página": st.column_config.TextColumn("Pág", width="small")
+            }
+        )
+
+        col1, col2, _ = st.columns([1, 1, 3])
+        with col1:
+            if st.button("✅ Aprovar e Consolidar", type="primary"):
+                if os.path.exists(CAMINHO_GOLD):
+                    base_gold = pd.read_csv(CAMINHO_GOLD, sep=";")
+                    df_final = pd.concat([base_gold, df_editado], ignore_index=True)
+                else:
+                    df_final = df_editado
+                
+                df_final.to_csv(CAMINHO_GOLD, index=False, sep=";", encoding="utf-8-sig")
+                os.remove(caminho_arquivo_atual) # Remove dos pendentes após aprovar
+                st.success("Dados movidos para a base consolidada!")
+                st.rerun()
+
+        with col2:
+            if st.button("🗑️ Descartar"):
+                shutil.move(caminho_arquivo_atual, os.path.join(DIR_EXCLUIDOS, arquivo_selecionado))
+                st.rerun()
+    else:
+      st.info("Nenhum relatório pendente de auditoria.")
