@@ -1,1 +1,10 @@
 .env
+
+venv_tcc/
+
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+.~lock.*
+*.tmp
