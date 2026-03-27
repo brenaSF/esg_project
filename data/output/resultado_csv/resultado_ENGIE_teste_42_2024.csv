@@ -1,0 +1,23 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ENGIE_teste_42;2024;total_colaboradores;0.0;unidade;Tabela 1 da página 33 - Empresa ENGIE_teste_42 (2024).;33
+ENGIE_teste_42;2024;total_mulheres;26.0;unidade;2024 34 26;136
+ENGIE_teste_42;2024;total_homens;34.0;unidade;2024 34 26;136
+ENGIE_teste_42;2024;total_mulheres_lideranca;4.0;unidade;Diretoria (Executiva e Funcional) 2 (22%) 9, Gerentes 2 (89,9%) 56;57
+ENGIE_teste_42;2024;total_homens_lideranca;49.0;unidade;"Categoria funcional 2022 2023 2024
+Diretores 7 2 9
+Gerentes 42 14 56";57
+ENGIE_teste_42;2024;percentual_mulheres_lideranca;31.4;%;Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%. O incremento também foi observado nas posições de liderança: de 27,7% em 2023 para 31,4% em 2024.;57
+ENGIE_teste_42;2024;percentual_homens_lideranca;68.6;%;Diretoria (Executiva e Funcional) 68,7% 60,6% 64,5%;57
+ENGIE_teste_42;2024;taxa_rotatividade;9.1;%;A taxa de rotatividade (turnover) foi de 9,1%, e a de rotatividade voluntária, quando o colaborador deixa a Companhia por livre iniciativa, de 5,5%.;49
+ENGIE_teste_42;2024;taxa_frequencia_acidentes;0.274;TF;Taxa de Frequência (TF)* prestadores de serviços 1,290 0,920 0,274 ≤ 1,4 ≤ 1,4;135
+ENGIE_teste_42;2024;media_horas_treinamento;72.4;horas;Total de horas de treinamento GRI 404-1 Número médio de horas de treinamento por colaborador GRI 404-1 79.622 72,4;59
+ENGIE_teste_42;2024;total_pcd;0.0;unidade;Tabela 'Quadro de Colaboradores' não encontrada com a linha 'PCD' e coluna '2024'.;33
+ENGIE_teste_42;2024;total_pessoas_negras;0.0;unidade;Tabela de diversidade racial não encontrada no contexto atual.;136
+ENGIE_teste_42;2024;percentual_pessoas_negras;0.0;percentual;Não há referência à tabela 'Diversidade Racial' no contexto fornecido.;136
+ENGIE_teste_42;2024;total_mulheres_pcd;0.0;unidade;Citação direta do relatório ou descrição da célula da tabela;136
+ENGIE_teste_42;2024;total_homens_pcd;0.0;unidade;Não existe menção a 'Homens PCD' no contexto atual.;136
+ENGIE_teste_42;2024;total_multas;0.0;R$;Não há referência à tabela 'Passivos e Multas' nos trechos apresentados.;105
+ENGIE_teste_42;2024;total_passivos;0.0;R$;Tabela 'Passivos e Multas' não mencionada nos trechos disponíveis.;14
+ENGIE_teste_42;2024;total_colaboradores_treinados;0.0;colaboradores;Instrução de Mapeamento: Localize na Tabela 'Treinamento e Desenvolvimento'. Extraia o número total de colaboradores que receberam treinamento no ano 2024.;135
+ENGIE_teste_42;2024;percentual_colaboradores_treinados;99.0;%;Percentual de empregados treinados 2024: 99,0%;135
+ENGIE_teste_42;2024;total_acidentes;55.0;acidentes;Número de acidentes de trabalho e de trajeto com e sem afastamento 107 50 55;134

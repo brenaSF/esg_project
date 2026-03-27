@@ -1,0 +1,22 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+NEOENERGIA_teste_44;2024;total_colaboradores_clt;0.0;unidade;Não há dados disponíveis para 2024.;Não identificada
+NEOENERGIA_teste_44;2024;total_colaboradores_negros;8.971;unidade (ex: R$, %, Horas, Absoluto);"| Pretos | 1.897 | 12,1% | 1.873 12,2% ND ND |
+| Pardos | 7.074 | 45,1% | 0 |";112
+NEOENERGIA_teste_44;2024;total_colaboradores_brancos;6075.0;unidade (ex: R$, %, Horas, Absoluto);| Brancos | 6.075 | 38,7% | 0 |;112
+NEOENERGIA_teste_44;2024;total_colaboradores_pardos;7074.0;unidade;| Pardos | 7.074 | 45,1% | 0 |;112
+NEOENERGIA_teste_44;2024;total_colaboradores_indigenas;36.0;unidade (ex: R$, %, Horas, Absoluto);| Indígenas | 36 | 0,2% | 34 0,2% ND ND |;112
+NEOENERGIA_teste_44;2024;total_colaboradores_amarelos;183.0;unidade (ex: R$, %, Horas, Absoluto);| Amarelos | 183 | 1,2% | 180 1,2% ND ND |;112
+NEOENERGIA_teste_44;2024;total_pcd;547.0;nº;Homens 345 334 338 | Mulheres 202 192 185 | Total 547 526 523;102
+NEOENERGIA_teste_44;2024;percentual_mulheres_total;20.4;%;Total (%) 79,6 % 80,8 % 82,0 % 0 20,4 % 19,2 % 18,0 %;102
+NEOENERGIA_teste_44;2024;percentual_mulheres_lideranca;129.0;número;Liderança 129 117 102;241
+NEOENERGIA_teste_44;2024;mulheres_etaria_abaixo_30;929.0;nº;Mulheres (total) 2.991 2.777 2.501 213 180 203 | Até 30 anos 929 908 804 |;240
+NEOENERGIA_teste_44;2024;mulheres_etaria_30_50;2058.0;número;Entre 31 e 50 anos (nº) 2.058 1.864 1.706;100
+NEOENERGIA_teste_44;2024;mulheres_etaria_acima_50;19.0;nº;Maior de 50 anos 19 21 16;105
+NEOENERGIA_teste_44;2024;total_analistas_mulheres;0.0;unidade;Não disponível.;Não identificada
+NEOENERGIA_teste_44;2024;total_gerentes_mulheres;129.0;número;Liderança direta (nº) 296 289 286 129 117 102;100
+NEOENERGIA_teste_44;2024;total_diretores_mulheres;5.0;número;Nº % Nº % Nº % Por gênero Homens 18 78,3 22 86,3 19 95,0 Mulheres 5 21,7 3 13,6 1¹ 5,0;181
+NEOENERGIA_teste_44;2024;percentual_homens_total;12489.0;número;Homens (total) 12.489 12.447 12.343 0 2 11;241
+NEOENERGIA_teste_44;2024;percentual_homens_lideranca;296.0;número;Liderança direta (nº) 296 289 286 0 0 0;241
+NEOENERGIA_teste_44;2024;homens_etaria_abaixo_30;2.744;nº;Até 30 anos (nº) 2.744 2.923 3.155 997 961 866;102
+NEOENERGIA_teste_44;2024;homens_etaria_30_50;9008.0;número;Entre 31 e 50 anos 9.008 8.775 8.435;102
+NEOENERGIA_teste_44;2024;homens_etaria_acima_50;108.0;nº;Maior de 50 anos 108 89 99 19 21 16;105

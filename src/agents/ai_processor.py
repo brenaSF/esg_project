@@ -5,44 +5,88 @@ from langchain_chroma import Chroma
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.documents import Document
-
+from src.utils.parsers import formatar_para_numero
+from src.config import Config
+from src.agents.esg_prompt import DISCOVERY_PROMPT_TEMPLATE, EXTRACTION_PROMPT_TEMPLATE
 class ESGMetricProcessor:
-    def __init__(self, OPENAI_API_KEY):
-        self.model = ChatOpenAI(model_name="gpt-4o-mini", temperature=0, api_key=OPENAI_API_KEY)
+    def __init__(self):
+        self.model = ChatOpenAI(
+            model_name=Config.MODEL_NAME, 
+            temperature=0, 
+            api_key=Config.OPENAI_API_KEY
+        )
         self.embeddings = OpenAIEmbeddings(
-            api_key=OPENAI_API_KEY, 
-            model="text-embedding-3-small"
+            api_key=Config.OPENAI_API_KEY, 
+            model=Config.EMBEDDING_MODEL
         )
         self.parser = JsonOutputParser()
 
-    def formatar_para_numero(self, valor):
-        if valor is None: return 0
-        if isinstance(valor, dict):
-            valor = next(iter(valor.values()), "0")
+
+    def _rerank_documents(self, query, docs_e_scores):
+        """
+        Reavalia os documentos trazidos pelo ChromaDB usando uma nota de 0 a 10.
+        """
+        reranked_docs = []
         
-        texto = str(valor).replace(",", ".").strip()
-        try:
-            numeros = re.findall(r"[-+]?\d*\.\d+|\d+", texto)
-            if not numeros: return 0
-            num_final = float(numeros[0])
-            if "%" in texto:
-                return num_final / 100 if num_final > 1 else num_final
-            return num_final
-        except:
-            return 0
+        # Ajustamos o prompt para pedir uma nota numérica
+        rerank_prompt = PromptTemplate.from_template(
+            "Como um auditor ESG, avalie de 0 a 10 a utilidade do trecho para responder: '{query}'\n"
+            "Considere se há números, tabelas ou menções diretas aos indicadores.\n"
+            "Responda APENAS o número da nota.\n\n"
+            "Trecho: {context}"
+        )
+        
+        chain = rerank_prompt | self.model
+        
+        for doc, score in docs_e_scores:
+            try:
+                # A LLM analisa o conteúdo e retorna uma nota
+                veredicto = chain.invoke({"query": query, "context": doc.page_content}).content
+                
+                # Extrai o número da resposta (ex: "Nota: 8" vira 8.0)
+                match = re.search(r'\d+', veredicto)
+                if match:
+                    score_relevancia = float(match.group())
+                    
+                    # Filtro de corte: só passa o que for relevante (nota >= 5)
+                    if score_relevancia >= 5:
+                        # O novo score combina a similaridade do Chroma com a "inteligência" da LLM
+                        novo_score = score + (score_relevancia / 10)
+                        reranked_docs.append((doc, novo_score))
+            except Exception as e:
+                print(f"Erro no re-ranking de um trecho: {e}")
+                continue
+                
+        # Reordena pela nova pontuação combinada
+        reranked_docs.sort(key=lambda x: x[1], reverse=True)
+        return reranked_docs  
 
     def _extrair_com_rag(self, chroma_client, collection_name, empresa, ano):
-        # Conexão segura via LangChain usando o client persistente
+        """Função principal que executa o processo de extração usando RAG.
+         1. Discovery: Identifica quais métricas estão presentes e gera perguntas específicas.
+         2. Precise Extraction: Para cada métrica, busca os trechos mais relevantes e extrai o valor quantitativo.
+        
+        Args:
+            chroma_client: Cliente do ChromaDB para acesso à base de dados vetorial.
+            collection_name: Nome da coleção no ChromaDB onde os documentos estão armazenados.
+            empresa: Nome da empresa alvo da extração.
+            ano: Ano específico para o qual os dados devem ser extraídos.
+
+        Returns:
+            Uma tabela de auditoria contendo as métricas extraídas, seus valores, unidades, scores de relevância e evidências textuais.
+
+        """
+        
         vector_store = Chroma(
             client=chroma_client,
             collection_name=collection_name,
             embedding_function=self.embeddings
         )
 
-        # Filtro de metadados rigoroso para evitar vazamento de dados de outras empresas/anos
+        # retriever com filtro para empresa e ano, garantindo que só busque documentos relevantes para o contexto específico
         retriever = vector_store.as_retriever(
             search_kwargs={
-                "k": 10,
+                "k": 15,
                 "filter": {
                     "$and": [
                         {"empresa": {"$eq": empresa}},
@@ -53,58 +97,18 @@ class ESGMetricProcessor:
         )
 
         discovery_prompt = PromptTemplate(
-            template="""Você é um auditor sênior especialista em relatórios GRI (Global Reporting Initiative), focado na norma GRI 405-1.
-            Sua tarefa é extrair exatamente 20 métricas quantitativas de Diversidade e Descarbonização do contexto abaixo.
-
-            ### DIRETRIZES DE EXTRAÇÃO:
-            1. **Precisão de Liderança:** Diferencie claramente 'quadro geral' de 'cargos de liderança/alta administração'.
-            2. **Faixas Etárias:** Extraia separadamente as categorias (Ex: <30, 30-50, >50). Se houver uma tabela, foque no ano mais recente (2024).
-            3. **Formato do Valor:** O valor no JSON deve ser uma PERGUNTA objetiva que, quando respondida, extraia apenas o número ou percentual específico. Caso seja um número : mostre o número inteiro (ex: 500 empregados com deficiência)
-            4. **Filtro de Ruído:** Ignore cabeçalhos de tabelas ou sequências de números que não correspondam diretamente à métrica.
-            5. No JSON, indique também em qual página (presente no contexto) você encontrou o valor específico.
-            
-
-            ### TEMAS PERMITIDOS:
-            - Diversidade: Gênero, Raça/Etnia, PCD, Faixa Etária (Total e por Nível Hierárquico).
-
-            ### EXEMPLO DE SAÍDA ESPERADA:
-            {{
-                "percentual_mulheres_lideranca": "Qual o percentual de mulheres em cargos de liderança ou alta administração em 2024?",
-                "percentual_pcd_total": "Qual o percentual total de pessoas com deficiência (PCD) no quadro de funcionários?",
-                "quantidade_empregados_ate_30": "Qual a quantidade de empregados que possuem até 30 anos?",
-            }}
-
-            Contexto: {context}
-
-            {format_instructions}""",
+            template=DISCOVERY_PROMPT_TEMPLATE,
             input_variables=["context"],
             partial_variables={"format_instructions": self.parser.get_format_instructions()}
         )
 
         extraction_prompt = PromptTemplate(
-            template="""Você é um auditor sênior de ESG. Sua tarefa é extrair o valor quantitativo para o ano de {ano}.
-
-            ### REGRAS CRÍTICAS:
-            1. **Filtro de Ano:** O contexto contém dados históricos (2022, 2023, 2024). Ignore QUALQUER valor que não seja referente ao ano de {ano}.
-            2. **Soma de Segmentos:** Se para o ano de {ano} existirem valores separados por gênero (Homens e Mulheres), você DEVE somá-los para compor o total da categoria.
-            - Exemplo no contexto: "Até 29 anos 97 85". 
-            - Ação: Somar 97 + 85 = 182.
-            3. **Prioridade de Tabela:** Se houver uma estrutura de tabela, identifique a interseção correta entre a linha (métrica) e a coluna (ano/gênero).
-
-            Responda em formato JSON:
-            {{
-                "valor": "o número encontrado",
-                "unidade": "unidade de medida",
-                "trecho_original": "a frase exata",
-                "id_trecho": "o número do [Trecho X] de onde você extraiu a informação"
-            }}
-            Contexto: {context}
-            Métrica: {question}
-            {format_instructions}""",
-            input_variables=["context", "question","ano"],
+            template=EXTRACTION_PROMPT_TEMPLATE,
+            input_variables=["context", "question", "ano"],
             partial_variables={"format_instructions": self.parser.get_format_instructions()}
         )
 
+        
         # 1. Discovery
         docs_iniciais = retriever.invoke(f"Indicadores de diversidade e emissões de {empresa} {ano}")
         contexto_inicial = "\n".join([d.page_content for d in docs_iniciais])
@@ -113,13 +117,34 @@ class ESGMetricProcessor:
             "context": contexto_inicial, "empresa": empresa, "ano": ano
         })
 
+       
         # 2. Precise Extraction
         tabela_auditoria = []
-        for coluna, query in metricas_descobertas.items():
+
+        print(f"\nMétricas Descobertas para {empresa} {ano}:")
+        print(metricas_descobertas)
+
+        for coluna, info_metrica in metricas_descobertas.items():
             try:
-                docs_especificos = retriever.invoke(query)
+
+                query_busca = info_metrica.get("query_localizacao") if isinstance(info_metrica, dict) else info_metrica
+        
+                if not query_busca:
+                    query_busca = f"Dados sobre {coluna} no ano {ano}"
+
+                docs_especificos = retriever.invoke(query_busca)
                 #contexto_focado = "\n".join([d.page_content for d in docs_especificos])
                 #paginas = list(set([str(d.metadata.get("pagina", "N/A")) for d in docs_especificos]))
+
+                print(f"\n--- EXPLORANDO CHUNKS PARA: {coluna} ---")
+                for i, doc in enumerate(docs_especificos):
+                    # Mostra o índice, os metadados (página, empresa) e o início do conteúdo
+                    origem = doc.metadata.get('source', 'Desconhecido')
+                    pagina = doc.metadata.get('pagina', 'N/A')
+                    
+                    print(f"ID: {i} | Página: {pagina} | Fonte: {origem}")
+                    print(f"Conteúdo: {doc.page_content[:200]}...") # Primeiros 200 caracteres
+                    print("-" * 30)
 
                 fragmentos = []
                 for i, d in enumerate(docs_especificos):
@@ -129,7 +154,7 @@ class ESGMetricProcessor:
                 contexto_focado = "\n\n".join(fragmentos)
 
                 resultado = (extraction_prompt | self.model | self.parser).invoke({
-                    "context": contexto_focado, "question": query, "ano": ano
+                    "context": contexto_focado, "question": query_busca, "ano": ano
                 })
 
                 try:
@@ -148,7 +173,7 @@ class ESGMetricProcessor:
                     "Empresa": empresa,
                     "Ano": ano,
                     "Dado Extraído": coluna,
-                    "Valor": self.formatar_para_numero(resultado.get("valor")),
+                    "Valor": formatar_para_numero(resultado.get("valor")),
                     "Unidade": resultado.get("unidade"),
                     "Fonte (Texto Original)": resultado.get("trecho_original"),
                     "Página": str(pagina_exata) # <--- O SEGREDO ESTÁ AQUI: Forçar string

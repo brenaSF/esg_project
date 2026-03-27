@@ -1,0 +1,26 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ENGIE_teste_44;2024;total_colaboradores_clt;1173.0;colaboradores;Ao final de 2024, o quadro funcional da ENGIE Brasil Energia era formado por 1.173 colaboradores diretos.;48
+ENGIE_teste_44;2024;total_colaboradores_negros;0.0;unidade;Não há citação exata disponível.;Não identificada
+ENGIE_teste_44;2024;total_colaboradores_brancos;0.0;unidade (ex: R$, %, Horas, Absoluto);Não há citação exata disponível para Brancos em 2024.;136
+ENGIE_teste_44;2024;total_colaboradores_pardos;218.0;absoluto;"Diretores (estatutário e funcional) 8 0 0 1 0 9
+Gerentes 48 1 7 0 0 56
+Analistas, engenheiros e especialistas 601 23 79 9 0 712
+Operadores e técnicos 240 23 132 0 1 396
+Total 897 47 218 10 1 1.173";136
+ENGIE_teste_44;2024;total_colaboradores_indigenas;0.0;unidade (ex: R$, %, Horas, Absoluto);Não há citação específica sobre a presença de Indígenas.;Não identificada
+ENGIE_teste_44;2024;total_colaboradores_amarelos;0.0;unidade;Amarelos 0;131
+ENGIE_teste_44;2024;total_pcd;60.0;pessoas;Em 2024, os resultados obtidos levaram o programa à classificação como finalista do Prêmio Ser Humano (PSH), da Associação Brasileira de Recursos Humanos (ABRH).;55
+ENGIE_teste_44;2024;percentual_mulheres_total;32.1;%;De forma geral, a presença feminina tem aumentado na ENGIE Brasil Energia. Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%.;57
+ENGIE_teste_44;2024;percentual_mulheres_lideranca;31.4;%;aumento de 3,8 p.p. Ressalta-se que a Diretoria (Executiva e Funcional) 68,6% 31,4% em 2024;57
+ENGIE_teste_44;2024;mulheres_etaria_abaixo_30;26.0;unidade;2024 34 26;136
+ENGIE_teste_44;2024;mulheres_etaria_30_50;279.0;absoluto;Entre 30 e 50 anos 624 279;136
+ENGIE_teste_44;2024;mulheres_etaria_acima_50;12.0;pessoas;Mais de 50 anos 76 12;136
+ENGIE_teste_44;2024;total_analistas_mulheres;264.0;unidade;Colaboradores por categoria funcional e gênero Categoria funcional Homens Mulheres Total Analistas, engenheiros e especialistas 448 264 712;136
+ENGIE_teste_44;2024;total_gerentes_mulheres;14.0;unidade;Gerentes 42 14 56;136
+ENGIE_teste_44;2024;total_diretores_mulheres;2.0;unidade;"Conselho de Administração 7 (78%) 2 (22%) 9
+Diretoria (Estatuária e Funcional) 7 (78%) 2 (22%) 9";131
+ENGIE_teste_44;2024;percentual_homens_total;67.9;%;% na força de trabalho 73,3% 26,7% 70,6% 29,4% 67,9% 32,1%;136
+ENGIE_teste_44;2024;percentual_homens_lideranca;49.0;unidade;Diretores 7 2 9 Gerentes 42 14 56 Analistas, engenheiros e especialistas 448 264 712;136
+ENGIE_teste_44;2024;homens_etaria_abaixo_30;34.0;número de colaboradores;2024 34 26;136
+ENGIE_teste_44;2024;homens_etaria_30_50;624.0;número de colaboradores;Entre 30 e 50 anos 624 279;136
+ENGIE_teste_44;2024;homens_etaria_acima_50;76.0;colaboradores;Mais de 50 anos 76 12;136

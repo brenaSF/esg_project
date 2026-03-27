@@ -1,0 +1,20 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ENGIE_teste_41;2024;total_colaboradores;1173.0;colaboradores;Total | N/A | N/A | N/A | N/A | 897 | 47 | 218 | 10 | 1 | 1.173;0
+ENGIE_teste_41;2024;total_mulheres;47.0;unidade;Colaboradores por categoria funcional e gênero;0
+ENGIE_teste_41;2024;total_homens;897.0;colaboradores;Total 897 47 218 10 1 1.173;0
+ENGIE_teste_41;2024;total_mulheres_lideranca;378.0;unidade;Diretoria também conta com mulheres em seu quadro, respondendo pela Diretora de Pessoas, Processos e Sustentabilidade, desde 2020, e pela Diretora Jurídica e de Ética, desde 2023. Mulheres em Gerência: 2, Mulheres em Diretoria: 376.;0
+ENGIE_teste_41;2024;total_homens_lideranca;49.0;unidade;Gerentes 42 14 56 Diretores 7 2 9;0
+ENGIE_teste_41;2024;percentual_mulheres_lideranca;31.4;%;Diretoria (Executiva e Funcional) 68,7% 60,6% 64,5% 7 (Homens) 2 (Mulheres) 9 (Total);0
+ENGIE_teste_41;2024;percentual_homens_lideranca;68.6;%;2024: % em posição de gestão 68,6% 31,4%;0
+ENGIE_teste_41;2024;taxa_frequencia_acidentes;0.0;N/A;Taxa de Frequência (TF)* emprega dos próprios | 0,000 | 0,000 | 0,000 | ≤ 1,4 | ≤ 1,4;0
+ENGIE_teste_41;2024;media_horas_treinamento;0.0;horas;Número total de horas 1.591,5 1.542 2.738,3;0
+ENGIE_teste_41;2024;total_horas_treinamento;2738.3;horas;Número total de horas 1.591,5 1.542 2.738,3;0
+ENGIE_teste_41;2024;total_multas;0.0;R$;Não há referência à tabela 'Passivos e Multas' nos trechos fornecidos.;0
+ENGIE_teste_41;2024;total_pessoas_negras;0.0;unidade;N/A | Negros | N/A | N/A | 0 | N/A | Pardos | N/A | N/A | 0;0
+ENGIE_teste_41;2024;percentual_pessoas_negras;0.0;percentual;Membros do Conselho de Administração por faixa etária 131;0
+ENGIE_teste_41;2024;total_pessoas_brancas;0.0;unidade;Citação direta do relatório ou descrição da célula da tabela;0
+ENGIE_teste_41;2024;total_pessoas_amarelas;0.0;unidade;Não foi possível localizar a tabela 'Diversidade Racial' com os dados solicitados.;0
+ENGIE_teste_41;2024;total_pessoas_indigenas;0.0;unidade;N/A;Não identificada
+ENGIE_teste_41;2024;percentual_pessoas_brancas;0.0;%;Diretores (estatutário e funcional) 8 0 0 1 0 9;0
+ENGIE_teste_41;2024;percentual_pessoas_amarelas;0.0;%;Tabela 1: Total de colaboradores: 1.173, sendo 0 Amarelos.;0
+ENGIE_teste_41;2024;percentual_pessoas_indigenas;0.0085;porcentagem;Total 897 47 218 10 1 1.173;0

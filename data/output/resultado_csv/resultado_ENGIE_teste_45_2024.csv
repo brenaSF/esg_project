@@ -1,0 +1,33 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ENGIE_teste_45;2024;total_colaboradores_clt;0.0;Absoluto;N/A;Não identificada
+ENGIE_teste_45;2024;total_colaboradores_negros;0.0;absoluto;Nenhuma citação específica sobre colaboradores negros em 2024.;Não identificada
+ENGIE_teste_45;2024;total_colaboradores_brancos;0.0;Absoluto;;Não identificada
+ENGIE_teste_45;2024;total_colaboradores_pardos;0.0;Absoluto;N/A;Não identificada
+ENGIE_teste_45;2024;total_colaboradores_indigenas;0.0;unidade;;Não identificada
+ENGIE_teste_45;2024;total_colaboradores_amarelos;0.0;unidade (ex: R$, %, Horas, Absoluto);;Não identificada
+ENGIE_teste_45;2024;total_pcd;0.0;unidade (ex: R$, %, Horas, Absoluto);;Não identificada
+ENGIE_teste_45;2024;percentual_mulheres_total;32.1;%;Em 2024, houve um aumento de 2,7 p.p no número de mulheres no quadro funcional, passando de 29,4% para 32,1%.;57
+ENGIE_teste_45;2024;percentual_mulheres_lideranca;31.4;%;% em posição de gestão 76,8% 23,2% 72,4% 27,6% 68,6% 31,4%;136
+ENGIE_teste_45;2024;mulheres_etaria_abaixo_30;0.0;unidade;Não encontrado;Não identificada
+ENGIE_teste_45;2024;mulheres_etaria_30_50;624.0;colaboradores;"2024 34 26
+Entre 30 e 50 anos 624 279";136
+ENGIE_teste_45;2024;mulheres_etaria_acima_50;12.0;unidade;Mais de 50 anos 76 12;136
+ENGIE_teste_45;2024;total_analistas_mulheres;264.0;unidade;Analistas, engenheiros e especialistas 448 264 712;136
+ENGIE_teste_45;2024;total_gerentes_mulheres;14.0;unidade;Gerentes 42 14 56;136
+ENGIE_teste_45;2024;total_diretores_mulheres;1.0;unidade;"Conselho de Administração 7 (78%) 2 (22%) 9; Diretoria (Estatutária e Funcional) 7 (78%) 2 (22%) 9";131
+ENGIE_teste_45;2024;percentual_homens_total;67.9;%;% na força de trabalho 67,9%;136
+ENGIE_teste_45;2024;percentual_homens_lideranca;31.4;%;aumento de 6,7% de 27,7% em 2023 para 31,4% em 2024;57
+ENGIE_teste_45;2024;homens_etaria_abaixo_30;0.0;unidade;Não aplicável;Não identificada
+ENGIE_teste_45;2024;homens_etaria_30_50;624.0;colaboradores;"2024 34 26
+Entre 30 e 50 anos 624 279";136
+ENGIE_teste_45;2024;homens_etaria_acima_50;12.0;unidade;Mais de 50 anos 76 12;136
+ENGIE_teste_45;2024;GRI_401_total_contratacoes;0.0;unidade (ex: R$, %, Horas, Absoluto);;Não identificada
+ENGIE_teste_45;2024;GRI_401_taxa_turnover;5.5;%;A taxa de rotatividade (turnover) foi de 9,1%, e a de rotatividade voluntária, quando o colaborador deixa a Companhia por livre iniciativa, de 5,5%, dos quais 43,3% foram originados por adesões ao Programa de Demissão Voluntário (PDV) da Companhia.;49
+ENGIE_teste_45;2024;GRI_403_acidentes_trabalho;0.0;unidade (ex: R$, %, Horas, Absoluto);Número de acidentes fatais (óbitos) 0 1 0;51
+ENGIE_teste_45;2024;GRI_403_doencas_ocupacionais;0.0;unidade;;Não identificada
+ENGIE_teste_45;2024;GRI_404_media_horas_treinamento;10.3;Horas;2024 8,7 16,0 10,3;135
+ENGIE_teste_45;2024;GRI_405_proporcao_salario_genero;0.0;%;Não encontrado.;Não identificada
+ENGIE_teste_45;2024;GRI_406_incidentes_discriminacao;0.0;incidentes;Nenhuma citação específica sobre GRI_406_incidentes_discriminacao foi encontrada.;Não identificada
+ENGIE_teste_45;2024;GRI_412_treinamento_direitos_humanos;10.3;Horas;2024 8,7 16,0 10,3;135
+ENGIE_teste_45;2024;GRI_413_impacto_comunidades;0.0;unidade;Não há citação exata com dados quantitativos sobre GRI_413 para 2024.;Não identificada
+ENGIE_teste_45;2024;GRI_414_avaliacao_social_fornecedores;0.0;unidade (ex: R$, %, Horas, Absoluto);;Não identificada

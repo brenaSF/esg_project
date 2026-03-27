@@ -5,7 +5,7 @@ import uvicorn
 import json
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from src.orchestrator import ESGAutomationOrchestrator
+from src.agents.orchestrator import ESGAutomationOrchestrator
 
 dotenv.load_dotenv()
 app = FastAPI(title="ESG Curator API", description="Backend para extração RAG de relatórios sustentáveis")
@@ -23,6 +23,7 @@ class FilePayload(BaseModel):
 
 @app.post("/process-file")
 async def process_file(payload: FilePayload):
+    """Endpoint para processar um arquivo PDF de relatório ESG."""
     caminho_origem = os.path.join("data/raw", payload.filename)
     
     if not os.path.exists(caminho_origem):

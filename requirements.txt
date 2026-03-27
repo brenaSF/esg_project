@@ -1,8 +1,13 @@
+langchain 
+langchain-openai 
+langchain-community 
+langchain-chroma 
 streamlit
-pandas
-langchain
-langchain-openai
-chromadb
-openpyxl
-tabula-py
-camelot-py[cv]
+ pandas 
+ openai 
+ pydantic 
+ python-dotenv 
+ pdfplumber
+ fastapi
+ uvicorn
+ unstructured

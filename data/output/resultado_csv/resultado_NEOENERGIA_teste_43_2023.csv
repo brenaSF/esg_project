@@ -1,0 +1,22 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+NEOENERGIA_teste_43;2023;total_pcd;0.0;unidade;A linha 'PCD' não foi encontrada na tabela.;242
+NEOENERGIA_teste_43;2023;total_mulheres_lideranca;166.0;mulheres;Contávamos no encerramento de 2023 com 20% de mulheres nas equipes corporativas, sendo um total de 129 mulheres em cargos de liderança direta (diretoras, superintendentes e gerentes | GG1, GG2 e GG3) e 37 mulheres na diretoria (GG1).;110
+NEOENERGIA_teste_43;2023;faixa_etaria_abaixo_30;3741.0;número;Até 30 anos (nº) 2.744 2.923 3.155 997 961 866;101
+NEOENERGIA_teste_43;2023;total_homens_lideranca;378.0;número;Liderança direta (nº) 296 289 286 129 117 102 | Homens 82 81 83 | Total (nº) 296 289 286 129 117 102;102
+NEOENERGIA_teste_43;2023;taxa_rotatividade;7.4;%;Total (%) 7,4 % 8,0 % 8,0 % 8,6 % 8,3 % 7,3 %;102
+NEOENERGIA_teste_43;2023;taxa_frequencia_acidentes;1.0;taxa;Índice de frequência (IF) 1 0,32 0,19 0,38;124
+NEOENERGIA_teste_43;2023;media_horas_treinamento;19.5;horas;Treinamentos de saúde e segurança - total de horas de treinamento - Terceiros 933.908;243
+NEOENERGIA_teste_43;2023;total_mulheres;3204.0;número de mulheres;Mulheres (total) 3.204 2.957 2.702 0 0 2;241
+NEOENERGIA_teste_43;2023;total_homens;12489.0;número;Homens (total) 12.489 12.447 12.343 0 2 11;241
+NEOENERGIA_teste_43;2023;total_pessoas_negras;8891.0;pessoas;"| Pretos | 1.897 | 12,1% | 1.873 12,2% ND ND |
+| Pardos | 7.074 | 45,1% | 0 |";112
+NEOENERGIA_teste_43;2023;percentual_mulheres;20.4;%;Total (%) 79,6 % 80,8 % 82,0 % 20,4 % 19,2 % 18,0 %;101
+NEOENERGIA_teste_43;2023;percentual_homens;79.6;%;Total (%) 79,6 % 80,8 % 82,0 % | 0 | 0 | 20,4 % | 19,2 % 18,0 %;101
+NEOENERGIA_teste_43;2023;total_multas;159.0;mil;Multas pagas no exercício, valor total (R$ mil) 159 0 7.577;245
+NEOENERGIA_teste_43;2023;total_sancoes;6.0;número;Número de sanções não monetárias, administrativas ou judiciais, pelo descumprimento de leis ou regulações relacionadas com o meio ambiente. 6 11 12;244
+NEOENERGIA_teste_43;2023;total_investimento_social;27476.0;R$ mil;Total 27.476 | 0 | 0 | 26.451 19.361;169
+NEOENERGIA_teste_43;2023;percentual_diversidade_racial;12.1;%;Número total de empregados: 15.693. Empregados por raça: Pretos 1.897 (12,1%);112
+NEOENERGIA_teste_43;2023;total_acidentes;116.0;nº;Número de acidentados (nº) 116 116 132;124
+NEOENERGIA_teste_43;2023;total_funcionarios;15693.0;número de funcionários;No encerramento de 2023, contávamos com 15.693 empregados.;100
+NEOENERGIA_teste_43;2023;total_licencas;0.0;licença;Não há menção ao número total de licenças ambientais obtidas no ano 2023.;30
+NEOENERGIA_teste_43;2023;total_programas_sociais;0.0;programas;O Instituto Neoenergia contribui para melhorar a qualidade de vida das pessoas mais vulneráveis, apoiando o desenvolvimento sustentável, nas comunidades onde operamos.;172

@@ -9,7 +9,7 @@ class ESGDocumentLoader:
         self.y_tolerance = y_tolerance
         # Palavras-chave que indicam presença de dados quantitativos ou tabelas GRI
         self.keywords_esg = ["gri", "405-1", "quadro", "gênero", "raça", "pcd", 
-                             "diversidade", "idade", "emissões", "escopo", "%"]
+                             "diversidade", "idade", "%"]
 
     def _extrair_texto_estruturado(self, page):
         area_util = page.within_bbox((55, 40, page.width - 40, page.height - 40)) 

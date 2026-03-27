@@ -1,13 +1,18 @@
 import streamlit as st
 import pandas as pd
 import os
-from datetime import datetime
 import getpass
 import logging
-import requests
 import shutil
 from src.utils.style import apply_vitality_style
 from src.utils.audit import obter_arquivos_pendentes, calcular_progresso
+from src.services.storage_service import salvar_arquivo_upload, processar_arquivo_na_api
+
+from src.services.audit_service import (
+    carregar_dados_para_auditoria, 
+    consolidar_e_limpar, 
+    descartar_relatorio
+)
 
 logging.getLogger("streamlit.runtime.scriptrunner.script_run_context").setLevel(logging.ERROR)
 
@@ -39,8 +44,6 @@ with aba_principal:
     
 with aba_extracao:
     DIR_RAW = "data/raw"
-    # Certifique-se de que a pasta existe antes de tentar salvar
-    os.makedirs(DIR_RAW, exist_ok=True)
     
     API_URL = "http://localhost:8000/process-file"
 
@@ -63,46 +66,25 @@ with aba_extracao:
                 if upload_files and empresa_nome:
                     with st.spinner("Enviando documentos para processamento..."):
                         for uploaded_file in upload_files:
-                            file_path = os.path.join(DIR_RAW, uploaded_file.name)
-                            with open(file_path, "wb") as f:
-                                f.write(uploaded_file.getbuffer())
+                            salvar_arquivo_upload(uploaded_file, DIR_RAW)
 
-                            payload = {
-                                "filename": uploaded_file.name,
-                                "empresa": empresa_nome,
-                                "ano": int(ano_ref)
-                            }
-                   
-                            try:
-                                response = requests.post(API_URL, json=payload, timeout=300) # Timeout longo para LLM
-                                
-                                if response.status_code == 200:
-                                    st.success(f"✅ {uploaded_file.name} processado com sucesso!")
-                                else:
-                                    # CORREÇÃO DO JSONDECODEERROR:
-                                    try:
-                                        erro_info = response.json().get('detail', 'Erro interno no servidor')
-                                    except:
-                                        erro_info = f"Resposta inválida do servidor (Status {response.status_code})"
-                                    
-                                    st.error(f"❌ Falha ao processar {uploaded_file.name}: {erro_info}")
+                            sucesso, mensagem = processar_arquivo_na_api(
+                                API_URL, 
+                                uploaded_file.name, 
+                                empresa_nome, 
+                                ano_ref
+                            )
                             
-                            except requests.exceptions.ConnectionError:
-                                st.error("🚨 Erro: API Offline. Inicie o backend (Uvicorn).")
+                            if sucesso:
+                                st.success(f"{uploaded_file.name}: {mensagem}")
+                            else:
+                                st.error(f"{uploaded_file.name}: {mensagem}")
                 else:
                     st.error("Por favor, preencha o nome da empresa e suba os arquivos.")
 
 with aba_auditoria:
     DIR_OUTPUT = "data/output"
     DIR_AUDITADOS = os.path.join(DIR_OUTPUT, "auditados")
-    DIR_CSV = os.path.join(DIR_OUTPUT, "resultado_csv")
-    DIR_EXCLUIDOS = os.path.join(DIR_OUTPUT, "excluidos")
-    CAMINHO_GOLD = os.path.join(DIR_OUTPUT, "base_consolidada_esg.csv")
-
-    for pasta in [DIR_AUDITADOS, DIR_EXCLUIDOS,DIR_CSV]:
-        os.makedirs(pasta, exist_ok=True)
-
-  
 
     # --- Sidebar com Barra de Progresso ---
     with st.sidebar:
@@ -139,69 +121,61 @@ with aba_auditoria:
 
     if arquivo_selecionado:
 
-        caminho_arquivo_atual = os.path.join(DIR_CSV, arquivo_selecionado)
+        df = carregar_dados_para_auditoria(arquivo_selecionado)
 
-        if not os.path.exists(caminho_arquivo_atual):
-            st.error("Arquivo selecionado não encontrado. Por favor, sincronize os dados.")
-            st.stop() 
-
-        df = pd.read_csv(caminho_arquivo_atual, sep=";")
+        if df is not None:
         
-        # --- Painel de Métricas Rápidas ---
-        m1, m2, m3 = st.columns(3)
-        with m1:
-            nome_empresa = df['Empresa'].iloc[0] if 'Empresa' in df.columns else "N/A"
-            st.metric("Empresa", nome_empresa)
-        with m2:
-            st.metric("Métricas", len(df))
-        with m3:
-            ano = df['Ano'].iloc[0] if 'Ano' in df.columns else "N/A"
-            st.metric("Ano de Referência", ano)
+            # --- Painel de Métricas Rápidas ---
+            m1, m2, m3 = st.columns(3)
+            with m1:
+                nome_empresa = df['Empresa'].iloc[0] if 'Empresa' in df.columns else "N/A"
+                st.metric("Empresa", nome_empresa)
+            with m2:
+                st.metric("Métricas", len(df))
+            with m3:
+                ano = df['Ano'].iloc[0] if 'Ano' in df.columns else "N/A"
+                st.metric("Ano de Referência", ano)
 
-        st.markdown(f"### 📋 Editando: `{arquivo_selecionado}`")
-        
-        # Injeção de colunas de auditoria se não existirem
-        #if 'status_auditoria' not in df.columns: df['status_auditoria'] = 'Pendente'
-        #if 'notas_auditor' not in df.columns: df['notas_auditor'] = ''
+            st.markdown(f"### 📋 Editando: `{arquivo_selecionado}`")
+            
+            # Injeção de colunas de auditoria se não existirem
+            #if 'status_auditoria' not in df.columns: df['status_auditoria'] = 'Pendente'
+            #if 'notas_auditor' not in df.columns: df['notas_auditor'] = ''
 
-        df['Página'] = df['Página'].astype(str)
+            df['Página'] = df['Página'].astype(str)
 
-        df_editado = st.data_editor(
-            df,
-            num_rows="dynamic",
-            width="stretch",
-            hide_index=True,
-            column_config={
-                "status_auditoria": st.column_config.SelectboxColumn(
-                    "Status", options=["Pendente", "Validado", "Corrigido", "Inconsistente"]
-                ),
-                "Empresa": st.column_config.TextColumn("Empresa", disabled=True),
-                "Ano": st.column_config.NumberColumn("Ano", disabled=True),
-                "Dado Extraído": st.column_config.TextColumn("Métrica IA", width="medium"),
-                "Valor": st.column_config.NumberColumn("Valor", format="%.2f"),
-                "Unidade": st.column_config.TextColumn("Unid.", width="small"),
-                "Fonte (Texto Original)": st.column_config.TextColumn("Evidência (RAG)", width="large"),
-                "Página": st.column_config.TextColumn("Pág", width="small")
-            }
-        )
+            df_editado = st.data_editor(
+                df,
+                num_rows="dynamic",
+                width="stretch",
+                hide_index=True,
+                column_config={
+                    "status_auditoria": st.column_config.SelectboxColumn(
+                        "Status", options=["Pendente", "Validado", "Corrigido", "Inconsistente"]
+                    ),
+                    "Empresa": st.column_config.TextColumn("Empresa", disabled=True),
+                    "Ano": st.column_config.NumberColumn("Ano", disabled=True),
+                    "Dado Extraído": st.column_config.TextColumn("Métrica IA", width="medium"),
+                    "Valor": st.column_config.NumberColumn("Valor", format="%.6f"),
+                    "Unidade": st.column_config.TextColumn("Unid.", width="small"),
+                    "Fonte (Texto Original)": st.column_config.TextColumn("Evidência (RAG)", width="large"),
+                    "Página": st.column_config.TextColumn("Pág", width="small")
+                }
+            )
 
-        col1, col2, _ = st.columns([1, 1, 3])
-        with col1:
-            if st.button("✅ Aprovar e Consolidar", type="primary"):
-                if os.path.exists(CAMINHO_GOLD):
-                    base_gold = pd.read_csv(CAMINHO_GOLD, sep=";")
-                    df_final = pd.concat([base_gold, df_editado], ignore_index=True)
-                else:
-                    df_final = df_editado
-                
-                df_final.to_csv(CAMINHO_GOLD, index=False, sep=";", encoding="utf-8-sig")
-                os.remove(caminho_arquivo_atual) # Remove dos pendentes após aprovar
-                st.success("Dados movidos para a base consolidada!")
-                st.rerun()
+            col1, col2, _ = st.columns([1, 1, 3])
+            with col1:
+                if st.button("✅ Aprovar e Consolidar", type="primary"):
+                    consolidar_e_limpar(df_editado, arquivo_selecionado)
+                    st.success("Dados movidos para a base consolidada!")
+                    st.rerun()
 
-        with col2:
-            if st.button("🗑️ Descartar"):
-                shutil.move(caminho_arquivo_atual, os.path.join(DIR_EXCLUIDOS, arquivo_selecionado))
-                st.rerun()
+            with col2:
+                if st.button("🗑️ Descartar"):
+                    descartar_relatorio(arquivo_selecionado)
+                    st.success("Relatório descartado com sucesso!")
+                    st.rerun()
+        else:
+            st.error("Erro ao carregar o arquivo.")
     else:
-      st.info("Nenhum relatório pendente de auditoria.")
+        st.info("Nenhum relatório pendente de auditoria.")
