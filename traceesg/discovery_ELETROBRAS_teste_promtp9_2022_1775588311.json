@@ -1,0 +1,102 @@
+{
+    "total_colaboradores_clt": {
+        "valor": 10020,
+        "evidencia_texto": "Total de empregados: 10.020",
+        "status": "Encontrado"
+    },
+    "total_colaboradores_negros": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "total_colaboradores_brancos": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "total_colaboradores_pardos": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "total_colaboradores_indigenas": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "total_colaboradores_amarelos": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "total_pcd": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "percentual_mulheres_total": {
+        "valor": "18.5%",
+        "evidencia_texto": "Total de mulheres: 1.858, percentual de mulheres no quadro geral: 18.5%",
+        "status": "Encontrado"
+    },
+    "percentual_mulheres_lideranca": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "mulheres_etaria_abaixo_30": {
+        "valor": 69,
+        "evidencia_texto": "Mulheres abaixo de 30 anos: 69",
+        "status": "Encontrado"
+    },
+    "mulheres_etaria_30_50": {
+        "valor": 1.745,
+        "evidencia_texto": "Mulheres entre 30 e 50 anos: 1.745",
+        "status": "Encontrado"
+    },
+    "mulheres_etaria_acima_50": {
+        "valor": 166,
+        "evidencia_texto": "Mulheres acima de 50 anos: 166",
+        "status": "Encontrado"
+    },
+    "total_analistas_mulheres": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "total_gerentes_mulheres": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "total_diretores_mulheres": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "percentual_homens_total": {
+        "valor": "81.5%",
+        "evidencia_texto": "Total de homens: 8.162, percentual de homens no quadro geral: 81.5%",
+        "status": "Encontrado"
+    },
+    "percentual_homens_lideranca": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
+        "status": "Não Encontrado"
+    },
+    "homens_etaria_abaixo_30": {
+        "valor": 2.387,
+        "evidencia_texto": "Homens abaixo de 30 anos: 2.387",
+        "status": "Encontrado"
+    },
+    "homens_etaria_30_50": {
+        "valor": 5.897,
+        "evidencia_texto": "Homens entre 30 e 50 anos: 5.897",
+        "status": "Encontrado"
+    },
+    "homens_etaria_acima_50": {
+        "valor": 1.443,
+        "evidencia_texto": "Homens acima de 50 anos: 1.443",
+        "status": "Encontrado"
+    }
+}

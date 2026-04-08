@@ -1,0 +1,47 @@
+{
+    "emissoes_fugitivas_sf6": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa sobre emissões fugitivas de SF6.",
+        "status": "STATUS: OMISSÃO TÉCNICA CRÍTICA"
+    },
+    "emissoes_no_x": {
+        "valor": 27.127,
+        "evidencia_texto": "Emissões totais de NOx em 2022 totalizaram 27.127 t/ano.",
+        "status": "Encontrado"
+    },
+    "emissoes_so_x": {
+        "valor": 4.229,
+        "evidencia_texto": "Emissões totais de SOx em 2022 totalizaram 4.229 t/ano.",
+        "status": "Encontrado"
+    },
+    "material_particulado_mp": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa sobre emissões de Material Particulado.",
+        "status": "Não Encontrado"
+    },
+    "escopo_2_sem_perdas": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa sobre emissões de GEE do Escopo 2 sem perdas.",
+        "status": "STATUS: OMISSÃO TÉCNICA CRÍTICA"
+    },
+    "perdas_tecnicas_energia": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa sobre perdas técnicas de energia.",
+        "status": "Não Encontrado"
+    },
+    "intensidade_gee_mwh": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa sobre a intensidade de GEE por MWh.",
+        "status": "Não Encontrado"
+    },
+    "consumo_combustivel_fossil": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa sobre o consumo de combustíveis fósseis.",
+        "status": "Não Encontrado"
+    },
+    "emissoes_biogenicas_co2": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa sobre emissões biogênicas de CO2.",
+        "status": "Não Encontrado"
+    }
+}

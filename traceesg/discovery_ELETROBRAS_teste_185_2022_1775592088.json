@@ -1,0 +1,16 @@
+{
+    "queries": {
+        "emissoes_fugitivas_sf6": "Localize o volume de Hexafluoreto de Enxofre (SF6) liberado em toneladas (t) no relatório de 2022, especificamente em tabelas de Escopo 1 ou Ativos de Transmissão.",
+        "emissoes_no_x": "Localize o total de Óxidos de Nitrogênio (NOx) emitidos em toneladas (t) no relatório de 2022, conforme indicado na seção GRI 305-7.",
+        "emissoes_so_x": "Localize o total de Óxidos de Enxofre (SOx) emitidos em toneladas (t) no relatório de 2022, conforme indicado na seção GRI 305-7.",
+        "material_particulado_mp": "Localize a emissão de Material Particulado (MP) em toneladas (t) no relatório de 2022, conforme indicado na seção GRI 305-7.",
+        "escopo_2_sem_perdas": "Busque o valor de emissões indiretas (Escopo 2) que EXCLUI explicitamente as perdas técnicas da rede elétrica no relatório de 2022.",
+        "perdas_tecnicas_energia": "Localize o volume ou percentual de energia perdida na transmissão/distribuição no relatório de 2022, conforme a Métrica Setorial EU12.",
+        "intensidade_gee_mwh": "Localize a relação de tCO2e emitida por cada Megawatt-hora (MWh) gerado ou distribuído no relatório de 2022.",
+        "consumo_combustivel_fossil": "Total de combustíveis não renováveis consumidos em Joules ou unidades de volume no relatório de 2022.",
+        "emissoes_biogenicas_co2": "Localize emissões de CO2 provenientes de fontes biológicas (queima de biomassa) no relatório de 2022."
+    },
+    "status": {
+        "omissao_tecnica": "STATUS: OMISSÃO TÉCNICA CRÍTICA - A empresa menciona 'mudanças climáticas' mas não apresenta a tabela de emissões de Escopo 1, 2 ou 3."
+    }
+}

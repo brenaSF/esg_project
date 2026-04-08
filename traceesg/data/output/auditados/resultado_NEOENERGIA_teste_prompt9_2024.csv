@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Metrica;Valor;Unidade;Evidencia;Status_Extração;Página;Status_Auditoria
+NEOENERGIA_teste_prompt9;2024;total_colaboradores_clt;15493;Absoluto;Total (nº) 12.489 12.449 12.354 3.204 2.957 2.704;Valor Absoluto;Não informada;Inconsistente
+NEOENERGIA_teste_prompt9;2024;total_colaboradores_negros;;Absoluto;;;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_colaboradores_brancos;;Absoluto;;;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_colaboradores_pardos;;Absoluto;;;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_colaboradores_indigenas;;Absoluto;;;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_colaboradores_amarelos;;Absoluto;;;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_pcd;547;Absoluto;Total 547 526 523;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;percentual_mulheres_total;20,4 %;Percentual (%);Total (%) 79,6 % 80,8 % 82,0 % 20,4 % 19,2 % 18,0 %;Percentual;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;percentual_mulheres_lideranca;30 %;Percentual (%);Total (%) 70 71 74 30 29 26;Percentual;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;mulheres_etaria_abaixo_30;997;Absoluto;Até 30 anos (nº) 997 961 866;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;mulheres_etaria_30_50;2058;Absoluto;Entre 31 e 50 anos (nº) 2.058 1.864 1.706;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;mulheres_etaria_acima_50;149;Absoluto;Maior de 50 anos (nº) 149 132 132;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_analistas_mulheres;;Absoluto;;;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_gerentes_mulheres;92;Absoluto;Liderança intermediária (nº) 92 85 77;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;total_diretores_mulheres;37;Absoluto;Liderança sênior (nº) 37 32 25;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;percentual_homens_total;79,6 %;Percentual (%);Total (%) 79,6 % 80,8 % 82,0 % 20,4 % 19,2 % 18,0 %;Percentual;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;percentual_homens_lideranca;70 %;Percentual (%);Total (%) 70 71 74 30 29 26;Percentual;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;homens_etaria_abaixo_30;2744;Absoluto;Até 30 anos (nº) 2.744 2.923 3.155;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;homens_etaria_30_50;9008;Absoluto;Entre 31 e 50 anos (nº) 9.008 8.775 8.435;Valor Absoluto;Não informada;Consistente
+NEOENERGIA_teste_prompt9;2024;homens_etaria_acima_50;737;Absoluto;Maior de 50 anos (nº) 737 751 764;Valor Absoluto;Não informada;Consistente

@@ -1,0 +1,102 @@
+{
+    "total_colaboradores_clt": {
+        "valor": 14830,
+        "evidencia_texto": "Total 14.830",
+        "status": "Valor Extraído"
+    },
+    "total_colaboradores_negros": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "total_colaboradores_brancos": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "total_colaboradores_pardos": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "total_colaboradores_indigenas": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "total_colaboradores_amarelos": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "total_pcd": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "percentual_mulheres_total": {
+        "valor": "18.7%",
+        "evidencia_texto": "Mulheres 2.777 / Total 14.830 = 18.7%",
+        "status": "Valor Extraído"
+    },
+    "percentual_mulheres_lideranca": {
+        "valor": "28.8%",
+        "evidencia_texto": "Liderança Mulheres 117 / Total Liderança 406 = 28.8%",
+        "status": "Valor Extraído"
+    },
+    "mulheres_etaria_abaixo_30": {
+        "valor": 908,
+        "evidencia_texto": "Até 30 anos 908",
+        "status": "Valor Extraído"
+    },
+    "mulheres_etaria_30_50": {
+        "valor": 1761,
+        "evidencia_texto": "Entre 31 e 50 anos 1.761",
+        "status": "Valor Extraído"
+    },
+    "mulheres_etaria_acima_50": {
+        "valor": 108,
+        "evidencia_texto": "Mais de 51 anos 108",
+        "status": "Valor Extraído"
+    },
+    "total_analistas_mulheres": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "total_gerentes_mulheres": {
+        "valor": null,
+        "evidencia_texto": "Não encontrado",
+        "status": "Omissão de KPI"
+    },
+    "total_diretores_mulheres": {
+        "valor": 117,
+        "evidencia_texto": "Liderança Mulheres 117",
+        "status": "Valor Extraído"
+    },
+    "percentual_homens_total": {
+        "valor": "81.3%",
+        "evidencia_texto": "Homens 12.053 / Total 14.830 = 81.3%",
+        "status": "Valor Extraído"
+    },
+    "percentual_homens_lideranca": {
+        "valor": "71.2%",
+        "evidencia_texto": "Liderança Homens 289 / Total Liderança 406 = 71.2%",
+        "status": "Valor Extraído"
+    },
+    "homens_etaria_abaixo_30": {
+        "valor": 2841,
+        "evidencia_texto": "Até 30 anos 2.841",
+        "status": "Valor Extraído"
+    },
+    "homens_etaria_30_50": {
+        "valor": 8492,
+        "evidencia_texto": "Entre 31 e 50 anos 8.492",
+        "status": "Valor Extraído"
+    },
+    "homens_etaria_acima_50": {
+        "valor": 720,
+        "evidencia_texto": "Mais de 51 anos 720",
+        "status": "Valor Extraído"
+    }
+}

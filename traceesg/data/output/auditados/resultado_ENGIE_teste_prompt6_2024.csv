@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Metrica;Valor;Unidade;Evidencia;Status_Extração;Página
+ENGIE_teste_prompt6;2024;total_colaboradores_clt;1173;Absoluto;Total 897 47 218 10 1 1.173;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_colaboradores_negros;218;Absoluto;Total 897 47 218 10 1 1.173;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_colaboradores_brancos;601;Absoluto;Total 601 23 79 9 0 712;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_colaboradores_pardos;79;Absoluto;Total 601 23 79 9 0 712;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_colaboradores_indigenas;1;Absoluto;Total 601 23 79 9 0 712;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_colaboradores_amarelos;0;Absoluto;Total 601 23 79 9 0 712;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_pcd;;Absoluto;Colaboradores por faixa etária e gênero;Citação Qualitativa/Omissão de KPI;Não informada
+ENGIE_teste_prompt6;2024;percentual_mulheres_total;32,1%;Percentual (%);% na força de trabalho 67,9% 32,1%;Percentual;Não informada
+ENGIE_teste_prompt6;2024;percentual_mulheres_lideranca;31,4%;Percentual (%);% em posição de gestão 68,6% 31,4%;Percentual;Não informada
+ENGIE_teste_prompt6;2024;mulheres_etaria_abaixo_30;85;Absoluto;Até 29 anos 97 85;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;mulheres_etaria_30_50;279;Absoluto;Entre 30 e 50 anos 624 279;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;mulheres_etaria_acima_50;12;Absoluto;Mais de 50 anos 76 12;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_analistas_mulheres;264;Absoluto;Analistas, engenheiros e especialistas 448 264 712;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_gerentes_mulheres;14;Absoluto;Gerentes 42 14 56;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;total_diretores_mulheres;2;Absoluto;Diretores 7 2 9;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;percentual_homens_total;67,9%;Percentual (%);% na força de trabalho 73,3% 26,7% 70,6% 29,4% 67,9% 32,1%;Percentual;Não informada
+ENGIE_teste_prompt6;2024;percentual_homens_lideranca;68,6%;Percentual (%);% em posição de gestão 76,8% 23,2% 72,4% 27,6% 68,6% 31,4%;Percentual;Não informada
+ENGIE_teste_prompt6;2024;homens_etaria_abaixo_30;97;Absoluto;Até 29 anos 97 85;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;homens_etaria_30_50;624;Absoluto;Entre 30 e 50 anos 624 279;Valor Absoluto;Não informada
+ENGIE_teste_prompt6;2024;homens_etaria_acima_50;76;Absoluto;Mais de 50 anos 76 12;Valor Absoluto;Não informada

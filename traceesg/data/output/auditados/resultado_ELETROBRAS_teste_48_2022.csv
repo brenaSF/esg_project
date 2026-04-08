@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Dado Extraído;Valor;Unidade;Fonte (Texto Original);Página
+ELETROBRAS_teste_48;2022;total_colaboradores_clt;0.0;Pessoas;Total de seguranças (quadro próprio e terceirizados) 1.741 1.965 2.398;110
+ELETROBRAS_teste_48;2022;total_colaboradores_negros;38.4;%;Empregados 2 60 38 1 59 40 0,7 57,3 41,9;95
+ELETROBRAS_teste_48;2022;total_colaboradores_brancos;0.0;Absoluto;0;95
+ELETROBRAS_teste_48;2022;total_colaboradores_pardos;0.0;Absoluto;0;183
+ELETROBRAS_teste_48;2022;total_colaboradores_indigenas;0.0;Pessoas;Dados sobre total_colaboradores_indigenas no ano 2022;183
+ELETROBRAS_teste_48;2022;total_colaboradores_amarelos;0.0;Pessoas;0;91
+ELETROBRAS_teste_48;2022;total_pcd;0.0;Absoluto;Dados sobre total_pcd no ano 2022;66
+ELETROBRAS_teste_48;2022;percentual_mulheres_total;0.24;%;2022 24;95
+ELETROBRAS_teste_48;2022;percentual_mulheres_lideranca;0.24;%;Em 2022, 24% dos cargos de gerência eram ocupados por mulheres, superando os 19% de mulheres no total de colaboradores da empresa.;94
+ELETROBRAS_teste_48;2022;mulheres_etaria_abaixo_30;0.0;Pessoas;0;94
+ELETROBRAS_teste_48;2022;mulheres_etaria_30_50;1.401;Pessoas;1.401 113 4.054;91
+ELETROBRAS_teste_48;2022;mulheres_etaria_acima_50;0.0;;0;183
+ELETROBRAS_teste_48;2022;total_analistas_mulheres;0.0;Pessoas;0;94
+ELETROBRAS_teste_48;2022;total_gerentes_mulheres;0.24;%;Em 2022, 24% dos cargos de gerência eram ocupados por mulheres, superando os 19% de mulheres no total de colaboradores da empresa.;94
+ELETROBRAS_teste_48;2022;total_diretores_mulheres;0.0;Diretores;0 | 0 | 0 | 0 | 0 | 0 | Pessoas | 0 |;94
+ELETROBRAS_teste_48;2022;percentual_homens_total;0.24;%;Em 2022, 24% dos cargos de gerência eram ocupados por mulheres, superando os 19% de mulheres no total de colaboradores da empresa.;94
+ELETROBRAS_teste_48;2022;percentual_homens_lideranca;0.24;%;Em 2022, 24% dos cargos de gerência eram ocupados por mulheres, superando os 19% de mulheres no total de colaboradores da empresa.;94
+ELETROBRAS_teste_48;2022;homens_etaria_abaixo_30;0.0;Pessoas;0;91
+ELETROBRAS_teste_48;2022;homens_etaria_30_50;0.0;Pessoas;0;93
+ELETROBRAS_teste_48;2022;homens_etaria_acima_50;0.0;Pessoas;Número absoluto de acidentes com afastamento (maior do que 15 dias)- empregado - - 11;106

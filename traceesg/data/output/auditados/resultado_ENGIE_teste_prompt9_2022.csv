@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Metrica;Valor;Unidade;Evidencia;Página;Status_Auditoria
+ENGIE_teste_prompt9;2022;total_colaboradores_clt;199;Absoluto;Total de colaboradores por faixa etária e gênero;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;total_colaboradores_negros;;Absoluto;;Não informada;Consistente
+ENGIE_teste_prompt9;2022;total_colaboradores_brancos;;Absoluto;;Não informada;Consistente
+ENGIE_teste_prompt9;2022;total_colaboradores_pardos;;Absoluto;;Não informada;Consistente
+ENGIE_teste_prompt9;2022;total_colaboradores_indigenas;;Absoluto;;Não informada;Consistente
+ENGIE_teste_prompt9;2022;total_colaboradores_amarelos;;Absoluto;;Não informada;Consistente
+ENGIE_teste_prompt9;2022;total_pcd;;Absoluto;Pessoas com deficiência ou necessidades especiais;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;percentual_mulheres_total;26,1%;Percentual (%);Média de horas de treinamento por gênero;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;percentual_mulheres_lideranca;37,7%;Percentual (%);Proporção entre o salário-base de homens e mulheres;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;mulheres_etaria_abaixo_30;85;Absoluto;Total de mulheres na faixa etária abaixo de 30 anos;Não informada;Consistente
+ENGIE_teste_prompt9;2022;mulheres_etaria_30_50;226;Absoluto;Total de mulheres na faixa etária entre 30 e 50 anos;Não informada;Consistente
+ENGIE_teste_prompt9;2022;mulheres_etaria_acima_50;13;Absoluto;Total de mulheres na faixa etária acima de 50 anos;Não informada;Consistente
+ENGIE_teste_prompt9;2022;total_analistas_mulheres;32;Absoluto;Total de analistas mulheres;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;total_gerentes_mulheres;61;Absoluto;Total de gerentes mulheres;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;total_diretores_mulheres;32;Absoluto;Total de diretores mulheres;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;percentual_homens_total;47,2%;Percentual (%);Média de horas de treinamento por gênero;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;percentual_homens_lideranca;65,1%;Percentual (%);Proporção entre o salário-base de homens e mulheres;Não informada;Inconsistente
+ENGIE_teste_prompt9;2022;homens_etaria_abaixo_30;114;Absoluto;Total de homens na faixa etária abaixo de 30 anos;Não informada;Consistente
+ENGIE_teste_prompt9;2022;homens_etaria_30_50;680;Absoluto;Total de homens na faixa etária entre 30 e 50 anos;Não informada;Consistente
+ENGIE_teste_prompt9;2022;homens_etaria_acima_50;97;Absoluto;Total de homens na faixa etária acima de 50 anos;Não informada;Consistente

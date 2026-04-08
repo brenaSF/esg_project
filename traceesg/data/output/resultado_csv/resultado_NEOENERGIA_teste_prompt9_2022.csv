@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Metrica;Valor;Unidade;Evidencia;Página;Status_Auditoria
+NEOENERGIA_teste_prompt9;2022;total_colaboradores_clt;14830;Absoluto;Total 14.830;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_colaboradores_negros;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_colaboradores_brancos;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_colaboradores_pardos;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_colaboradores_indigenas;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_colaboradores_amarelos;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_pcd;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;percentual_mulheres_total;18.7%;Percentual (%);Mulheres 2.777 / Total 14.830 = 18.7%;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;percentual_mulheres_lideranca;28.8%;Percentual (%);Liderança Mulheres 117 / Total Liderança 406 = 28.8%;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;mulheres_etaria_abaixo_30;908;Absoluto;Até 30 anos 908;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;mulheres_etaria_30_50;1761;Absoluto;Entre 31 e 50 anos 1.761;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;mulheres_etaria_acima_50;108;Absoluto;Mais de 51 anos 108;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_analistas_mulheres;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_gerentes_mulheres;;Absoluto;Não encontrado;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;total_diretores_mulheres;117;Absoluto;Liderança Mulheres 117;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;percentual_homens_total;81.3%;Percentual (%);Homens 12.053 / Total 14.830 = 81.3%;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;percentual_homens_lideranca;71.2%;Percentual (%);Liderança Homens 289 / Total Liderança 406 = 71.2%;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;homens_etaria_abaixo_30;2841;Absoluto;Até 30 anos 2.841;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;homens_etaria_30_50;8492;Absoluto;Entre 31 e 50 anos 8.492;Não informada;Pendente
+NEOENERGIA_teste_prompt9;2022;homens_etaria_acima_50;720;Absoluto;Mais de 51 anos 720;Não informada;Pendente

@@ -1,0 +1,21 @@
+﻿Empresa;Ano;Metrica;Valor;Unidade;Evidencia;Página;Status_Auditoria
+ELETROBRAS_teste_promtp9;2022;total_colaboradores_clt;10020;Absoluto;Total de empregados: 10.020;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_colaboradores_negros;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_colaboradores_brancos;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_colaboradores_pardos;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_colaboradores_indigenas;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_colaboradores_amarelos;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_pcd;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;percentual_mulheres_total;18.5%;Percentual (%);Total de mulheres: 1.858, percentual de mulheres no quadro geral: 18.5%;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;percentual_mulheres_lideranca;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;mulheres_etaria_abaixo_30;69;Absoluto;Mulheres abaixo de 30 anos: 69;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;mulheres_etaria_30_50;1.745;Absoluto;Mulheres entre 30 e 50 anos: 1.745;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;mulheres_etaria_acima_50;166;Absoluto;Mulheres acima de 50 anos: 166;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_analistas_mulheres;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_gerentes_mulheres;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;total_diretores_mulheres;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;percentual_homens_total;81.5%;Percentual (%);Total de homens: 8.162, percentual de homens no quadro geral: 81.5%;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;percentual_homens_lideranca;;Absoluto;Não foi encontrado dado numérico ou citação qualitativa.;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;homens_etaria_abaixo_30;2.387;Absoluto;Homens abaixo de 30 anos: 2.387;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;homens_etaria_30_50;5.897;Absoluto;Homens entre 30 e 50 anos: 5.897;Não informada;Pendente
+ELETROBRAS_teste_promtp9;2022;homens_etaria_acima_50;1.443;Absoluto;Homens acima de 50 anos: 1.443;Não informada;Pendente
