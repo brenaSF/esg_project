@@ -28,9 +28,6 @@ with aba_auditoria:
     render_auditoria(arquivo_selecionado)
     pass
 
-with aba_diagnostico:
-    render_diagnostico(arquivo_selecionado)
-    pass
 
 with aba_acuracia_extracao:
     if arquivo_auditado:

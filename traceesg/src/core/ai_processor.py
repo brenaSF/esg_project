@@ -7,10 +7,15 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.documents import Document
 from src.core.parsers import formatar_para_numero
 from src.core.config import Config
-from src.core.esg_prompt import DISCOVERY_PROMPT_TEMPLATE_400
+from src.core.prompt400 import DISCOVERY_PROMPT_TEMPLATE_400
 from src.core.prompt300 import DISCOVERY_PROMPT_TEMPLATE_300
 import json 
 import time
+from dotenv import load_dotenv
+
+load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
+
+VALOR_PADRAO = os.getenv("VALOR_PADRAO", "GRI_400")  # Valor padrão para o prompt, pode ser configurado no .env
 
 class ESGMetricProcessor:
     def __init__(self):
@@ -94,8 +99,15 @@ class ESGMetricProcessor:
             }
         )
 
+        if VALOR_PADRAO == "GRI_400":
+            template = DISCOVERY_PROMPT_TEMPLATE_400
+        elif VALOR_PADRAO == "GRI_300":
+            template = DISCOVERY_PROMPT_TEMPLATE_300
+        else:
+            raise ValueError(f"Valor inválido para VALOR_PADRAO: {VALOR_PADRAO}. Use 'GRI_400' ou 'GRI_300'.")
+
         discovery_prompt = PromptTemplate(
-            template=DISCOVERY_PROMPT_TEMPLATE_300,
+            template=template,
             input_variables=["context"],
             partial_variables={"format_instructions": self.parser.get_format_instructions()}
         )

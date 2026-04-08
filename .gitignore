@@ -6,6 +6,10 @@ venv_tcc/
 *.py[cod]
 *$py.class
 
+__pycache__/
+*.py[cod]
+*$py.class
+
 .~lock.*
 *.tmp
 

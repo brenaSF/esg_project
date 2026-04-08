@@ -6,7 +6,7 @@ class ESGDocumentLoader:
     def __init__(self, x_tolerance=3, y_tolerance=3):
         self.x_tolerance = x_tolerance
         self.y_tolerance = y_tolerance
-        # Palavras-chave que indicam presença de dados quantitativos ou tabelas GRI
+
         self.keywords_esg = ["gri", "405-1", "quadro", "gênero", "raça", "pcd", 
                              "diversidade", "idade", "%"]
 
@@ -40,11 +40,6 @@ class ESGDocumentLoader:
 
         return "\n".join(texto_final)
     
-    def _extrair_texto_estruturado2(self, page):
-        area_util = page.within_bbox((55, 40, page.width - 40, page.height - 40))
-        # O layout=True tenta preservar o espaçamento visual (colunas) no texto bruto
-        return area_util.extract_text(x_tolerance=3, y_tolerance=3, layout=True) or ""
-
     def _extract_tables_fast(self, page):
         try:
             settings = {
@@ -85,39 +80,35 @@ class ESGDocumentLoader:
             for i, page in enumerate(pdf.pages):
                 num_pagina = i + 1
                 
-                # 1. Extrai o texto limpo (Sem menus laterais)
+                # 1. Extrai o texto limpo 
                 texto_pag = self._extrair_texto_estruturado(page)
                 
-                # Se a página for vazia após o crop, pula
                 if not texto_pag.strip():
                     continue
 
-                # 2. Decisão de Extração de Tabela (Otimização de Velocidade)
-                # Só roda o extrator de tabela se a página parecer ter dados relevantes
-                #texto_tabelas = ""
-                #if any(k in texto_pag.lower() for k in self.keywords_esg):
-                #    texto_tabelas = self._extract_tables_fast(page)
-                
-                # 3. Consolidação do Chunk
-
-                # 2. Extração de Tabela PRIORITÁRIA
                 texto_tabelas = self._extract_tables_fast(page)
 
-                # 3. Consolidação Inteligente
-                # Se houver tabela, colocamos ela no topo do contexto do chunk
+                # 3. Consolidação 
+                # Se houver tabela,ela fica no topo do contexto do chunk
                 if texto_tabelas:
                     contexto_final = f"{texto_tabelas}\n\n--- TEXTO DA PÁGINA ---\n\n{texto_pag}"
                 else:
                     contexto_final = texto_pag
 
+                tem_tabela = "|" in contexto_final
+
                 chunk = {
-                    "indicador_id": "RAW_TEXT",
-                    "chave": f"pg_{num_pagina}",
-                    "valor": None,
-                    "contexto": contexto_final.strip(),
-                    "pagina": num_pagina,
-                    "empresa": empresa,
-                    "ano": ano
+                    "id": f"{empresa}_{ano}_pg{num_pagina}_{i}", # ID único obrigatório
+                    "document": contexto_final.strip(),          # O conteúdo textual
+                    "metadata": {
+                        "source": f"pg_{num_pagina}",
+                        "empresa": empresa,
+                        "ano": ano,
+                        "setor": "Social",                          # Categoria para filtros
+                        "tipo": "corpo_texto",
+                        "tem_tabela": tem_tabela            
+                             
+                    }
                 }
 
                 

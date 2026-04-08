@@ -86,11 +86,14 @@ class ESGAutomationOrchestrator:
         """Indexar os chunks extraídos no ChromaDB, associando metadados de empresa, ano e página."""
         documents = [
             Document(
-                page_content=chunk.get("contexto", ""),
-                metadata={"empresa": self.empresa, "ano": int(self.ano), "pagina": int(chunk.get("pagina", 0))}
-            ) for chunk in raw_data["chunks"] if chunk.get("contexto")
+                page_content=chunk.get("document", ""),
+                metadata=chunk.get("metadata", {})
+            ) for chunk in raw_data["chunks"] if chunk.get("document")
         ]
-        self.vector_store.add_documents(documents)
+        if documents:
+            self.vector_store.add_documents(documents)
+        else:
+            print(f"Aviso: Nenhum embedding gerado para {self.empresa}. Verifique a extração.")
 
     def _export_final_csv(self, dados_llm):
         try:
