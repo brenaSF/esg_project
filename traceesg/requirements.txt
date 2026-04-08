@@ -1,0 +1,12 @@
+langchain 
+langchain-openai 
+langchain-community 
+langchain-chroma 
+streamlit
+pandas 
+openai 
+pydantic 
+python-dotenv 
+pdfplumber
+fastapi
+uvicorn

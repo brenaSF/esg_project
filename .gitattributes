@@ -1,0 +1,3 @@
+*.pdf binary
+*.json linguist-generated=true
+*.csv linguist-generated=true

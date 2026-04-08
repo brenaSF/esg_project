@@ -1,0 +1,20 @@
+.env
+
+venv_tcc/
+
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+.~lock.*
+*.tmp
+
+data/
+
+# Ignorar todos os PDFs de dados
+**/data/raw/*.pdf
+**/data/processed/*.pdf
+
+# Ignorar outputs de testes e chunks
+**/data/output/
+**/traceesg/data/output/
