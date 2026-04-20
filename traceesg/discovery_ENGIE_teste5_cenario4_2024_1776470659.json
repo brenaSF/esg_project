@@ -1,0 +1,87 @@
+{
+    "total_colaboradores_clt": {
+        "valor": 1173,
+        "evidencia_texto": "Total 897 + 47 + 218 + 10 + 1 = 1173",
+        "status": "Valor Extraído"
+    },
+    "total_colaboradores_negros": {
+        "valor": 23,
+        "evidencia_texto": "Diretores (0) + Gerentes (1) + Analistas, engenheiros e especialistas (23) + Operadores e técnicos (0) = 24",
+        "status": "Valor Extraído"
+    },
+    "total_colaboradores_brancos": {
+        "valor": 601,
+        "evidencia_texto": "Diretores (8) + Gerentes (48) + Analistas, engenheiros e especialistas (601) + Operadores e técnicos (240) = 897",
+        "status": "Valor Extraído"
+    },
+    "total_colaboradores_pardos": {
+        "valor": 79,
+        "evidencia_texto": "Diretores (0) + Gerentes (7) + Analistas, engenheiros e especialistas (79) + Operadores e técnicos (132) = 218",
+        "status": "Valor Extraído"
+    },
+    "total_colaboradores_indigenas": {
+        "valor": 1,
+        "evidencia_texto": "Diretores (0) + Gerentes (0) + Analistas, engenheiros e especialistas (0) + Operadores e técnicos (1) = 1",
+        "status": "Valor Extraído"
+    },
+    "total_colaboradores_amarelos": {
+        "valor": 0,
+        "evidencia_texto": "Diretores (0) + Gerentes (0) + Analistas, engenheiros e especialistas (0) + Operadores e técnicos (0) = 0",
+        "status": "Valor Extraído"
+    },
+    "total_pcd": {
+        "valor": null,
+        "evidencia_texto": "Programa para PCDs.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "percentual_mulheres_total": {
+        "valor": "32,1%",
+        "evidencia_texto": "Mulheres (32,1%) em posições de liderança.",
+        "status": "Valor Extraído"
+    },
+    "percentual_mulheres_lideranca": {
+        "valor": "32,1%",
+        "evidencia_texto": "Mulheres (32,1%) em posições de liderança.",
+        "status": "Valor Extraído"
+    },
+    "mulheres_etaria_abaixo_30": {
+        "valor": 85,
+        "evidencia_texto": "Mulheres até 29 anos (85).",
+        "status": "Valor Extraído"
+    },
+    "mulheres_etaria_30_50": {
+        "valor": 279,
+        "evidencia_texto": "Mulheres entre 30 e 50 anos (279).",
+        "status": "Valor Extraído"
+    },
+    "mulheres_etaria_acima_50": {
+        "valor": 12,
+        "evidencia_texto": "Mulheres acima de 50 anos (12).",
+        "status": "Valor Extraído"
+    },
+    "percentual_homens_total": {
+        "valor": "67,9%",
+        "evidencia_texto": "Homens (67,9%) na força de trabalho.",
+        "status": "Valor Extraído"
+    },
+    "percentual_homens_lideranca": {
+        "valor": "70,5%",
+        "evidencia_texto": "Homens em alta gestão (70,5%).",
+        "status": "Valor Extraído"
+    },
+    "homens_etaria_abaixo_30": {
+        "valor": 97,
+        "evidencia_texto": "Homens até 29 anos (97).",
+        "status": "Valor Extraído"
+    },
+    "homens_etaria_30_50": {
+        "valor": 624,
+        "evidencia_texto": "Homens entre 30 e 50 anos (624).",
+        "status": "Valor Extraído"
+    },
+    "homens_etaria_acima_50": {
+        "valor": 76,
+        "evidencia_texto": "Homens acima de 50 anos (76).",
+        "status": "Valor Extraído"
+    }
+}

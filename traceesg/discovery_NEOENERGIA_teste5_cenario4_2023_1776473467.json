@@ -1,0 +1,85 @@
+{
+    "total_colaboradores_clt": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o total de colaboradores CLT.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_negros": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o total de colaboradores negros.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_brancos": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o total de colaboradores brancos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_pardos": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o total de colaboradores pardos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_indigenas": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o total de colaboradores indígenas.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_amarelos": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o total de colaboradores amarelos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_pcd": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o total de colaboradores PcD.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "percentual_mulheres_total": {
+        "valor": "77,7%",
+        "evidencia_texto": "Neoenergia Elektro, 77,7%, o que contribui para os reconhecimentos alcançados."
+    },
+    "percentual_mulheres_lideranca": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o percentual de mulheres em cargos de liderança.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "mulheres_etaria_abaixo_30": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado a quantidade de mulheres na faixa etária abaixo de 30 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "mulheres_etaria_30_50": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado a quantidade de mulheres na faixa etária entre 30 e 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "mulheres_etaria_acima_50": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado a quantidade de mulheres na faixa etária acima de 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "percentual_homens_total": {
+        "valor": "77,4%",
+        "evidencia_texto": "Neoenergia Cosern atingiu 77,4%."
+    },
+    "percentual_homens_lideranca": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado o percentual de homens em cargos de liderança.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "homens_etaria_abaixo_30": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado a quantidade de homens na faixa etária abaixo de 30 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "homens_etaria_30_50": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado a quantidade de homens na faixa etária entre 30 e 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "homens_etaria_acima_50": {
+        "valor": null,
+        "evidencia_texto": "Não foi encontrado a quantidade de homens na faixa etária acima de 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    }
+}

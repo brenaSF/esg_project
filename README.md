@@ -1,10 +1,13 @@
 # TraceESG
 
-O sistema utiliza **LLMs (GPT-4o-mini)** e **Busca Semântica (RAG)** para encontrar valores e retornar o texto original como evidência para auditoria humana.
+Este projeto engloba um pipeline de extração e validação de métricas quantitativas de sustentabilidade, com o objetivo de oferecer suporte a especialista de auditoria de relatórios de sustentabilidade em diferentes empresas. Como dataset atual , utiliza-se documento referentes as empresas Neoenergia, Eletrobras e Engie do anos de 2021,2022 e 2023. 
+A aplicação utiliza ferramentas muito comuns no meio da tecnologia de extração , vetorização e recuperação de dados atravé de similaridade semântica.
+
+O sistema TraceESG utiliza **LLMs (GPT-4o-mini)** e **Busca Semântica (RAG)** para encontrar valores e retornar o texto original como evidência para auditoria humana.
 
 ## Interface auditoria
 
-Ondevisualziar : https://esgproject-daqzi9ycjpgvxjqbimpfna.streamlit.app/
+Onde visualziar : https://esgproject-daqzi9ycjpgvxjqbimpfna.streamlit.app/
 
 ## 🚀 Funcionalidades do sistema
 

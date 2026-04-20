@@ -35,20 +35,17 @@ Exemplo: "Homens (12.489) + Mulheres (3.204) = 15.693". Não aceite totais pront
 ### DICIONÁRIO DE MÉTRICAS (CHAVES OBRIGATÓRIAS):
 {{
     "total_colaboradores_clt": "Localize a tabela de perfil da força de trabalho ou vínculo empregatício. Soma de (Homens + Mulheres) ou (Liderança + Operacional) para o ano {ano}.",
-    "total_colaboradores_negros": "Busque a soma de Pretos + Pardos em tabelas de raça/etnia.",
-    "total_colaboradores_brancos": "Localize a tabela de raça/etnia. Se houver Brancos, some-os.",
-    "total_colaboradores_pardos": "Localize a tabela de raça/etnia. Se houver Pardos, some-os.",
-    "total_colaboradores_indigenas": "Localize a tabela de raça/etnia. Se houver Indígenas, some-os.",
-    "total_colaboradores_amarelos": "Localize a tabela de raça/etnia. Se houver Amarelos, some-os.",
-    "total_pcd": "Localize o número total de pessoas com deficiência (PcD).",
+    "total_colaboradores_negros": "Localize a tabela de raça/etnia e identifique a categoria 'Negros/Pretos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
+    "total_colaboradores_brancos": "Localize a tabela de raça/etnia e identifique a categoria 'Brancos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
+    "total_colaboradores_pardos": "Localize a tabela de raça/etnia e identifique a categoria 'Pardos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
+    "total_colaboradores_indigenas": "Localize a tabela de raça/etnia e identifique a categoria 'Indígenas'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
+    "total_colaboradores_amarelos": "Localize a tabela de raça/etnia e identifique a categoria 'Amarelos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
+    "total_pcd": "Procure por tabelas de diversidade, composição do quadro de funcionários ou indicadores sociais. Se o valor total não estiver explícito, mas houver uma segmentação por gênero (ex: Homens PcD e Mulheres PcD) ou por nível hierárquico (ex: Operacional, Administrativo e Liderança), realize a soma de todos os valores para formar o total geral. Caso o relatório apresente apenas percentuais, tente localizar o número absoluto; se não houver o valor absoluto correto ou ele for inconsistente, deixe o valor em branco.",
     "percentual_mulheres_total": "Localize o percentual ou total de mulheres no quadro geral.",
     "percentual_mulheres_lideranca": "Localize mulheres em cargos de liderança, gerência ou diretoria.",
     "mulheres_etaria_abaixo_30": "Localize a quantidade de mulheres na faixa etária abaixo de 30 anos.",
     "mulheres_etaria_30_50": "Localize a quantidade de mulheres  faixa etária entre 30 e 50 anos.",
     "mulheres_etaria_acima_50": "Localize a quantidade de mulheres  faixa etária acima de 50 anos.",
-    "total_analistas_mulheres": "Localize o total de analistas mulheres.",
-    "total_gerentes_mulheres": "Localize o total de gerentes mulheres.",
-    "total_diretores_mulheres": "Localize o total de diretores mulheres.",
     "percentual_homens_total": "Localize o percentual ou total de homens no quadro geral.",
     "percentual_homens_lideranca": "Localize o total de homens que trabalham em cargos de liderança, gerência ou diretoria.",
     "homens_etaria_abaixo_30": "Localize a quantidade de homens na faixa etária abaixo de 30 anos.",
@@ -70,7 +67,7 @@ Extraia o valor exato para o ano {ano} com base no mapeamento fornecido."Antes d
 
 
 ### PROTOCOLO DE EXECUÇÃO:
-1. **Memória de Cálculo:** Se a instrução exigir soma (ex: Pretos + Pardos), detalhe o cálculo em 'raciocinio'.
+1. **Memória de Cálculo:** Se a instrução exigir soma (ex: Homens + mulheres), detalhe o cálculo em 'raciocinio'.
 2. **Localização:** Use os marcadores [Trecho X] para identificar a origem.
 3. **Ausência de Dados:** Se o dado não existir nos trechos fornecidos, retorne 0.0 e indique no status.
 

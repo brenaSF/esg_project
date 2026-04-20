@@ -11,11 +11,12 @@ from src.core.prompt400 import DISCOVERY_PROMPT_TEMPLATE_400
 from src.core.prompt300 import DISCOVERY_PROMPT_TEMPLATE_300
 import json 
 import time
+import asyncio
 from dotenv import load_dotenv
 
-load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
+load_dotenv() 
 
-VALOR_PADRAO = os.getenv("VALOR_PADRAO", "GRI_400")  # Valor padrão para o prompt, pode ser configurado no .env
+VALOR_PADRAO = os.getenv("VALOR_PADRAO", "GRI_400") 
 
 class ESGMetricProcessor:
     def __init__(self):
@@ -29,6 +30,7 @@ class ESGMetricProcessor:
             model=Config.EMBEDDING_MODEL
         )
         self.parser = JsonOutputParser()
+        self.semaphore = asyncio.Semaphore(5)
 
 
     def _rerank_documents(self, query, docs_e_scores):
@@ -69,27 +71,122 @@ class ESGMetricProcessor:
         # Reordena pela nova pontuação combinada
         reranked_docs.sort(key=lambda x: x[1], reverse=True)
         return reranked_docs  
-
-    def _extrair_com_rag(self,vector_store,empresa, ano):
-        """Função principal que executa o processo de extração usando RAG.
-         1. Discovery: Identifica quais métricas estão presentes e gera perguntas específicas.
-         2. Precise Extraction: Para cada métrica, busca os trechos mais relevantes e extrai o valor quantitativo.
+    
+    async def convert_text_to_markdown_tables(self,raw_text: str) -> str:
+        """
+        Recebe o texto bruto extraído do PDF e utiliza o LLM para 
+        reconstruir as tabelas em formato Markdown limpo.
+        """
+        llm = ChatOpenAI(temperature=0, model_name=self.model_name)
         
-        Args:
-            chroma_client: Cliente do ChromaDB para acesso à base de dados vetorial.
-            collection_name: Nome da coleção no ChromaDB onde os documentos estão armazenados.
-            empresa: Nome da empresa alvo da extração.
-            ano: Ano específico para o qual os dados devem ser extraídos.
+        template = """
+        Você é um especialista em engenharia de dados ESG. Sua tarefa é converter o texto bruto extraído de um PDF 
+        em tabelas Markdown organizadas. 
+        
+        Regras:
+        1. Identifique se há múltiplas tabelas misturadas e separe-as com títulos (H3).
+        2. Recupere a estrutura lógica (Linhas vs Colunas) mesmo que o texto esteja desalinhado.
+        3. Preserve os valores exatos e os nomes das métricas (GRI, Categorias, anos).
+        4. Se um dado parecer truncado ou ilegível, mantenha-o como está, mas tente organizar a linha.
 
-        Returns:
-            Uma tabela de auditoria contendo as métricas extraídas, seus valores, unidades, scores de relevância e evidências textuais.
+        Texto Bruto:
+        {text}
 
+        Tabelas em Markdown:
         """
         
-        # retriever com filtro para empresa e ano, garantindo que só busque documentos relevantes para o contexto específico
+        prompt = PromptTemplate(template=template, input_variables=["text"])
+        chain = prompt | llm
+        
+        response = await chain.ainvoke({"text": raw_text})
+        return response.content
+
+    def _salvar_log_discovery(self, empresa, ano, dados):
+        nome_arquivo = f"discovery_{empresa}_{ano}_{int(time.time())}.json"
+        with open(nome_arquivo, 'w', encoding='utf-8') as f:
+            json.dump(dados, f, ensure_ascii=False, indent=4)
+        print(f"✅ Log de descoberta salvo: {nome_arquivo}")
+
+
+    def _detectar_tabela_no_texto(self,text: str) -> bool:
+        """
+        Detecta padrões que indicam que o texto bruto é uma tabela desalinhada.
+        """
+        padroes = [
+            r"\d{4}\s+\d+",                 # Anos seguidos de números
+            r"GRI\s+\d+",                   # GRI seguido de número
+            r"\d+[.,]\d+%\s+\d+[.,]\d+%",   # Porcentagens lado a lado
+            r"(Homens|Mulheres|Gênero|Raça|PCD|Até \d+ anos)", # Palavras-chave ESG
+            r"\d{2,}\s+\d{2,}\s+\d{2,}",    # Sequência de pelo menos 3 números
+            r"Total\s+\d+"                  # Palavra Total seguida de valor
+        ]
+        
+        for p in padroes:
+            if re.search(p, text, re.IGNORECASE | re.MULTILINE):
+                return True
+        return False
+    
+    async def _processar_metrica_individual(self, metrica, dados, retriever, discovery_prompt, empresa, ano):
+        """
+        Função assíncrona para processar uma única métrica.
+        """
+        async with self.semaphore:
+            try:
+                # Lógica de Refinamento (Precise Extraction)
+                if dados.get("valor") is None or "Omissão" in str(dados.get("status")):
+                    query_focada = f"Valor numérico exato e tabela para a métrica {metrica} da {empresa} em {ano}"
+                    
+                    # O retriever.ainvoke é a versão assíncrona do invoke
+                    docs_especificos = await retriever.ainvoke(query_focada)
+                    
+                    contextos_processados = []
+                    for doc in docs_especificos:
+                        conteudo_chunk = doc.page_content
+                        if self._detectar_tabela_no_texto(conteudo_chunk):
+                            # Chamada assíncrona para estruturação de tabela
+                            #conteudo_chunk = await self.convert_text_to_markdown_tables(conteudo_chunk)
+                            print("-----------------------")
+                            print(conteudo_chunk)
+                        contextos_processados.append(conteudo_chunk)
+                    
+                    contexto_focado = "\n\n".join(contextos_processados)
+                    
+                    # Executa a extração refinada
+                    dados_refinados = await (discovery_prompt | self.model | self.parser).ainvoke({
+                        "context": contexto_focado, 
+                        "empresa": empresa, 
+                        "ano": ano
+                    })
+                    
+                    if metrica in dados_refinados:
+                        dados = dados_refinados[metrica]
+
+                # Formatação do resultado
+                valor_final = dados.get("valor")
+                return {
+                    "Empresa": empresa,
+                    "Ano": ano,
+                    "Metrica": metrica,
+                    "Valor": valor_final,
+                    "Unidade": "Percentual (%)" if "%" in str(valor_final) else "Absoluto",
+                    "Evidencia": dados.get("evidencia_texto", ""),
+                    "Página": str(dados.get("página", "Não encontrada")),
+                    "Status_Auditoria": "Pendente"
+                }
+            except Exception as e:
+                print(f"❌ Erro na métrica {metrica}: {e}")
+                return None
+
+    async def _extrair_com_rag(self, vector_store, empresa, ano):
+        """
+        Função principal otimizada para o TraceESG.
+        Executa Discovery -> Detecção de Tabela -> Limpeza Seletiva -> Extração de Precisão.
+        """
+        
+        # 1. Configuração do Retriever com Filtros de Metadados
         retriever = vector_store.as_retriever(
             search_kwargs={
-                "k": 8,
+                "k": 7,
                 "filter": {
                     "$and": [
                         {"empresa": {"$eq": empresa}},
@@ -99,65 +196,42 @@ class ESGMetricProcessor:
             }
         )
 
+        # Seleção do Template de acordo com o padrão GRI definido
         if VALOR_PADRAO == "GRI_400":
             template = DISCOVERY_PROMPT_TEMPLATE_400
         elif VALOR_PADRAO == "GRI_300":
             template = DISCOVERY_PROMPT_TEMPLATE_300
         else:
-            raise ValueError(f"Valor inválido para VALOR_PADRAO: {VALOR_PADRAO}. Use 'GRI_400' ou 'GRI_300'.")
+            raise ValueError(f"Valor inválido para VALOR_PADRAO: {VALOR_PADRAO}")
 
         discovery_prompt = PromptTemplate(
             template=template,
-            input_variables=["context"],
+            input_variables=["context", "ano", "empresa"],
             partial_variables={"format_instructions": self.parser.get_format_instructions()}
         )
 
+        # 2. Discovery (Ainda sequencial pois é a base para o resto)
+        query_discovery = f"Tabelas de indicadores sociais da {empresa} {ano}"
+        docs_iniciais = await retriever.ainvoke(query_discovery)
+        contexto_inicial = "\n\n".join([d.page_content for d in docs_iniciais])
         
-        # 1. Discovery
-        docs_iniciais = retriever.invoke(f"Indicadores de diversidade e emissões de {empresa} {ano}")
-        contexto_inicial = "\n".join([d.page_content for d in docs_iniciais])
-        
-        metricas_descobertas = (discovery_prompt | self.model | self.parser).invoke({
+        metricas_preliminares = await (discovery_prompt | self.model | self.parser).ainvoke({
             "context": contexto_inicial, "empresa": empresa, "ano": ano
         })
 
-        nome_arquivo = f"discovery_{empresa}_{ano}_{int(time.time())}.json"
-        with open(nome_arquivo, 'w', encoding='utf-8') as f:
-            json.dump(metricas_descobertas, f, ensure_ascii=False, indent=4)
+        # 3. DISPARO ASSÍNCRONO DE TODAS AS MÉTRICAS
+        print(f"📊 Processando {len(metricas_preliminares)} métricas simultaneamente...")
+        
+        tarefas = [
+            self._processar_metrica_individual(metrica, dados, retriever, discovery_prompt, empresa, ano)
+            for metrica, dados in metricas_preliminares.items()
+        ]
 
-        print(f"✅ Mapeamento de descoberta salvo em: {nome_arquivo}")
+        # O gather executa todas as tarefas em paralelo
+        tabela_auditoria = await asyncio.gather(*tarefas)
 
-            
-        # 2. Precise Extraction
-        tabela_auditoria = []
-
-        print(metricas_descobertas)
-
-        total = len(metricas_descobertas)
-        print(f"📊 Processando {total} métricas encontradas...")
-
-        for metrica, dados in metricas_descobertas.items():
-            try:
-                valor_original = dados.get("valor")
-                unidade = "Percentual (%)" if dados.get("status") == "Percentual" or "%" in str(valor_original) else "Absoluto"
-              
-                pagina = str(dados.get("pagina", "Não informada"))
-
-                linha = {
-                    "Empresa": empresa,
-                    "Ano": ano,
-                    "Metrica": metrica,
-                    "Valor": valor_original,
-                    "Unidade": unidade,
-                    "Evidencia": dados.get("evidencia_texto", ""),
-                    "Página": pagina ,
-                    "Status_Auditoria": "Pendente"  
-                }
-                
-                tabela_auditoria.append(linha)
-                
-            except Exception as e:
-                print(f"Erro ao estruturar métrica {metrica}: {e}")
-
-        # Retorna a lista de dicionários (pronta para pd.DataFrame(tabela_para_csv))
+        # Filtrar falhas e salvar log
+        tabela_auditoria = [linha for linha in tabela_auditoria if linha is not None]
+        self._salvar_log_discovery(empresa, ano, metricas_preliminares)
+        
         return tabela_auditoria

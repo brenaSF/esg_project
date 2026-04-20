@@ -38,7 +38,7 @@ async def process_file(payload: FilePayload):
     try:
         orchestrator = ESGAutomationOrchestrator(caminho_origem, payload.empresa, payload.ano)
         
-        if orchestrator.run_pipeline():
+        if await orchestrator.run_pipeline():
             caminho_destino = os.path.join("data/processed", payload.filename)
             shutil.move(caminho_origem, caminho_destino)
             return {"status": "success", "message": f"Relatório de {payload.empresa} processado."}

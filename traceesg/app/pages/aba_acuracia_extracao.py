@@ -10,6 +10,7 @@ from src.services.diagnostic_service import (
 load_dotenv()
 
 DIR_OUTPUT = os.getenv("DIR_OUTPUT")
+METRICAS_PDF = os.getenv("METRICAS_PDF")
 
 def detectar_status(df):
 
@@ -29,91 +30,82 @@ def calcular_acuracia(df):
     ).round(2)
 
     return df_results
+def processar_metricas_detalhadas(df):
+    """
+    Calcula Precisão, Recall e Acurácia corrigindo o erro de tipos.
+    """
+    # Garantir que trabalhamos em uma cópia para não afetar o original
+    df = df.copy()
 
+    # 1. Identifica o que é acerto (não inconsistente)
+    # Verificamos se a coluna existe para evitar erros
+    if 'Status_Auditoria' in df.columns:
+        df["is_correto"] = (df['Status_Auditoria'].astype(str).str.lower() != 'inconsistente').astype(int)
+    else:
+        df["is_correto"] = 0
+
+    # 2. Identifica o que é uma tentativa da IA (Valor não nulo e não vazio)
+    if 'Valor' in df.columns:
+        df["is_tentativa"] = df['Valor'].notnull() & (df['Valor'].astype(str).str.strip() != "")
+    else:
+        df["is_tentativa"] = 0
+
+    # 3. Agrupa por empresa para calcular as métricas
+    df_results = df.groupby("Empresa").agg(
+        Total_Gabarito=("is_correto", "size"),      
+        Total_Tentativas=("is_tentativa", "sum"),   
+        Acertos_Totais=("is_correto", "sum")        
+    ).reset_index()
+
+    # --- CÁLCULOS FINAIS ---
+    
+    # PRECISÃO: (Acertos / Tentativas) -> Foco em não alucinar
+    # Se Total_Tentativas for 0, a precisão será 0.0
+    df_results["Precisão (%)"] = df_results.apply(
+        lambda row: (row["Acertos_Totais"] / row["Total_Tentativas"] * 100) 
+        if row["Total_Tentativas"] > 0 else 0.0, axis=1
+    ).round(2)
+
+    # RECALL: (Acertos / Total esperado no Gabarito) -> Foco em não omitir
+    df_results["Recall (%)"] = (
+        (df_results["Acertos_Totais"] / df_results["Total_Gabarito"]) * 100
+    ).round(2)
+
+    # ACURÁCIA: Seguindo sua lógica anterior
+    df_results["Acurácia (%)"] = df_results["Recall (%)"]
+
+    return df_results
 def render_acuracia_extracao(arquivo_selecionado):
-    """Renderiza a aba de avaliação de acurácia da extração, mostrando a taxa de acerto por empresa."""
     st.title("Avaliação de Acurácia da Extração")
     
     df = carregar_dados_para_diagnostico(arquivo_selecionado)
+    if df.empty:
+        st.warning("Dados não encontrados.")
+        return
 
+    # Processa as métricas corretamente agrupadas
+    df_results = processar_metricas_detalhadas(df)
+
+    # Métricas de topo (usando a primeira empresa da lista como exemplo)
     m1, m2, m3 = st.columns(3)
     with m1:
-        nome_empresa = df['Empresa'].iloc[0] if 'Empresa' in df.columns else "N/A"
-        st.metric("Empresa", nome_empresa)
+        st.metric("Empresa", df_results['Empresa'].iloc[0])
     with m2:
-        st.metric("Métricas", len(df))
+        st.metric("Total Gabarito", int(df_results['Total_Gabarito'].iloc[0]))
     with m3:
-        ano = df['Ano'].iloc[0] if 'Ano' in df.columns else "N/A"
-        st.metric("Ano de Referência", ano)    
+        st.metric("Tentativas IA", int(df_results['Total_Tentativas'].iloc[0]))
 
-    df_status = detectar_status(df)
-
-    # Calcular a acurácia por empresa
-    df_results = calcular_acuracia(df_status)
-
-
-    tentativas_da_ia = df[df['Valor'].notnull()] 
-
-    acertos = tentativas_da_ia["is_correto"].sum() 
-    total_tentativas = len(tentativas_da_ia) 
-
-    precisao = (acertos / total_tentativas) * 100
-
-    df_results["Precisão (%)"] = precisao.round(2)
-
-    # recall
-    # 1. Total de métricas que REALMENTE estavam no PDF (Gabarito)
-    # No seu exemplo, eram 14 métricas presentes na página.
-    metricas_existentes_no_pdf = 20 
-
-    # 2. Total que o extrator acertou (Status Consistente)
-    acertos = df["is_correto"].sum() 
-
-    # 3. Cálculo do Recall
-    # Se ele acertou as 14 que existiam: 14 / 14 = 1.0 (100%)
-    # Se ele tivesse 'esquecido' 2, seriam 12 acertos: 12 / 14 = 0.85 (85%)
-    recall = (acertos / metricas_existentes_no_pdf) * 100
-
-    df_results["Recall (%)"] = recall.round(2)
-
-
-    st.markdown("### Métrica de Acurácia")
+    # --- GRÁFICOS ---
+    st.markdown("---")
+    c1, c2 = st.columns(2)
     
-    fig = px.bar(
-        df_results, 
-        x="Empresa", 
-        y="Acurácia (%)", 
-        text_auto='.1f',
-        color="Acurácia (%)",
-        color_continuous_scale="Viridis"
-    )
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.markdown("### Métrica de Precisão")
-
-    fig2 = px.bar(
-        df_results, 
-        x="Empresa", 
-        y="Precisão (%)", 
-        text_auto='.1f',
-        color="Precisão (%)",
-        color_continuous_scale="Cividis"
-    )
-    st.plotly_chart(fig2, use_container_width=True)
-    fig3 = px.bar(
-        df_results, 
-        x="Empresa", 
-        y="Recall (%)", 
-        text_auto='.1f',
-        color="Recall (%)",
-        color_continuous_scale="Plasma" 
-    )
-    st.plotly_chart(fig3, use_container_width=True)
-
+    with c1:
+        st.markdown("### Precisão")
+        st.plotly_chart(px.bar(df_results, x="Empresa", y="Precisão (%)", range_y=[0,105], text_auto=True, color_discrete_sequence=['#636EFA']), use_container_width=True)
+    
+    with c2:
+        st.markdown("### Recall")
+        st.plotly_chart(px.bar(df_results, x="Empresa", y="Recall (%)", range_y=[0,105], text_auto=True, color_discrete_sequence=['#00CC96']), use_container_width=True)
 
     with st.expander("Ver Tabela Detalhada"):
-        st.dataframe(
-            df_results.sort_values(by="Acurácia (%)", ascending=False),
-            use_container_width=True,
-            hide_index=True
-        )
+        st.dataframe(df_results, use_container_width=True, hide_index=True)

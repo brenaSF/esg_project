@@ -1,0 +1,87 @@
+{
+    "total_colaboradores_clt": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre o total de colaboradores CLT.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_negros": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre colaboradores negros.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_brancos": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre colaboradores brancos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_pardos": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre colaboradores pardos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_indigenas": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre colaboradores indígenas.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_colaboradores_amarelos": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre colaboradores amarelos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "total_pcd": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre colaboradores com deficiência.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "percentual_mulheres_total": {
+        "valor": "24%",
+        "evidencia_texto": "Em 2019, as mulheres ocupavam 24% das posições de liderança.",
+        "status": "Valor Extraído"
+    },
+    "percentual_mulheres_lideranca": {
+        "valor": "30%",
+        "evidencia_texto": "Ampliar para 50% a participação de mulheres na administração do Grupo.",
+        "status": "Valor Extraído"
+    },
+    "mulheres_etaria_abaixo_30": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre mulheres na faixa etária abaixo de 30 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "mulheres_etaria_30_50": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre mulheres na faixa etária entre 30 e 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "mulheres_etaria_acima_50": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre mulheres na faixa etária acima de 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "percentual_homens_total": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre o percentual de homens no quadro geral.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "percentual_homens_lideranca": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre o total de homens em cargos de liderança.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "homens_etaria_abaixo_30": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre homens na faixa etária abaixo de 30 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "homens_etaria_30_50": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre homens na faixa etária entre 30 e 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    },
+    "homens_etaria_acima_50": {
+        "valor": null,
+        "evidencia_texto": "Não foram encontrados dados sobre homens na faixa etária acima de 50 anos.",
+        "status": "Citação Qualitativa/Omissão de KPI"
+    }
+}
