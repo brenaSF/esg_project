@@ -30,7 +30,7 @@ extraia o número inteiro; se pede 'percentual', extraia o valor com o símbolo 
 9. **Protocolo de Memória de Cálculo (Crucial)**: Caso o valor não esteja explícito, faça o cálculo de soma. Para cada valor numérico extraído, o campo evidencia deve seguir o formato: [Valor Componente A] + [Valor Componente B] = [Total Extraído].
 Exemplo: "Homens (12.489) + Mulheres (3.204) = 15.693". Não aceite totais prontos sem validar a soma das parcelas presentes na tabela.
 
-10. Caso existam divisões entre contrato temporário ou contrato indefinido, some os valores para compor o total geral, a menos que o relatório destaque apenas um tipo de contrato como foco principal.
+10. Regra de Colunas Distantes: "Este relatório apresenta tabelas onde as categorias (Integral/Parcial) estão em blocos de colunas separados. Para o ano {ano}, você DEVE capturar o valor da coluna correspondente em 'Período Integral' e o valor da coluna correspondente em 'Período Parcial' antes de fechar o cálculo."
 
 ### DICIONÁRIO DE MÉTRICAS (CHAVES OBRIGATÓRIAS):
 {{
@@ -43,15 +43,14 @@ Exemplo: "Homens (12.489) + Mulheres (3.204) = 15.693". Não aceite totais pront
     "total_pcd": "Procure por tabelas de diversidade, composição do quadro de funcionários ou indicadores sociais. Se o valor total não estiver explícito, mas houver uma segmentação por gênero (ex: Homens PcD e Mulheres PcD) ou por nível hierárquico (ex: Operacional, Administrativo e Liderança), realize a soma de todos os valores para formar o total geral. Caso o relatório apresente apenas percentuais, tente localizar o número absoluto; se não houver o valor absoluto correto ou ele for inconsistente, deixe o valor em branco.",
     "percentual_mulheres_total": "Localize o percentual ou total de mulheres no quadro geral.",
     "percentual_mulheres_lideranca": "Localize mulheres em cargos de liderança, gerência ou diretoria.",
-    "mulheres_etaria_abaixo_30": "Localize a quantidade de mulheres na faixa etária abaixo de 30 anos.",
-    "mulheres_etaria_30_50": "Localize a quantidade de mulheres  faixa etária entre 30 e 50 anos.",
-    "mulheres_etaria_acima_50": "Localize a quantidade de mulheres  faixa etária acima de 50 anos.",
+    "mulheres_etaria_abaixo_30": "Localize a quantidade total de empregados/funcionários  mulheres na faixa etária abaixo de 30 anos. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
+    "mulheres_etaria_30_50": "Localize a quantidade total de empregados/funcionários mulheres  faixa etária entre 30 e 50 anos. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
+    "mulheres_etaria_acima_50": "Localize a quantidade total de empregados/funcionários mulheres  faixa etária acima de 50 anos. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
     "percentual_homens_total": "Localize o percentual ou total de homens no quadro geral.",
     "percentual_homens_lideranca": "Localize o total de homens que trabalham em cargos de liderança, gerência ou diretoria.",
-    "homens_etaria_abaixo_30": "Localize a quantidade de homens na faixa etária abaixo de 30 anos.",
-    "homens_etaria_30_50": "Localize a quantidade de homens  faixa etária entre 30 e 50 anos.",
-    "homens_etaria_acima_50": "Localize a quantidade de homens  faixa etária acima de 50 anos."
-
+    "homens_etaria_abaixo_30": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR TIPO DE EMPREGO' ou o código 'GRI 2-7'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Até 30 anos' e realize a soma: [Integral] + [Parcial].",
+    "homens_etaria_30_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR TIPO DE EMPREGO' ou o código 'GRI 2-7'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Entre 30 e 50 anos' e realize a soma: [Integral] + [Parcial]." ,
+    "homens_etaria_acima_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR TIPO DE EMPREGO' ou o código 'GRI 2-7'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Acima de 50' e realize a soma: [Integral] + [Parcial]." ,
 }}
 
 Contexto: {context}

@@ -13,10 +13,23 @@ import json
 import time
 import asyncio
 from dotenv import load_dotenv
-
+from langchain_classic.retrievers import MultiQueryRetriever
 load_dotenv() 
-
+import pandas as pd
 VALOR_PADRAO = os.getenv("VALOR_PADRAO", "GRI_400") 
+
+ADAPTIVE_QUERY_PROMPT = PromptTemplate(
+    input_variables=["empresa", "ano"],
+    template="""Com base nas métricas GRI 400 (Diversidade, Raça, Faixa Etária e Pessoal), 
+    gere 5 buscas específicas para o relatório da {empresa} em {ano}.
+    Exemplos de termos de busca:
+    1. "Tabela de empregados por gênero e idade GRI 2-7 {ano}"
+    2. "Quadro de colaboradores por raça e etnia {ano}"
+    3. "Composição da alta governança e liderança {ano}"
+    4. "Número total de empregados período integral e parcial"
+    """
+)
+
 
 class ESGMetricProcessor:
     def __init__(self):
@@ -101,6 +114,7 @@ class ESGMetricProcessor:
         response = await chain.ainvoke({"text": raw_text})
         return response.content
 
+
     def _salvar_log_discovery(self, empresa, ano, dados):
         nome_arquivo = f"discovery_{empresa}_{ano}_{int(time.time())}.json"
         with open(nome_arquivo, 'w', encoding='utf-8') as f:
@@ -125,6 +139,42 @@ class ESGMetricProcessor:
             if re.search(p, text, re.IGNORECASE | re.MULTILINE):
                 return True
         return False
+
+
+    def visualizar_chunks_busca(self, docs_recuperados, empresa, ano):
+        """
+        Exibe de forma organizada os chunks recuperados pelo retriever.
+        Útil para validar se o MultiQuery está encontrando as tabelas GRI.
+        """
+        print(f"\n{'='*80}")
+        print(f"📊 RELATÓRIO DE CHUNKS RECUPERADOS - {empresa} ({ano})")
+        print(f"Total de chunks encontrados: {len(docs_recuperados)}")
+
+        dados_para_exibicao = []
+
+        for i, doc in enumerate(docs_recuperados):
+            # Extraindo metadados (ajuste as chaves conforme seu parser/vectorstore)
+            pagina = doc.metadata.get('page', 'N/A')
+            fonte = doc.metadata.get('source', 'Documento')
+            
+            # Limpa o texto para visualização rápida (primeiros 200 caracteres)
+            preview_texto = doc.page_content.replace('\n', ' ').strip()[:200] + "..."
+            
+            dados_para_exibicao.append({
+                "ID": i + 1,
+                "Página": pagina,
+                "Conteúdo": preview_texto
+            })
+
+            # Print detalhado no console
+            print(f"🔍 [Chunk {i+1}] | Página: {pagina}")
+            print(f"Texto: {doc.page_content.strip()}")
+            print("-" * 50)
+
+        # Opcional: Retornar como DataFrame para melhor visualização em Notebooks
+        df_chunks = pd.DataFrame(dados_para_exibicao)
+        return df_chunks
+
     
     async def _processar_metrica_individual(self, metrica, dados, retriever, discovery_prompt, empresa, ano):
         """
@@ -178,15 +228,26 @@ class ESGMetricProcessor:
                 return None
 
     async def _extrair_com_rag(self, vector_store, empresa, ano):
-        """
-        Função principal otimizada para o TraceESG.
-        Executa Discovery -> Detecção de Tabela -> Limpeza Seletiva -> Extração de Precisão.
-        """
+        # --- FASE 1: PLANEJAMENTO (O LLM define o que buscar com base no Prompt 400) ---
+        print(f"📡 Fase 1: Planejando busca técnica para {empresa}...")
         
-        # 1. Configuração do Retriever com Filtros de Metadados
-        retriever = vector_store.as_retriever(
+        # Seleção do Template base
+        template_texto = DISCOVERY_PROMPT_TEMPLATE_400 if VALOR_PADRAO == "GRI_400" else DISCOVERY_PROMPT_TEMPLATE_300
+        
+        # O LLM analisa o seu prompt principal para saber o que procurar no VectorDB
+        chain_planejamento = ADAPTIVE_QUERY_PROMPT | self.model
+        plano_de_busca = await chain_planejamento.ainvoke({
+            "template": template_texto,
+            "empresa": empresa,
+            "ano": ano
+        })
+        
+        # --- FASE 2: EXECUÇÃO (Multi-Query baseada no plano) ---
+        print(f"🔍 Fase 2: Executando Multi-Query orientado a métricas...")
+        
+        base_retriever = vector_store.as_retriever(
             search_kwargs={
-                "k": 7,
+                "k": 12, 
                 "filter": {
                     "$and": [
                         {"empresa": {"$eq": empresa}},
@@ -196,42 +257,47 @@ class ESGMetricProcessor:
             }
         )
 
-        # Seleção do Template de acordo com o padrão GRI definido
-        if VALOR_PADRAO == "GRI_400":
-            template = DISCOVERY_PROMPT_TEMPLATE_400
-        elif VALOR_PADRAO == "GRI_300":
-            template = DISCOVERY_PROMPT_TEMPLATE_300
-        else:
-            raise ValueError(f"Valor inválido para VALOR_PADRAO: {VALOR_PADRAO}")
+        # O MultiQuery agora usa o plano gerado na Fase 1
+        docs_recuperados = await base_retriever.ainvoke(plano_de_busca.content)
+        
+        # Remove duplicatas (Caso queries diferentes tragam a mesma página)
+        vistos = set()
+        docs_unicos = []
+        for d in docs_recuperados:
+            content_hash = hash(d.page_content)
+            if content_hash not in vistos:
+                vistos.add(content_hash)
+                docs_unicos.append(d)
 
+        self.visualizar_chunks_busca(docs_unicos, empresa, ano)
+        contexto_consolidado = "\n\n".join([doc.page_content for doc in docs_unicos])
+
+        # --- FASE 3: EXTRAÇÃO (O Discovery Prompt final) ---
+        print(f"🧠 Fase 3: Extraindo métricas do contexto filtrado...")
+        
         discovery_prompt = PromptTemplate(
-            template=template,
+            template=template_texto,
             input_variables=["context", "ano", "empresa"],
             partial_variables={"format_instructions": self.parser.get_format_instructions()}
         )
 
-        # 2. Discovery (Ainda sequencial pois é a base para o resto)
-        query_discovery = f"Tabelas de indicadores sociais da {empresa} {ano}"
-        docs_iniciais = await retriever.ainvoke(query_discovery)
-        contexto_inicial = "\n\n".join([d.page_content for d in docs_iniciais])
-        
         metricas_preliminares = await (discovery_prompt | self.model | self.parser).ainvoke({
-            "context": contexto_inicial, "empresa": empresa, "ano": ano
+            "context": contexto_consolidado,
+            "empresa": empresa,
+            "ano": ano
         })
 
-        # 3. DISPARO ASSÍNCRONO DE TODAS AS MÉTRICAS
-        print(f"📊 Processando {len(metricas_preliminares)} métricas simultaneamente...")
-        
+        # --- FASE DE REFINAMENTO (Seu Passo 5 original permanece igual) ---
+        print(f"📊 Refinando {len(metricas_preliminares)} métricas...")
         tarefas = [
-            self._processar_metrica_individual(metrica, dados, retriever, discovery_prompt, empresa, ano)
+            self._processar_metrica_individual(metrica, dados, base_retriever, discovery_prompt, empresa, ano)
             for metrica, dados in metricas_preliminares.items()
         ]
 
-        # O gather executa todas as tarefas em paralelo
-        tabela_auditoria = await asyncio.gather(*tarefas)
+        tabela_auditoria = await asyncio.gather(*tarefas, return_exceptions=True)
+        tabela_auditoria = [linha for linha in tabela_auditoria if isinstance(linha, dict)]
 
-        # Filtrar falhas e salvar log
-        tabela_auditoria = [linha for linha in tabela_auditoria if linha is not None]
-        self._salvar_log_discovery(empresa, ano, metricas_preliminares)
+        if tabela_auditoria:
+            self._salvar_log_discovery(empresa, ano, tabela_auditoria)
         
         return tabela_auditoria

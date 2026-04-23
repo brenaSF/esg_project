@@ -65,6 +65,15 @@ class ESGDocumentLoader:
         except:
             return ""
 
+    def cleaning_text(self, text):
+        # Remove excesso de pipes e zeros soltos que seu extrator de tabela gerou
+        text = re.sub(r'\|\s*0\s*\|', '|', text) 
+        # Tenta unir caracteres isolados (C o l a b o r a d o r e s -> Colaboradores)
+        text = re.sub(r'(?<=\b\w)\s(?=\w\b)', '', text)
+        # Remove múltiplas quebras de linha e espaços
+        text = re.sub(r'\n{3,}', '\n\n', text)
+        return text
+
     def extract_all_text(self, pdf_path, empresa, ano):
         """
         Processa o PDF inteiro de forma otimizada.
@@ -88,10 +97,12 @@ class ESGDocumentLoader:
 
                 texto_tabelas = self._extract_tables_fast(page)
 
+                texto_limpo = self.cleaning_text(texto_tabelas)
+
                 # 3. Consolidação 
                 # Se houver tabela,ela fica no topo do contexto do chunk
                 if texto_tabelas:
-                    contexto_final = f"{texto_tabelas}\n\n--- TEXTO DA PÁGINA ---\n\n{texto_pag}"
+                    contexto_final = f"\n\n--- TEXTO DA PÁGINA ---\n\n{texto_pag}"
                 else:
                     contexto_final = texto_pag
 
