@@ -18,7 +18,12 @@ DIR_AUDITADOS = os.getenv("DIR_AUDITADOS")
 def render_auditoria(arquivo_selecionado): 
     """Renders the audit page where users can review and edit extracted ESG metrics before consolidating them into the final database."""
     
-    st.title("🛡️ Portal de Governança ESG")
+    st.markdown("""
+        <div class="main-card">
+            <h2>Auditoria de Dados Extraídos pela IA</h2>
+            <p>Análise os dados extraídos e informe se é "Consistente" ou "Inconsistente".</p>
+        </div>
+    """, unsafe_allow_html=True)
     
 
     if arquivo_selecionado:

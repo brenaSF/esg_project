@@ -75,8 +75,16 @@ def processar_metricas_detalhadas(df):
     df_results["Acurácia (%)"] = df_results["Recall (%)"]
 
     return df_results
+
 def render_acuracia_extracao(arquivo_selecionado):
-    st.title("Avaliação de Acurácia da Extração")
+
+    st.markdown("""
+        <div class="main-card">
+            <h2>Avaliação da qualidade da extração.</h2>
+            <p>Analise a precisão e a confiabilidade dos dados processados.</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
     
     df = carregar_dados_para_diagnostico(arquivo_selecionado)
     if df.empty:

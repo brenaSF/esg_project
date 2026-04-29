@@ -3,6 +3,10 @@ import streamlit as st
 from src.services.storage_service import salvar_arquivo_upload, processar_arquivo_na_api
 import os
 import dotenv
+from src.services.audit_service import (
+    obter_arquivos_pendentes,
+    calcular_progresso
+)
 
 dotenv.load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
 
@@ -43,6 +47,8 @@ def render_extracao() :
                             
                             if sucesso:
                                 st.success(f"{uploaded_file.name}: {mensagem}")
+                                st.rerun()
+
                             else:
                                 st.error(f"{uploaded_file.name}: {mensagem}")
                 else:

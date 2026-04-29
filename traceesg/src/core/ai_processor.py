@@ -16,7 +16,14 @@ from dotenv import load_dotenv
 from langchain_classic.retrievers import MultiQueryRetriever
 load_dotenv() 
 import pandas as pd
+from datasets import Dataset
+from ragas import evaluate
+
+from ragas.metrics import faithfulness, context_recall
+import nest_asyncio
+nest_asyncio.apply()
 VALOR_PADRAO = os.getenv("VALOR_PADRAO", "GRI_400") 
+
 
 ADAPTIVE_QUERY_PROMPT = PromptTemplate(
     input_variables=["empresa", "ano"],
@@ -52,7 +59,6 @@ class ESGMetricProcessor:
         """
         reranked_docs = []
         
-        # Ajustamos o prompt para pedir uma nota numérica
         rerank_prompt = PromptTemplate.from_template(
             "Como um auditor ESG, avalie de 0 a 10 a utilidade do trecho para responder: '{query}'\n"
             "Considere se há números, tabelas ou menções diretas aos indicadores.\n"
@@ -64,27 +70,22 @@ class ESGMetricProcessor:
         
         for doc, score in docs_e_scores:
             try:
-                # A LLM analisa o conteúdo e retorna uma nota
                 veredicto = chain.invoke({"query": query, "context": doc.page_content}).content
                 
-                # Extrai o número da resposta (ex: "Nota: 8" vira 8.0)
                 match = re.search(r'\d+', veredicto)
                 if match:
                     score_relevancia = float(match.group())
                     
-                    # Filtro de corte: só passa o que for relevante (nota >= 5)
                     if score_relevancia >= 5:
-                        # O novo score combina a similaridade do Chroma com a "inteligência" da LLM
                         novo_score = score + (score_relevancia / 10)
                         reranked_docs.append((doc, novo_score))
             except Exception as e:
                 print(f"Erro no re-ranking de um trecho: {e}")
                 continue
                 
-        # Reordena pela nova pontuação combinada
         reranked_docs.sort(key=lambda x: x[1], reverse=True)
         return reranked_docs  
-    
+
     async def convert_text_to_markdown_tables(self,raw_text: str) -> str:
         """
         Recebe o texto bruto extraído do PDF e utiliza o LLM para 
@@ -116,10 +117,20 @@ class ESGMetricProcessor:
 
 
     def _salvar_log_discovery(self, empresa, ano, dados):
+        # 1. Define o nome da pasta e garante que ela exista
+        diretorio = "discovery"
+        if not os.path.exists(diretorio):
+            os.makedirs(diretorio)
+        
+        # 2. Cria o caminho completo (pasta / nome_do_arquivo)
         nome_arquivo = f"discovery_{empresa}_{ano}_{int(time.time())}.json"
-        with open(nome_arquivo, 'w', encoding='utf-8') as f:
+        caminho_completo = os.path.join(diretorio, nome_arquivo)
+        
+        # 3. Salva o arquivo no caminho especificado
+        with open(caminho_completo, 'w', encoding='utf-8') as f:
             json.dump(dados, f, ensure_ascii=False, indent=4)
-        print(f"✅ Log de descoberta salvo: {nome_arquivo}")
+            
+        print(f"✅ Log de descoberta salvo em: {caminho_completo}")
 
 
     def _detectar_tabela_no_texto(self,text: str) -> bool:
@@ -153,11 +164,9 @@ class ESGMetricProcessor:
         dados_para_exibicao = []
 
         for i, doc in enumerate(docs_recuperados):
-            # Extraindo metadados (ajuste as chaves conforme seu parser/vectorstore)
             pagina = doc.metadata.get('page', 'N/A')
             fonte = doc.metadata.get('source', 'Documento')
             
-            # Limpa o texto para visualização rápida (primeiros 200 caracteres)
             preview_texto = doc.page_content.replace('\n', ' ').strip()[:200] + "..."
             
             dados_para_exibicao.append({
@@ -166,12 +175,10 @@ class ESGMetricProcessor:
                 "Conteúdo": preview_texto
             })
 
-            # Print detalhado no console
             print(f"🔍 [Chunk {i+1}] | Página: {pagina}")
             print(f"Texto: {doc.page_content.strip()}")
             print("-" * 50)
 
-        # Opcional: Retornar como DataFrame para melhor visualização em Notebooks
         df_chunks = pd.DataFrame(dados_para_exibicao)
         return df_chunks
 
@@ -182,26 +189,22 @@ class ESGMetricProcessor:
         """
         async with self.semaphore:
             try:
-                # Lógica de Refinamento (Precise Extraction)
                 if dados.get("valor") is None or "Omissão" in str(dados.get("status")):
                     query_focada = f"Valor numérico exato e tabela para a métrica {metrica} da {empresa} em {ano}"
                     
-                    # O retriever.ainvoke é a versão assíncrona do invoke
                     docs_especificos = await retriever.ainvoke(query_focada)
                     
                     contextos_processados = []
                     for doc in docs_especificos:
                         conteudo_chunk = doc.page_content
                         if self._detectar_tabela_no_texto(conteudo_chunk):
-                            # Chamada assíncrona para estruturação de tabela
-                            #conteudo_chunk = await self.convert_text_to_markdown_tables(conteudo_chunk)
+                            
                             print("-----------------------")
                             print(conteudo_chunk)
                         contextos_processados.append(conteudo_chunk)
                     
                     contexto_focado = "\n\n".join(contextos_processados)
                     
-                    # Executa a extração refinada
                     dados_refinados = await (discovery_prompt | self.model | self.parser).ainvoke({
                         "context": contexto_focado, 
                         "empresa": empresa, 
@@ -211,7 +214,6 @@ class ESGMetricProcessor:
                     if metrica in dados_refinados:
                         dados = dados_refinados[metrica]
 
-                # Formatação do resultado
                 valor_final = dados.get("valor")
                 return {
                     "Empresa": empresa,
@@ -227,14 +229,67 @@ class ESGMetricProcessor:
                 print(f"❌ Erro na métrica {metrica}: {e}")
                 return None
 
+    async def _calcular_metricas_reais(self, tabela_auditoria, contextos_recuperados):
+        if not tabela_auditoria:
+            return {"faithfulness": 0.0, "context_recall": 0.0}
+
+        # Prepare os dados fora do executor para evitar problemas de tipos
+        data = {
+            "question": [f"Qual o valor da métrica {m.get('Metrica', 'N/A')}?" for m in tabela_auditoria],
+            "answer": [str(m.get('Valor', '')) for m in tabela_auditoria],
+            "contexts": [contextos_recuperados for _ in tabela_auditoria],
+            "ground_truth": [m.get('Evidencia', '') for m in tabela_auditoria]
+        }
+
+        def processar_ragas_sync(dataset_dict):
+            # Import local para evitar conflitos de importação em threads
+            from datasets import Dataset
+            from ragas import evaluate
+            
+            dataset = Dataset.from_dict(dataset_dict)
+            # Forçamos o Ragas a não tentar ser "esperto" com o loop
+            resultado = evaluate(
+                dataset=dataset,
+                metrics=[faithfulness, context_recall]
+            )
+            return resultado
+
+        try:
+            loop = asyncio.get_event_loop()
+            resultado = await loop.run_in_executor(None, processar_ragas_sync, data)
+
+            # 1. Converter os scores para DataFrame para facilitar o cálculo
+            import pandas as pd
+            df_scores = pd.DataFrame(resultado.scores)
+            
+            # 2. Printar os valores no console para você ver o que está acontecendo
+            print("\n" + "="*50)
+            print("📊 SCORES DETALHADOS DO RAGAS")
+            print(df_scores) 
+            print("="*50 + "\n")
+
+            # 3. Calcular a média das métricas
+            # O numeric_only garante que não tente tirar média de colunas de texto
+            medias = df_scores.mean(numeric_only=True).to_dict()
+
+            return {
+                "faithfulness": round(medias.get("faithfulness", 0.0), 2),
+                "context_recall": round(medias.get("context_recall", 0.0), 2)
+            }
+        except Exception as e:
+            print(f"❌ Erro ao extrair scores do Ragas: {e}")
+            # Print adicional para entender a estrutura do 'resultado' caso falhe de novo
+            if 'resultado' in locals():
+                print(f"Estrutura do objeto resultado.scores: {type(resultado.scores)}")
+            return {"faithfulness": 0.0, "context_recall": 0.0}
+
     async def _extrair_com_rag(self, vector_store, empresa, ano):
+        start_time = time.time()
         # --- FASE 1: PLANEJAMENTO (O LLM define o que buscar com base no Prompt 400) ---
         print(f"📡 Fase 1: Planejando busca técnica para {empresa}...")
         
-        # Seleção do Template base
         template_texto = DISCOVERY_PROMPT_TEMPLATE_400 if VALOR_PADRAO == "GRI_400" else DISCOVERY_PROMPT_TEMPLATE_300
         
-        # O LLM analisa o seu prompt principal para saber o que procurar no VectorDB
         chain_planejamento = ADAPTIVE_QUERY_PROMPT | self.model
         plano_de_busca = await chain_planejamento.ainvoke({
             "template": template_texto,
@@ -247,7 +302,7 @@ class ESGMetricProcessor:
         
         base_retriever = vector_store.as_retriever(
             search_kwargs={
-                "k": 12, 
+                "k": 8, 
                 "filter": {
                     "$and": [
                         {"empresa": {"$eq": empresa}},
@@ -257,10 +312,8 @@ class ESGMetricProcessor:
             }
         )
 
-        # O MultiQuery agora usa o plano gerado na Fase 1
         docs_recuperados = await base_retriever.ainvoke(plano_de_busca.content)
         
-        # Remove duplicatas (Caso queries diferentes tragam a mesma página)
         vistos = set()
         docs_unicos = []
         for d in docs_recuperados:
@@ -287,7 +340,7 @@ class ESGMetricProcessor:
             "ano": ano
         })
 
-        # --- FASE DE REFINAMENTO (Seu Passo 5 original permanece igual) ---
+        # --- FASE DE REFINAMENTO ---
         print(f"📊 Refinando {len(metricas_preliminares)} métricas...")
         tarefas = [
             self._processar_metrica_individual(metrica, dados, base_retriever, discovery_prompt, empresa, ano)
@@ -295,9 +348,21 @@ class ESGMetricProcessor:
         ]
 
         tabela_auditoria = await asyncio.gather(*tarefas, return_exceptions=True)
+        final_time = time.time() - start_time
         tabela_auditoria = [linha for linha in tabela_auditoria if isinstance(linha, dict)]
+
+        contextos_usados = [doc.page_content for doc in docs_unicos]
+    
+        # Chamada do cálculo real
+        scores_ragas = await self._calcular_metricas_reais(tabela_auditoria, contextos_usados)
+
+        # Injetar os scores em cada linha para que apareçam no CSV
+        for linha in tabela_auditoria:
+            linha["Ragas_Faithfulness"] = scores_ragas["faithfulness"]
+            linha["Ragas_Context_Recall"] = scores_ragas["context_recall"]
+            linha["Tempo_Processamento"] = round(time.time() - start_time, 2)
 
         if tabela_auditoria:
             self._salvar_log_discovery(empresa, ano, tabela_auditoria)
-        
+
         return tabela_auditoria
