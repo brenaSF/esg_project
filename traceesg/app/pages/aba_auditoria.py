@@ -15,6 +15,7 @@ DIR_OUTPUT = os.getenv("DIR_OUTPUT")
 DIR_AUDITADOS = os.getenv("DIR_AUDITADOS")
 
 
+
 def render_auditoria(arquivo_selecionado): 
     """Renders the audit page where users can review and edit extracted ESG metrics before consolidating them into the final database."""
     
@@ -46,6 +47,19 @@ def render_auditoria(arquivo_selecionado):
             
         
             df['Página'] = df['Página'].astype(str)
+
+            if 'Status_Auditoria' not in df.columns:
+                df['Status_Auditoria'] = "🟡 Pendente"
+            
+            # 2. Converter tudo para string para evitar conflito com NaT/NaN do Pandas
+            df['Status_Auditoria'] = df['Status_Auditoria'].astype(str).replace(['nan', 'None', ''], "🟡 Pendente")
+            
+            # 3. Limpar espaços extras que podem quebrar a correspondência com as 'options'
+            df['Status_Auditoria'] = df['Status_Auditoria'].str.strip()
+
+            # Força o valor correto se o que vier do CSV não bater com as opções do Selectbox
+            valid_options = ["🟡 Pendente", "🟢 Consistente", "🔴 Inconsistente"]
+            df.loc[~df['Status_Auditoria'].isin(valid_options), 'Status_Auditoria'] = "🟡 Pendente"
  
 
             df_editado = st.data_editor(
@@ -56,16 +70,23 @@ def render_auditoria(arquivo_selecionado):
                 column_config={
                     "Empresa": st.column_config.TextColumn("Empresa", disabled=True),
                     "Ano": st.column_config.NumberColumn("Ano", disabled=True),
-                    "Dado Extraído": st.column_config.TextColumn("Métrica IA", width="medium"),
+                    "Metrica": st.column_config.TextColumn("Métrica", width="medium"),
                     "Valor": st.column_config.NumberColumn("Valor", format="%.6f"),
                     "Unidade": st.column_config.TextColumn("Unid.", width="small"),
-                    "Fonte (Texto Original)": st.column_config.TextColumn("Evidência (RAG)", width="large"),
-                    "Página": st.column_config.TextColumn("Pág", width="small"),
+                    "Evidencia": st.column_config.TextColumn("Evidência (RAG)", width="large"),
+                    "Página": st.column_config.TextColumn("Pagina", width="medium"),
                     "Status_Auditoria": st.column_config.SelectboxColumn(
-                        "Status Auditoria", 
-                        options=["Pendente", "Consistente", "Inconsistente"], 
-                        width="medium"
-                    ),
+                    "Statis Auditoria",
+                    help="Altere o status para atualizar a base de dados",
+                    options=[
+                        "🟡 Pendente", 
+                        "🟢 Consistente", 
+                        "🔴 Inconsistente"
+                    ],
+                    width="medium",
+                    required=True,
+                    default="🟡 Pendente"
+                ),
                 }
             )
 
@@ -77,7 +98,7 @@ def render_auditoria(arquivo_selecionado):
                     st.rerun()
 
             with col2:
-                if st.button("🗑️ Descartar"):
+                if st.button("🗑️ Descartar",type="secondary"):
                     descartar_relatorio(arquivo_selecionado)
                     st.success("Relatório descartado com sucesso!")
                     st.rerun()

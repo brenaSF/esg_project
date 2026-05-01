@@ -32,6 +32,11 @@ Exemplo: "Homens (12.489) + Mulheres (3.204) = 15.693". Não aceite totais pront
 
 10. Regra de Colunas Distantes: "Este relatório apresenta tabelas onde as categorias (Integral/Parcial) estão em blocos de colunas separados. Para o ano {ano}, você DEVE capturar o valor da coluna correspondente em 'Período Integral' e o valor da coluna correspondente em 'Período Parcial' antes de fechar o cálculo."
 
+11. **Rastreabilidade de Fonte (Páginas)**: 
+O contexto abaixo está dividido por marcadores `[FONTE: Página X]`. 
+Ao extrair qualquer métrica, você deve identificar obrigatoriamente qual é a página de origem contida no marcador imediatamente anterior ao texto onde o dado foi encontrado. 
+Preencha o campo "página" do JSON apenas com o número extraído desse marcador.
+
 ### DICIONÁRIO DE MÉTRICAS (CHAVES OBRIGATÓRIAS):
 {{
     "total_colaboradores_clt": "Localize a tabela de perfil da força de trabalho ou vínculo empregatício. Soma de (Homens + Mulheres) ou (Liderança + Operacional) ou (Brancos + Negros + Indígenas + Pardos + Amarelos) para o ano {ano}.",
@@ -56,6 +61,7 @@ Exemplo: "Homens (12.489) + Mulheres (3.204) = 15.693". Não aceite totais pront
 Contexto: {context}
 {format_instructions}
 """
+
 EXTRACTION_PROMPT_TEMPLATE = """Você é um Auditor de ESG. Sua tarefa é validar e refinar o valor extraído no mapeamento prévio.
 
 ### DADOS DO MAPEAMENTO PRÉVIO:

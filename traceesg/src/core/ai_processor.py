@@ -23,7 +23,7 @@ from ragas.metrics import faithfulness, context_recall
 import nest_asyncio
 nest_asyncio.apply()
 VALOR_PADRAO = os.getenv("VALOR_PADRAO", "GRI_400") 
-
+EVAL_RAGAS = False
 
 ADAPTIVE_QUERY_PROMPT = PromptTemplate(
     input_variables=["empresa", "ano"],
@@ -281,88 +281,121 @@ class ESGMetricProcessor:
             # Print adicional para entender a estrutura do 'resultado' caso falhe de novo
             if 'resultado' in locals():
                 print(f"Estrutura do objeto resultado.scores: {type(resultado.scores)}")
-            return {"faithfulness": 0.0, "context_recall": 0.0}
-
+                return {"faithfulness": 0.0, "context_recall": 0.0}
     async def _extrair_com_rag(self, vector_store, empresa, ano):
-        start_time = time.time()
-        # --- FASE 1: PLANEJAMENTO (O LLM define o que buscar com base no Prompt 400) ---
-        print(f"📡 Fase 1: Planejando busca técnica para {empresa}...")
-        
-        template_texto = DISCOVERY_PROMPT_TEMPLATE_400 if VALOR_PADRAO == "GRI_400" else DISCOVERY_PROMPT_TEMPLATE_300
-        
-        chain_planejamento = ADAPTIVE_QUERY_PROMPT | self.model
-        plano_de_busca = await chain_planejamento.ainvoke({
-            "template": template_texto,
-            "empresa": empresa,
-            "ano": ano
-        })
-        
-        # --- FASE 2: EXECUÇÃO (Multi-Query baseada no plano) ---
-        print(f"🔍 Fase 2: Executando Multi-Query orientado a métricas...")
-        
-        base_retriever = vector_store.as_retriever(
-            search_kwargs={
-                "k": 8, 
-                "filter": {
-                    "$and": [
-                        {"empresa": {"$eq": empresa}},
-                        {"ano": {"$eq": int(ano)}}
-                    ]
-                }
-            }
-        )
+            start_time = time.time()
+            
+            # --- FASE 1: PLANEJAMENTO ---
+            print(f"📡 Fase 1: Planejando busca técnica para {empresa}...")
+            template_texto = DISCOVERY_PROMPT_TEMPLATE_400 if VALOR_PADRAO == "GRI_400" else DISCOVERY_PROMPT_TEMPLATE_300
+            chain_planejamento = ADAPTIVE_QUERY_PROMPT | self.model
+            plano_de_busca = await chain_planejamento.ainvoke({
+                "template": template_texto, "empresa": empresa, "ano": ano
+            })
+            
+            # --- FASE 2: EXECUÇÃO ---
+            print(f"🔍 Fase 2: Executando Multi-Query...")
+            base_retriever = vector_store.as_retriever(
+                search_kwargs={"k": 8, "filter": {"$and": [{"empresa": {"$eq": empresa}}, {"ano": {"$eq": int(ano)}}]}}
+            )
+            docs_recuperados = await base_retriever.ainvoke(plano_de_busca.content)
+            
+            vistos = set()
+            docs_unicos = [d for d in docs_recuperados if not (hash(d.page_content) in vistos or vistos.add(hash(d.page_content)))]
+            contexto_com_paginas = []
+            for doc in docs_unicos:
+                # Captura o "6" do seu exemplo
+                num_pagina = doc.metadata.get("source", "desconhecida")
+                texto_formatado = f"[PÁGINA {num_pagina}]: {doc.page_content}"
+                contexto_com_paginas.append(texto_formatado)
 
-        docs_recuperados = await base_retriever.ainvoke(plano_de_busca.content)
-        
-        vistos = set()
-        docs_unicos = []
-        for d in docs_recuperados:
-            content_hash = hash(d.page_content)
-            if content_hash not in vistos:
-                vistos.add(content_hash)
-                docs_unicos.append(d)
+            contexto_consolidado = "\n\n".join(contexto_com_paginas)
 
-        self.visualizar_chunks_busca(docs_unicos, empresa, ano)
-        contexto_consolidado = "\n\n".join([doc.page_content for doc in docs_unicos])
+            # --- FASE 3: EXTRAÇÃO ---
+            print(f"🧠 Fase 3: Extraindo métricas do contexto filtrado...")
+            discovery_prompt = PromptTemplate(
+                template=template_texto,
+                input_variables=["context", "ano", "empresa"],
+                partial_variables={"format_instructions": self.parser.get_format_instructions()}
+            )
 
-        # --- FASE 3: EXTRAÇÃO (O Discovery Prompt final) ---
-        print(f"🧠 Fase 3: Extraindo métricas do contexto filtrado...")
-        
-        discovery_prompt = PromptTemplate(
-            template=template_texto,
-            input_variables=["context", "ano", "empresa"],
-            partial_variables={"format_instructions": self.parser.get_format_instructions()}
-        )
+            # Resultado inicial
+            metricas_finais = await (discovery_prompt | self.model | self.parser).ainvoke({
+                "context": contexto_consolidado, "empresa": empresa, "ano": ano
+            })
 
-        metricas_preliminares = await (discovery_prompt | self.model | self.parser).ainvoke({
-            "context": contexto_consolidado,
-            "empresa": empresa,
-            "ano": ano
-        })
+            # --- FASE DE REPESCAGEM (Otimizada) ---
+            faltantes = [m for m, d in metricas_finais.items() 
+                        if d.get("valor") is None or "Omissão" in str(d.get("status"))]
 
-        # --- FASE DE REFINAMENTO ---
-        print(f"📊 Refinando {len(metricas_preliminares)} métricas...")
-        tarefas = [
-            self._processar_metrica_individual(metrica, dados, base_retriever, discovery_prompt, empresa, ano)
-            for metrica, dados in metricas_preliminares.items()
-        ]
+            if faltantes:
+                print(f"🔄 Tentativa de recuperação para: {len(faltantes)} métricas...")
+                query_repescagem = f"Valores e detalhes sobre: {', '.join(faltantes)} - {empresa} {ano}"
+                docs_repescagem = await base_retriever.ainvoke(query_repescagem)
+                
+                # Atualiza lista de contextos para o Ragas
+                docs_unicos.extend(docs_repescagem)
+                contexto_repescagem = "\n\n".join([d.page_content for d in docs_repescagem])
 
-        tabela_auditoria = await asyncio.gather(*tarefas, return_exceptions=True)
-        final_time = time.time() - start_time
-        tabela_auditoria = [linha for linha in tabela_auditoria if isinstance(linha, dict)]
+                metricas_recuperadas = await (discovery_prompt | self.model | self.parser).ainvoke({
+                    "context": contexto_repescagem, "empresa": empresa, "ano": ano
+                })
 
-        contextos_usados = [doc.page_content for doc in docs_unicos]
-    
-        # Chamada do cálculo real
-        scores_ragas = await self._calcular_metricas_reais(tabela_auditoria, contextos_usados)
+                # Atualiza o dicionário principal com o que foi recuperado
+                for m in faltantes:
+                    if m in metricas_recuperadas and metricas_recuperadas[m].get("valor") is not None:
+                        metricas_finais[m] = metricas_recuperadas[m]
 
-        # Injetar os scores em cada linha para que apareçam no CSV
-        for linha in tabela_auditoria:
-            linha["Ragas_Faithfulness"] = scores_ragas["faithfulness"]
-            linha["Ragas_Context_Recall"] = scores_ragas["context_recall"]
-            linha["Tempo_Processamento"] = round(time.time() - start_time, 2)
+            # --- FORMATAÇÃO FINAL (Estrutura de Auditoria) ---
+            # --- FORMATAÇÃO FINAL ---
+            tabela_auditoria = []
+            for metrica, dados in metricas_finais.items():
+                # 1. Tratamento do Valor para evitar NaN
+                valor_raw = dados.get("valor")
+                # Se valor for None, vira "Omissão", evitando que bibliotecas como Pandas gerem NaN
+                valor_final = str(valor_raw) if valor_raw is not None else "Não encontrado"
+                
+                # 2. Tratamento da Página
+                # O LLM deve retornar a página que ele leu no texto [PÁGINA 6]
+                # Se ele não retornar, tentamos buscar nas chaves comuns
+                pag_raw = str(dados.get("página") or dados.get("pagina") or dados.get("Página") or "N/A")
+                
+                # Limpa apenas se houver dígitos, senão mantém (ex: mantém "6" ou "N/A")
+                pag_limpa = "".join(filter(str.isdigit, pag_raw)) if any(c.isdigit() for c in pag_raw) else pag_raw
 
-        if tabela_auditoria:
-            self._salvar_log_discovery(empresa, ano, tabela_auditoria)
+                # 3. Evidência
+                evidencia = dados.get("evidencia_texto") or dados.get("evidencia") or "Trecho não localizado"
 
-        return tabela_auditoria
+                tabela_auditoria.append({
+                    "Empresa": empresa,
+                    "Ano": ano,
+                    "Metrica": metrica,
+                    "Valor": valor_final,
+                    "Unidade": "Percentual (%)" if "%" in valor_final else "Absoluto",
+                    "Evidencia": evidencia,
+                    "Página": pag_limpa,
+                    "Status_Auditoria": dados.get("status") or ("Omissão" if valor_raw is None else "Coletado")
+                })
+
+            # --- AVALIAÇÃO RAGAS ---
+            EVAL_RAGAS = False
+            contextos_usados = [doc.page_content for doc in docs_unicos]
+            
+            if EVAL_RAGAS:
+                scores_ragas = await self._calcular_metricas_reais(tabela_auditoria, contextos_usados)
+            else:
+                scores_ragas = {"faithfulness": 0.0, "context_recall": 0.0}
+
+            # Injeção de metadados finais
+            tempo_total = round(time.time() - start_time, 2)
+            for linha in tabela_auditoria:
+                linha.update({
+                    "Ragas_Faithfulness": scores_ragas["faithfulness"],
+                    "Ragas_Context_Recall": scores_ragas["context_recall"],
+                    "Tempo_Processamento": tempo_total
+                })
+
+            if tabela_auditoria:
+                self._salvar_log_discovery(empresa, ano, tabela_auditoria)
+
+            return tabela_auditoria

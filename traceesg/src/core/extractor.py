@@ -112,7 +112,7 @@ class ESGDocumentLoader:
                     "id": f"{empresa}_{ano}_pg{num_pagina}_{i}", # ID único obrigatório
                     "document": contexto_final.strip(),          # O conteúdo textual
                     "metadata": {
-                        "source": f"pg_{num_pagina}",
+                        "source": num_pagina,
                         "empresa": empresa,
                         "ano": ano,
                         "setor": "Social",                          # Categoria para filtros

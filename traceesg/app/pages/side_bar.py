@@ -32,6 +32,7 @@ def render_sidebar():
 
         # Seleção de Arquivo - CSVs pendentes
         arquivos_lista = obter_arquivos_pendentes()
+        st.subheader("📊 Relatórios a serem analisados")
         if arquivos_lista:
             arquivo_selecionado = st.selectbox(
                 "Selecione o relatório para auditar:",

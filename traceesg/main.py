@@ -19,7 +19,7 @@ st.set_page_config(
 apply_vitality_style()
 
 
-aba_principal, aba_extracao, aba_auditoria , aba_acuracia_extracao= st.tabs(["Principal","🚀 Nova Extração", "🛡️ Auditoria de Dados", "Acurácia da Extração"])
+aba_principal, aba_extracao, aba_auditoria , aba_acuracia_extracao= st.tabs(["Principal","🚀 Nova Extração", "🛡️ Auditoria de Dados", "Avaliação da extração"])
 
 arquivo_selecionado, arquivo_auditado = render_sidebar()
 
