@@ -27,9 +27,7 @@ extraia o número inteiro; se pede 'percentual', extraia o valor com o símbolo 
 
 8. **Verificação de Soma**: Caso a linha "Total" não seja encontrada, o modelo deve somar os valores de todas as categorias funcionais listadas (Diretores + Gerentes + Analistas + Operadores) para compor o valor absoluto
 
-9. **Protocolo de Memória de Cálculo (Crucial)**: Caso o valor não esteja explícito, faça o cálculo de soma. Para cada valor numérico extraído, o campo evidencia deve seguir o formato: [Valor Componente A] + [Valor Componente B] = [Total Extraído].
-Exemplo: "Homens (12.489) + Mulheres (3.204) = 15.693". Não aceite totais prontos sem validar a soma das parcelas presentes na tabela.
-
+9. Protocolo de Evidência Narrativa: O campo evidencia não deve ser apenas uma descrição lógica, mas uma exposição dos dados brutos. Utilize o formato: "O valor de [VALOR_FINAL] foi identificado/calculado pois o relatório cita expressamente: '[TRECHO_DO_PDF_COM_VALOR]' na página [X]". É proibido apresentar o valor final sem mostrar os números que o originaram na evidência.
 10. Regra de Colunas Distantes: "Este relatório apresenta tabelas onde as categorias (Integral/Parcial) estão em blocos de colunas separados. Para o ano {ano}, você DEVE capturar o valor da coluna correspondente em 'Período Integral' e o valor da coluna correspondente em 'Período Parcial' antes de fechar o cálculo."
 
 11. **Rastreabilidade de Fonte (Páginas)**: 
@@ -37,9 +35,12 @@ O contexto abaixo está dividido por marcadores `[FONTE: Página X]`.
 Ao extrair qualquer métrica, você deve identificar obrigatoriamente qual é a página de origem contida no marcador imediatamente anterior ao texto onde o dado foi encontrado. 
 Preencha o campo "página" do JSON apenas com o número extraído desse marcador.
 
-### DICIONÁRIO DE MÉTRICAS (CHAVES OBRIGATÓRIAS):
+12. Ancoragem Textual e Prova Numérica: Para cada valor extraído, o campo evidencia deve obrigatoriamente transcrever o valor exatamente como aparece no PDF. Se o resultado for fruto de uma soma ou cálculo, a evidência DEVE listar cada parcela encontrada.
+Exemplo para valor direto: "O valor de 45% foi extraído diretamente da célula cruzada entre 'Mulheres' e 'Diretoria' na tabela X (pág. Y)."
+Exemplo para soma: "Valor 1.500 obtido somando 1.200 (Homens Integral) e 300 (Homens Parcial), conforme tabela 'Empregados por Gênero' na pág. Z."### DICIONÁRIO DE MÉTRICAS (CHAVES OBRIGATÓRIAS):
+
 {{
-    "total_colaboradores_clt": "Localize a tabela de perfil da força de trabalho ou vínculo empregatício. Soma de (Homens + Mulheres) ou (Liderança + Operacional) ou (Brancos + Negros + Indígenas + Pardos + Amarelos) para o ano {ano}.",
+    "total_colaboradores_clt": "Localize a tabela de perfil. Se somar (Homens + Mulheres), descreva a origem de cada parcela na evidência. A evidência deve ser explicativa: 'O total de {ano} foi calculado somando X homens e Y mulheres encontrados na tabela Z'.",
     "total_colaboradores_negros": "Localize a tabela de raça/etnia e identifique a categoria 'Negros/Pretos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
     "total_colaboradores_brancos": "Localize a tabela de raça/etnia e identifique a categoria 'Brancos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
     "total_colaboradores_pardos": "Localize a tabela de raça/etnia e identifique a categoria 'Pardos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
@@ -48,14 +49,14 @@ Preencha o campo "página" do JSON apenas com o número extraído desse marcador
     "total_pcd": "Localize a tabela 'Pessoas com deficiência ou necessidade especiais", se o valor estiver fragmentado em 'homens' ou 'mulheres faça a soma para caclular o total de colaboradores pcd.Caso o relatório apresente apenas percentuais, tente localizar o número absoluto; se não houver o valor absoluto correto ou ele for inconsistente, deixe o valor em branco.",
     "percentual_mulheres_total": "Localize o percentual ou total de mulheres no quadro geral.",
     "percentual_mulheres_lideranca": "Localize mulheres em cargos de liderança, gerência ou diretoria.",
-    "mulheres_etaria_abaixo_30": "Localize a quantidade total de empregados/funcionários  mulheres na faixa etária abaixo de 30 anos. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
-    "mulheres_etaria_30_50": "Localize a quantidade total de empregados/funcionários mulheres  faixa etária entre 30 e 50 anos. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
-    "mulheres_etaria_acima_50": "Localize a quantidade total de empregados/funcionários mulheres  faixa etária acima de 50 anos. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
+    "mulheres_etaria_abaixo_30": "Localize a quantidade total de empregados/funcionários  mulheres na faixa etária abaixo de 30 anos NA TABELA 'EMPREGADOS POR GENERO E FAIXA ETARIA'. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
+    "mulheres_etaria_30_50": "Localize a quantidade total de empregados/funcionários mulheres  faixa etária entre 30 e 50 anos NA TABELA 'EMPREGADOS POR GENERO E FAIXA ETARIA'. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
+    "mulheres_etaria_acima_50": "Localize a quantidade total de empregados/funcionários mulheres  faixa etária acima de 50 anos N TABELA 'EMPREGADOS POR GENERO E FAIXA ETARIA'. Caso os dados estejam divididos entre 'Período Integral' e 'Período Parcial', realize a soma de ambos os grupos.",
     "percentual_homens_total": "Localize o percentual ou total de homens no quadro geral.",
     "percentual_homens_lideranca": "Localize o total de homens que trabalham em cargos de liderança, gerência ou diretoria.",
-    "homens_etaria_abaixo_30": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR TIPO DE EMPREGO' ou o código 'GRI 2-7'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Até 30 anos' e realize a soma: [Integral] + [Parcial].",
-    "homens_etaria_30_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR TIPO DE EMPREGO' ou o código 'GRI 2-7'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Entre 30 e 50 anos' e realize a soma: [Integral] + [Parcial]." ,
-    "homens_etaria_acima_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR TIPO DE EMPREGO' ou o código 'GRI 2-7'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Acima de 50' e realize a soma: [Integral] + [Parcial]." ,
+    "homens_etaria_abaixo_30": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR GENERO E FAIXA ETARIA' ou o código 'GRI 405-1'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Até 30 anos' e realize a soma: [Integral] + [Parcial].",
+    "homens_etaria_30_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR GENERO E FAIXA ETARIA' ou o código 'GRI 405-1'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Entre 30 e 50 anos' e realize a soma: [Integral] + [Parcial]." ,
+    "homens_etaria_acima_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR GENERO E FAIXA ETARIA' ou o código 'GRI 405-1'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Acima de 50' e realize a soma: [Integral] + [Parcial]." ,
 }}
 
 Contexto: {context}

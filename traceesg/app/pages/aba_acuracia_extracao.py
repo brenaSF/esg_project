@@ -5,7 +5,10 @@ from dotenv import load_dotenv
 import os
 from src.services.diagnostic_service import (
     carregar_dados_para_diagnostico)
-
+from ragas import evaluate
+from ragas.metrics import faithfulness, answer_relevancy
+from datasets import Dataset
+from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
@@ -13,9 +16,9 @@ DIR_OUTPUT = os.getenv("DIR_OUTPUT")
 METRICAS_PDF = os.getenv("METRICAS_PDF")
 
 color_map = {
-    'Crítico': '#EF553B',  # Vermelho
-    'Regular': '#FECB52',  # Amarelo/Laranja
-    'Bom': '#00CC96'       # Verde
+    'Crítico': '#EF553B', 
+    'Regular': '#FECB52',  
+    'Bom': '#00CC96'      
 }
 
 def detectar_status(df):
@@ -27,7 +30,7 @@ def detectar_status(df):
 def categorizar_status(valor):
     if valor < 70:
         return 'Crítico'
-    elif valor < 90:
+    elif valor < 80:
         return 'Regular'
     else:
         return 'Bom'
@@ -45,52 +48,111 @@ def calcular_acuracia(df):
 
     return df_results
 
+
+@st.cache_data(show_spinner="Analisando fidelidade dos dados com Ragas...")
+def obter_relatorio_ragas(dataframe):
+    df_para_ragas = preparar_dataframe_para_ragas(dataframe)
+    return executar_avaliacao_ragas(df_para_ragas)
+
+
+
+def executar_avaliacao_ragas(df_preparado):
+    evaluator_llm = ChatOpenAI(model="gpt-4o-mini")
+    
+    dataset = Dataset.from_dict(df_preparado[[
+        "question", "answer", "contexts"
+    ]].to_dict('list'))
+    
+   
+    result = evaluate(
+        dataset=dataset,
+        metrics=[
+            faithfulness,       # O valor extraído está realmente no texto?
+            answer_relevancy   # A resposta faz sentido para a métrica GRI?
+        ],
+        llm=evaluator_llm
+    )
+    
+    return result.to_pandas()
+
+def preparar_dataframe_para_ragas(df):
+    """
+    Ajusta o DF vindo do diagnostic_service para o formato Ragas.
+    """
+    df_ragas = df.copy()
+    
+    # Ragas precisa de: question, answer, contexts, ground_truth
+    # Mapeando das suas colunas prováveis:
+    df_ragas = df_ragas.rename(columns={
+        "Metrica": "question",      # A métrica GRI buscada
+        "Valor": "answer",        # O que a IA respondeu
+        "Evidencia": "contexts",   # O trecho do PDF usado
+        "Gabarito": "ground_truth" # O valor real esperado (se houver)
+    })
+    
+    df_ragas["contexts"] = df_ragas["contexts"].apply(lambda x: [str(x)] if pd.notnull(x) else [""])
+    
+    df_ragas = df_ragas.fillna("N/A")
+    
+    return df_ragas
+
 def processar_metricas_detalhadas(df):
     """
     Calcula Precisão, Recall e Acurácia corrigindo o erro de tipos.
     """
-    # Garantir que trabalhamos em uma cópia para não afetar o original
     df = df.copy()
 
-    # 1. Identifica o que é acerto (não inconsistente)
-    # Verificamos se a coluna existe para evitar erros
+   
     if 'Status_Auditoria' in df.columns:
-        df["is_correto"] = (df['Status_Auditoria'].astype(str).str.lower() != 'inconsistente').astype(int)
+        status_lower = df['Status_Auditoria'].astype(str).str.lower()
+        df["is_correto"] = status_lower.str.contains('consistente') & ~status_lower.str.contains('inconsistente')
+        df["is_correto"] = df["is_correto"].astype(int)
     else:
         df["is_correto"] = 0
 
-    # 2. Identifica o que é uma tentativa da IA (Valor não nulo e não vazio)
     if 'Valor' in df.columns:
         df["is_tentativa"] = df['Valor'].notnull() & (df['Valor'].astype(str).str.strip() != "")
     else:
         df["is_tentativa"] = 0
 
-    # 3. Agrupa por empresa para calcular as métricas
     df_results = df.groupby("Empresa").agg(
-        Total_Gabarito=("is_correto", "size"),      
         Total_Tentativas=("is_tentativa", "sum"),   
         Acertos_Totais=("is_correto", "sum")        
     ).reset_index()
 
-    # --- CÁLCULOS FINAIS ---
-    
-    # PRECISÃO: (Acertos / Tentativas) -> Foco em não alucinar
-    # Se Total_Tentativas for 0, a precisão será 0.0
 
+    try:
+        total_alvo = int(METRICAS_PDF)
+    except:
+        total_alvo = 17 # Fallback caso a variável não exista ou seja inválida
+        
+    df_results["Total_Gabarito"] = total_alvo
+   
     df_results["Precisão (%)"] = (
         (df_results["Acertos_Totais"] / df_results["Total_Tentativas"].replace(0, 1)) * 100
-    ).where(df_results["Total_Tentativas"] > 0, 0.0).round(2)
+    ).round(2)
 
     df_results["Recall (%)"] = (
         (df_results["Acertos_Totais"] / df_results["Total_Gabarito"].replace(0, 1)) * 100
-    ).where(df_results["Total_Gabarito"] > 0, 0.0).round(2)
+    ).round(2)
 
-    # 4. Enriquecimento de UI (Design Semântico)
+   
+    total_geral = df_results["Total_Tentativas"] + df_results["Total_Gabarito"] - df_results["Acertos_Totais"]
+    df_results["Acurácia (%)"] = (
+        (df_results["Acertos_Totais"] / total_geral.replace(0, 1)) * 100
+    ).round(2)
+
+    p = df_results["Precisão (%)"] / 100
+    r = df_results["Recall (%)"] / 100
+    df_results["F1-Score (%)"] = (
+        (2 * (p * r) / (p + r).replace(0, 1)) * 100
+    ).round(2)
+
     df_results['Status_Precisao'] = df_results['Precisão (%)'].apply(categorizar_status)
     df_results['Status_Recall'] = df_results['Recall (%)'].apply(categorizar_status)
-    
-    # Acurácia em RAG/Extração costuma ser o Recall ou F1-Score
-    df_results["Acurácia (%)"] = df_results["Recall (%)"]
+    df_results['Status_Acuracia'] = df_results['Acurácia (%)'].apply(categorizar_status)
+    df_results['Status_F1Score'] = df_results['F1-Score (%)'].apply(categorizar_status)
+
 
     return df_results
 
@@ -99,13 +161,10 @@ def obter_falhas_extracao(df):
     Retorna apenas as linhas onde o gabarito esperava um dado, 
     mas a IA falhou ou errou.
     """
-    # Filtra onde houve erro (is_correto == 0) mas era uma linha do gabarito
     df_falhas = df[df['Status_Auditoria'].astype(str).str.lower() == 'inconsistente'].copy()
     
-    # Selecionamos apenas colunas úteis para o auditor não se perder
     colunas_uteis = ['Empresa', 'Metrica', 'Valor', 'Evidencia', 'Página']
     
-    # Garante que só retornamos colunas que existem no seu DF
     colunas_presentes = [c for c in colunas_uteis if c in df_falhas.columns]
     
     return df_falhas[colunas_presentes]
@@ -178,22 +237,61 @@ def render_acuracia_extracao(arquivo_selecionado):
         
         st.plotly_chart(fig_rec, use_container_width=True)
 
-    # --- ABAIXO DOS GRÁFICOS ---
+    c3, c4 = st.columns(2)
+
+    with c3:
+        st.markdown("### Acurácia", help="Recall: De tudo que existia para extrair, quanto a IA conseguiu encontrar?")
+        fig_rec = px.bar(
+        df_results, 
+        x="Empresa", 
+        y="Acurácia (%)", 
+        range_y=[0, 110], 
+        text_auto='.1f',
+        color="Status_Acuracia",
+        color_discrete_map=color_map,
+        category_orders={"Status_Acuracia": ["Bom", "Regular", "Crítico"]}
+        )
+    
+        fig_rec.update_layout(
+            margin=dict(l=20, r=20, t=20, b=20),
+            showlegend=False
+        )
+        
+        st.plotly_chart(fig_rec, use_container_width=True)
+
+    with c4:
+        st.markdown("### Acurácia", help="Recall: De tudo que existia para extrair, quanto a IA conseguiu encontrar?")
+        fig_rec = px.bar(
+        df_results, 
+        x="Empresa", 
+        y="F1-Score (%)", 
+        range_y=[0, 110], 
+        text_auto='.1f',
+        color="Status_F1Score",
+        color_discrete_map=color_map,
+        category_orders={"Status_F1Score": ["Bom", "Regular", "Crítico"]}
+        )
+    
+        fig_rec.update_layout(
+            margin=dict(l=20, r=20, t=20, b=20),
+            showlegend=False
+        )
+        
+        st.plotly_chart(fig_rec, use_container_width=True)
+
     st.markdown("### Diagnóstico de Falhas")
     
-    col_btn, _ = st.columns([1, 2]) # Alinha o botão à esquerda
+    col_btn, _ = st.columns([1, 2]) 
     
     with col_btn:
         with st.popover("🔍 Ver itens não extraídos (Falhas)"):
             st.write("Abaixo estão os indicadores que a IA não conseguiu capturar ou extraiu incorretamente:")
             
-            # 'df' é o dataframe original carregado antes de processar as métricas
             df_falhas = obter_falhas_extracao(df) 
             
             if not df_falhas.empty:
                 st.dataframe(df_falhas, use_container_width=True, hide_index=True)
                 
-                # Botão opcional para exportar essas falhas para análise posterior
                 csv = df_falhas.to_csv(index=False).encode('utf-8')
                 st.download_button(
                     label="Baixar relatório de erros (.csv)",
@@ -203,6 +301,21 @@ def render_acuracia_extracao(arquivo_selecionado):
                 )
             else:
                 st.success("Nenhuma falha crítica encontrada para este relatório!")
+                
+    st.markdown("### 🤖 Avaliação de IA (Ragas Framework)")
+    
+    if st.button("Gerar Relatório de Qualidade Ragas"):
+        with st.spinner("Analisando fidelidade dos dados com GPT-4o-mini..."):
+            df_para_ragas = preparar_dataframe_para_ragas(df)
+            df_ragas_final = executar_avaliacao_ragas(df_para_ragas)
+            
+            # Exibindo os scores médios
+            cols = st.columns(4)
+            cols[0].metric("Fidelidade", f"{df_ragas_final['faithfulness'].mean():.2f}")
+            cols[1].metric("Relevância", f"{df_ragas_final['answer_relevancy'].mean():.2f}")
+        
+            
+            st.dataframe(df_ragas_final, use_container_width=True)
 
     with st.expander("Ver Tabela Detalhada"):
         st.dataframe(df_results, use_container_width=True, hide_index=True)

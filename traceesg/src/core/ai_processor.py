@@ -386,14 +386,13 @@ class ESGMetricProcessor:
             else:
                 scores_ragas = {"faithfulness": 0.0, "context_recall": 0.0}
 
-            # Injeção de metadados finais
-            tempo_total = round(time.time() - start_time, 2)
-            for linha in tabela_auditoria:
-                linha.update({
-                    "Ragas_Faithfulness": scores_ragas["faithfulness"],
-                    "Ragas_Context_Recall": scores_ragas["context_recall"],
-                    "Tempo_Processamento": tempo_total
-                })
+            tempo_total_rag = round(time.time() - start_time, 2)
+            #for linha in tabela_auditoria:
+            #    linha.update({
+            #        "Ragas_Faithfulness": scores_ragas["faithfulness"],
+            #        "Ragas_Context_Recall": scores_ragas["context_recall"],
+            #        "Tempo_Processamento": tempo_total
+            #    })
 
             if tabela_auditoria:
                 self._salvar_log_discovery(empresa, ano, tabela_auditoria)
