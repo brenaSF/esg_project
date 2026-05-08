@@ -6,10 +6,16 @@ venv_tcc/
 *.py[cod]
 *$py.class
 
+__pycache__/
+*.py[cod]
+*$py.class
+
 .~lock.*
 *.tmp
 
 data/
+
+discovery/
 
 # Ignorar todos os PDFs de dados
 **/data/raw/*.pdf

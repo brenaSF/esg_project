@@ -12,7 +12,7 @@ def salvar_arquivo_upload(uploaded_file, destino_dir):
         f.write(uploaded_file.getbuffer())
     return caminho
 
-def processar_arquivo_na_api(api_url, filename, empresa, ano, timeout=700):
+def processar_arquivo_na_api(api_url, filename, empresa, ano, timeout=7000):
     """
     Envia um payload simples para a API e retorna (sucesso: bool, mensagem: str).
     Trata ConnectionError, Timeout e respostas com JSON inválido.

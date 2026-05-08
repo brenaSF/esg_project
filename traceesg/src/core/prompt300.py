@@ -15,29 +15,32 @@ extraia o número inteiro; se pede 'percentual', extraia o valor com o símbolo 
 3. **Métricas de Perda**: No setor elétrico, diferencie "Consumo Interno" de "Perdas na Distribuição/Transmissão". 
 4. **Detecção de Vazio Técnico**: Se a empresa cita "mudanças climáticas" mas não apresenta a tabela de emissões de Escopo 1, 2 ou 3, marque como STATUS: OMISSÃO TÉCNICA CRÍTICA.
 5.  Sempre conte as colunas a partir do cabeçalho. Se o cabeçalho tem 5 colunas (Indicador, Unidade, 2020, 2021, 2022), certifique-se de que o valor extraído pertence à 5ª coluna.
+6.  As unidades de medida pra este escopo são (t/ano), Mil tCO2e, tCO2e/(R$ mil)
 
 ### DICIONÁRIO DE MÉTRICAS (CHAVES OBRIGATÓRIAS):
 {{
-    "emissoes_fugitivas_sf6": "Localize o volume de Hexafluoreto de Enxofre (SF6) liberado. Comum em tabelas de Escopo 1 ou Ativos de Transmissão.",
-    "emissoes_no_x": "Localize o total de Óxidos de Nitrogênio (NOx) emitidos em toneladas (GRI 305-7).",
-    "emissoes_so_x": "Localize o total de Óxidos de Enxofre (SOx) emitidos em toneladas (GRI 305-7).",
-    "material_particulado_mp": "Localize a emissão de Material Particulado (MP) em toneladas (GRI 305-7).",
-    "escopo_2_sem_perdas": "Busque o valor de emissões indiretas (Escopo 2) que EXCLUI explicitamente as perdas técnicas da rede elétrica.",
+    "emissoes_sf6": "Localize 'Emissões fugitivas de SF6' ou 'Hexafluoreto'. Extraia o valor da coluna do {ano}.",
+    "emissoes_no_x": "Localize 'Emissões Totais de NOx' ou 'Óxidos de Nitrogênio'.",
+    "emissoes_so_x": "Localize 'Emissões Totais de SOx' ou 'Óxidos de Enxofre'.",
+    "material_particulado_mp": "Localize 'Emissões Totais de MP' ou 'Material Particulado'.",
+    "escopo_2_sem_perdas": "Busque especificamente por 'Escopo 2 (sem perdas)' ou 'Escopo 2 líquido'.",
     "perdas_tecnicas_energia": "Localize o volume ou percentual de energia perdida na transmissão/distribuição (Métrica Setorial EU12).",
-    "intensidade_gee_mwh": "Localize a relação de tCO2e emitida por cada Megawatt-hora (MWh) gerado ou distribuído.",
+    "emissoes_totais_gee_rol": "Localize a relação de tCO2e emitida por cada Megawatt-hora (MWh) gerado ou distribuído.",
     "consumo_combustivel_fossil": "Total de combustíveis não renováveis consumidos (GRI 302-1) em Joules ou unidades de volume.",
     "emissoes_biogenicas_co2": "Localize emissões de CO2 provenientes de fontes biológicas (queima de biomassa)."
 }}
 
 ### EXEMPLO DE SAÍDA ESPERADA:
 {{
-    "emissoes_fugitivas_sf6": {{
+    "emissoes_sf6": {{
         "valor": 0.45,
-        "evidencia_texto": "Emissões fugitivas de SF6 em 2022 totalizaram 0,45 tCO2e",
+        "unidade":Índice,
+        "evidencia_texto": "Emissões fugitivas de SF6 em {ano} totalizaram 0,45 tCO2e",
         "status": "Encontrado"
     }},
     "emissoes_no_x": {{
         "valor": null,
+        "unidade":(t/ano),
         "evidencia_texto": "Não foi encontrado dado numérico ou citação qualitativa.",
         "status": "Não Encontrado"
     }}

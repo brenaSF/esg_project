@@ -18,7 +18,7 @@ def render_sidebar():
     with st.sidebar:
         # --- Área Lateral ---  
         st.image("https://cdn-icons-png.flaticon.com/512/3950/3950815.png", width=80)
-        st.title("🛡️ ESG Control Panel")
+        st.title("🛡️ TRACEESG")
         st.info(f"👤 **Usuário:** {getpass.getuser()}")
         st.divider()
 
@@ -32,6 +32,7 @@ def render_sidebar():
 
         # Seleção de Arquivo - CSVs pendentes
         arquivos_lista = obter_arquivos_pendentes()
+        st.subheader("📊 Relatórios a serem analisados")
         if arquivos_lista:
             arquivo_selecionado = st.selectbox(
                 "Selecione o relatório para auditar:",

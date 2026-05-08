@@ -8,7 +8,7 @@ from langchain_chroma import Chroma
 from src.core.extractor import ESGDocumentLoader
 from src.core.ai_processor import ESGMetricProcessor
 from dotenv import load_dotenv
-
+import asyncio
 load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
 
 DIR_OUTPUT = os.getenv("DIR_OUTPUT")
@@ -39,7 +39,7 @@ class ESGAutomationOrchestrator:
             embedding_function=self.embeddings 
         )
 
-    def run_pipeline(self):
+    async def run_pipeline(self):
         # 1. Extração (Pre-processing do KDD)
         raw_data = self.loader.extract_all_text(self.pdf_path, self.empresa, self.ano)
         if not raw_data or not raw_data.get("chunks"):
@@ -73,7 +73,7 @@ class ESGAutomationOrchestrator:
         self._index_to_vector_db(raw_data)
         
         #5. Processamento LLM com RAG
-        resultado_llm = self.processor._extrair_com_rag(
+        resultado_llm = await self.processor._extrair_com_rag(
             vector_store = self.vector_store,
             empresa=self.empresa,
             ano=self.ano
@@ -86,11 +86,14 @@ class ESGAutomationOrchestrator:
         """Indexar os chunks extraídos no ChromaDB, associando metadados de empresa, ano e página."""
         documents = [
             Document(
-                page_content=chunk.get("contexto", ""),
-                metadata={"empresa": self.empresa, "ano": int(self.ano), "pagina": int(chunk.get("pagina", 0))}
-            ) for chunk in raw_data["chunks"] if chunk.get("contexto")
+                page_content=chunk.get("document", ""),
+                metadata=chunk.get("metadata", {})
+            ) for chunk in raw_data["chunks"] if chunk.get("document")
         ]
-        self.vector_store.add_documents(documents)
+        if documents:
+            self.vector_store.add_documents(documents)
+        else:
+            print(f"Aviso: Nenhum embedding gerado para {self.empresa}. Verifique a extração.")
 
     def _export_final_csv(self, dados_llm):
         try:
