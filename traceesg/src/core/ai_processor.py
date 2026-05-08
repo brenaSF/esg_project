@@ -117,16 +117,14 @@ class ESGMetricProcessor:
 
 
     def _salvar_log_discovery(self, empresa, ano, dados):
-        # 1. Define o nome da pasta e garante que ela exista
         diretorio = "discovery"
+        
         if not os.path.exists(diretorio):
             os.makedirs(diretorio)
         
-        # 2. Cria o caminho completo (pasta / nome_do_arquivo)
         nome_arquivo = f"discovery_{empresa}_{ano}_{int(time.time())}.json"
         caminho_completo = os.path.join(diretorio, nome_arquivo)
         
-        # 3. Salva o arquivo no caminho especificado
         with open(caminho_completo, 'w', encoding='utf-8') as f:
             json.dump(dados, f, ensure_ascii=False, indent=4)
             
@@ -138,12 +136,12 @@ class ESGMetricProcessor:
         Detecta padrões que indicam que o texto bruto é uma tabela desalinhada.
         """
         padroes = [
-            r"\d{4}\s+\d+",                 # Anos seguidos de números
-            r"GRI\s+\d+",                   # GRI seguido de número
-            r"\d+[.,]\d+%\s+\d+[.,]\d+%",   # Porcentagens lado a lado
-            r"(Homens|Mulheres|Gênero|Raça|PCD|Até \d+ anos)", # Palavras-chave ESG
-            r"\d{2,}\s+\d{2,}\s+\d{2,}",    # Sequência de pelo menos 3 números
-            r"Total\s+\d+"                  # Palavra Total seguida de valor
+            r"\d{4}\s+\d+",                 
+            r"GRI\s+\d+",                   
+            r"\d+[.,]\d+%\s+\d+[.,]\d+%",   
+            r"(Homens|Mulheres|Gênero|Raça|PCD|Até \d+ anos)", 
+            r"\d{2,}\s+\d{2,}\s+\d{2,}",    
+            r"Total\s+\d+"                  
         ]
         
         for p in padroes:
@@ -233,7 +231,6 @@ class ESGMetricProcessor:
         if not tabela_auditoria:
             return {"faithfulness": 0.0, "context_recall": 0.0}
 
-        # Prepare os dados fora do executor para evitar problemas de tipos
         data = {
             "question": [f"Qual o valor da métrica {m.get('Metrica', 'N/A')}?" for m in tabela_auditoria],
             "answer": [str(m.get('Valor', '')) for m in tabela_auditoria],
@@ -242,12 +239,10 @@ class ESGMetricProcessor:
         }
 
         def processar_ragas_sync(dataset_dict):
-            # Import local para evitar conflitos de importação em threads
             from datasets import Dataset
             from ragas import evaluate
             
             dataset = Dataset.from_dict(dataset_dict)
-            # Forçamos o Ragas a não tentar ser "esperto" com o loop
             resultado = evaluate(
                 dataset=dataset,
                 metrics=[faithfulness, context_recall]
@@ -258,18 +253,15 @@ class ESGMetricProcessor:
             loop = asyncio.get_event_loop()
             resultado = await loop.run_in_executor(None, processar_ragas_sync, data)
 
-            # 1. Converter os scores para DataFrame para facilitar o cálculo
             import pandas as pd
             df_scores = pd.DataFrame(resultado.scores)
             
-            # 2. Printar os valores no console para você ver o que está acontecendo
             print("\n" + "="*50)
             print("📊 SCORES DETALHADOS DO RAGAS")
             print(df_scores) 
             print("="*50 + "\n")
 
-            # 3. Calcular a média das métricas
-            # O numeric_only garante que não tente tirar média de colunas de texto
+            
             medias = df_scores.mean(numeric_only=True).to_dict()
 
             return {
@@ -278,14 +270,13 @@ class ESGMetricProcessor:
             }
         except Exception as e:
             print(f"❌ Erro ao extrair scores do Ragas: {e}")
-            # Print adicional para entender a estrutura do 'resultado' caso falhe de novo
             if 'resultado' in locals():
                 print(f"Estrutura do objeto resultado.scores: {type(resultado.scores)}")
                 return {"faithfulness": 0.0, "context_recall": 0.0}
+
     async def _extrair_com_rag(self, vector_store, empresa, ano):
             start_time = time.time()
             
-            # --- FASE 1: PLANEJAMENTO ---
             print(f"📡 Fase 1: Planejando busca técnica para {empresa}...")
             template_texto = DISCOVERY_PROMPT_TEMPLATE_400 if VALOR_PADRAO == "GRI_400" else DISCOVERY_PROMPT_TEMPLATE_300
             chain_planejamento = ADAPTIVE_QUERY_PROMPT | self.model
@@ -293,7 +284,6 @@ class ESGMetricProcessor:
                 "template": template_texto, "empresa": empresa, "ano": ano
             })
             
-            # --- FASE 2: EXECUÇÃO ---
             print(f"🔍 Fase 2: Executando Multi-Query...")
             base_retriever = vector_store.as_retriever(
                 search_kwargs={"k": 8, "filter": {"$and": [{"empresa": {"$eq": empresa}}, {"ano": {"$eq": int(ano)}}]}}
@@ -304,14 +294,12 @@ class ESGMetricProcessor:
             docs_unicos = [d for d in docs_recuperados if not (hash(d.page_content) in vistos or vistos.add(hash(d.page_content)))]
             contexto_com_paginas = []
             for doc in docs_unicos:
-                # Captura o "6" do seu exemplo
                 num_pagina = doc.metadata.get("source", "desconhecida")
                 texto_formatado = f"[PÁGINA {num_pagina}]: {doc.page_content}"
                 contexto_com_paginas.append(texto_formatado)
 
             contexto_consolidado = "\n\n".join(contexto_com_paginas)
 
-            # --- FASE 3: EXTRAÇÃO ---
             print(f"🧠 Fase 3: Extraindo métricas do contexto filtrado...")
             discovery_prompt = PromptTemplate(
                 template=template_texto,
@@ -319,12 +307,10 @@ class ESGMetricProcessor:
                 partial_variables={"format_instructions": self.parser.get_format_instructions()}
             )
 
-            # Resultado inicial
             metricas_finais = await (discovery_prompt | self.model | self.parser).ainvoke({
                 "context": contexto_consolidado, "empresa": empresa, "ano": ano
             })
 
-            # --- FASE DE REPESCAGEM (Otimizada) ---
             faltantes = [m for m, d in metricas_finais.items() 
                         if d.get("valor") is None or "Omissão" in str(d.get("status"))]
 
@@ -333,7 +319,6 @@ class ESGMetricProcessor:
                 query_repescagem = f"Valores e detalhes sobre: {', '.join(faltantes)} - {empresa} {ano}"
                 docs_repescagem = await base_retriever.ainvoke(query_repescagem)
                 
-                # Atualiza lista de contextos para o Ragas
                 docs_unicos.extend(docs_repescagem)
                 contexto_repescagem = "\n\n".join([d.page_content for d in docs_repescagem])
 
@@ -341,30 +326,32 @@ class ESGMetricProcessor:
                     "context": contexto_repescagem, "empresa": empresa, "ano": ano
                 })
 
-                # Atualiza o dicionário principal com o que foi recuperado
                 for m in faltantes:
                     if m in metricas_recuperadas and metricas_recuperadas[m].get("valor") is not None:
                         metricas_finais[m] = metricas_recuperadas[m]
 
-            # --- FORMATAÇÃO FINAL (Estrutura de Auditoria) ---
-            # --- FORMATAÇÃO FINAL ---
+       
             tabela_auditoria = []
             for metrica, dados in metricas_finais.items():
-                # 1. Tratamento do Valor para evitar NaN
                 valor_raw = dados.get("valor")
-                # Se valor for None, vira "Omissão", evitando que bibliotecas como Pandas gerem NaN
                 valor_final = str(valor_raw) if valor_raw is not None else "Não encontrado"
                 
-                # 2. Tratamento da Página
-                # O LLM deve retornar a página que ele leu no texto [PÁGINA 6]
-                # Se ele não retornar, tentamos buscar nas chaves comuns
+               
                 pag_raw = str(dados.get("página") or dados.get("pagina") or dados.get("Página") or "N/A")
                 
-                # Limpa apenas se houver dígitos, senão mantém (ex: mantém "6" ou "N/A")
                 pag_limpa = "".join(filter(str.isdigit, pag_raw)) if any(c.isdigit() for c in pag_raw) else pag_raw
 
-                # 3. Evidência
                 evidencia = dados.get("evidencia_texto") or dados.get("evidencia") or "Trecho não localizado"
+
+                
+                gabarito_usuario = dados.get("gabarito_editado", "") 
+
+                valor_extraido = str(dados.get("valor") or "Não encontrado")
+                
+                if gabarito_usuario:
+                    status_validacao = "✅ Consistente" if valor_extraido.strip() == gabarito_usuario.strip() else "❌ Inconsistente"
+                else:
+                    status_validacao = "Aguardando Gabarito"
 
                 tabela_auditoria.append({
                     "Empresa": empresa,
@@ -373,6 +360,7 @@ class ESGMetricProcessor:
                     "Valor": valor_final,
                     "Unidade": "Percentual (%)" if "%" in valor_final else "Absoluto",
                     "Evidencia": evidencia,
+                    "Gabarito": gabarito_usuario,
                     "Página": pag_limpa,
                     "Status_Auditoria": dados.get("status") or ("Omissão" if valor_raw is None else "Coletado")
                 })
@@ -386,14 +374,7 @@ class ESGMetricProcessor:
             else:
                 scores_ragas = {"faithfulness": 0.0, "context_recall": 0.0}
 
-            tempo_total_rag = round(time.time() - start_time, 2)
-            #for linha in tabela_auditoria:
-            #    linha.update({
-            #        "Ragas_Faithfulness": scores_ragas["faithfulness"],
-            #        "Ragas_Context_Recall": scores_ragas["context_recall"],
-            #        "Tempo_Processamento": tempo_total
-            #    })
-
+     
             if tabela_auditoria:
                 self._salvar_log_discovery(empresa, ano, tabela_auditoria)
 

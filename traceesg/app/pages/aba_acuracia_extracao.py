@@ -6,13 +6,14 @@ import os
 from src.services.diagnostic_service import (
     carregar_dados_para_diagnostico)
 from ragas import evaluate
-from ragas.metrics import faithfulness, answer_relevancy
+from ragas.metrics import faithfulness, answer_relevancy,context_precision,context_recall
+
 from datasets import Dataset
 from langchain_openai import ChatOpenAI
 
 load_dotenv()
-
 DIR_OUTPUT = os.getenv("DIR_OUTPUT")
+llm_model = os.getenv("llm_model")
 METRICAS_PDF = os.getenv("METRICAS_PDF")
 
 color_map = {
@@ -60,15 +61,17 @@ def executar_avaliacao_ragas(df_preparado):
     evaluator_llm = ChatOpenAI(model="gpt-4o-mini")
     
     dataset = Dataset.from_dict(df_preparado[[
-        "question", "answer", "contexts"
+        "question", "answer", "contexts","ground_truth"
     ]].to_dict('list'))
     
    
     result = evaluate(
         dataset=dataset,
         metrics=[
-            faithfulness,       # O valor extraído está realmente no texto?
-            answer_relevancy   # A resposta faz sentido para a métrica GRI?
+            faithfulness,       
+            answer_relevancy, 
+            context_precision,
+            context_recall
         ],
         llm=evaluator_llm
     )
@@ -81,16 +84,16 @@ def preparar_dataframe_para_ragas(df):
     """
     df_ragas = df.copy()
     
-    # Ragas precisa de: question, answer, contexts, ground_truth
-    # Mapeando das suas colunas prováveis:
+
     df_ragas = df_ragas.rename(columns={
-        "Metrica": "question",      # A métrica GRI buscada
-        "Valor": "answer",        # O que a IA respondeu
-        "Evidencia": "contexts",   # O trecho do PDF usado
-        "Gabarito": "ground_truth" # O valor real esperado (se houver)
+        "Metrica": "question",      
+        "Valor": "answer",        
+        "Evidencia": "contexts",   
+        "Gabarito": "ground_truth"
     })
     
     df_ragas["contexts"] = df_ragas["contexts"].apply(lambda x: [str(x)] if pd.notnull(x) else [""])
+    df_ragas["ground_truth"] = df_ragas["ground_truth"].fillna("").astype(str)
     
     df_ragas = df_ragas.fillna("N/A")
     
@@ -124,7 +127,7 @@ def processar_metricas_detalhadas(df):
     try:
         total_alvo = int(METRICAS_PDF)
     except:
-        total_alvo = 17 # Fallback caso a variável não exista ou seja inválida
+        total_alvo = 17 
         
     df_results["Total_Gabarito"] = total_alvo
    
@@ -158,13 +161,15 @@ def processar_metricas_detalhadas(df):
 
 def obter_falhas_extracao(df):
     """
-    Retorna apenas as linhas onde o gabarito esperava um dado, 
-    mas a IA falhou ou errou.
+    Retorna apenas as linhas onde o status contém a palavra 'inconsistente',
+    ignorando emojis ou variações de maiúsculas/minúsculas.
     """
-    df_falhas = df[df['Status_Auditoria'].astype(str).str.lower() == 'inconsistente'].copy()
+    # Usamos .str.contains para ignorar o emoji que acompanha a string
+    mask_inconsistente = df['Status_Auditoria'].astype(str).str.lower().str.contains('inconsistente', na=False)
     
-    colunas_uteis = ['Empresa', 'Metrica', 'Valor', 'Evidencia', 'Página']
+    df_falhas = df[mask_inconsistente].copy()
     
+    colunas_uteis = ['Empresa', 'Metrica', 'Valor','Gabarito', 'Evidencia', 'Página']
     colunas_presentes = [c for c in colunas_uteis if c in df_falhas.columns]
     
     return df_falhas[colunas_presentes]
@@ -309,10 +314,11 @@ def render_acuracia_extracao(arquivo_selecionado):
             df_para_ragas = preparar_dataframe_para_ragas(df)
             df_ragas_final = executar_avaliacao_ragas(df_para_ragas)
             
-            # Exibindo os scores médios
             cols = st.columns(4)
             cols[0].metric("Fidelidade", f"{df_ragas_final['faithfulness'].mean():.2f}")
             cols[1].metric("Relevância", f"{df_ragas_final['answer_relevancy'].mean():.2f}")
+            cols[2].metric("Context Recall", f"{df_ragas_final['context_recall'].mean():.2f}")
+            cols[3].metric("Context Precision", f"{df_ragas_final['context_precision'].mean():.2f}")
         
             
             st.dataframe(df_ragas_final, use_container_width=True)
