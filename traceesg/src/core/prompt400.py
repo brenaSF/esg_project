@@ -41,11 +41,11 @@ Exemplo para soma: "Valor 1.500 obtido somando 1.200 (Homens Integral) e 300 (Ho
 
 {{
     "total_colaboradores_clt": "Localize a tabela de perfil. Se somar (Homens + Mulheres), descreva a origem de cada parcela na evidência. A evidência deve ser explicativa: 'O total de {ano} foi calculado somando X homens e Y mulheres encontrados na tabela Z'.",
-    "total_colaboradores_negros": "Localize a tabela de raça/etnia e identifique a categoria 'Negros/Pretos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
-    "total_colaboradores_brancos": "Localize a tabela de raça/etnia e identifique a categoria 'Brancos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
-    "total_colaboradores_pardos": "Localize a tabela de raça/etnia e identifique a categoria 'Pardos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
-    "total_colaboradores_indigenas": "Localize a tabela de raça/etnia e identifique a categoria 'Indígenas'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
-    "total_colaboradores_amarelos": "Localize a tabela de raça/etnia e identifique a categoria 'Amarelos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro, deixe em branco.",
+    "total_colaboradores_negros": "Localize a tabela de raça/etnia e identifique a categoria 'Negros/Pretos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro e for porcentagem, deixe em branco.",
+    "total_colaboradores_brancos": "Localize a tabela de raça/etnia e identifique a categoria 'Brancos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro e for porcentagem, deixe em branco.",
+    "total_colaboradores_pardos": "Localize a tabela de raça/etnia e identifique a categoria 'Pardos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro e for porcentagem, deixe em branco.",
+    "total_colaboradores_indigenas": "Localize a tabela de raça/etnia e identifique a categoria 'Indígenas'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro e for porcentagem, deixe em branco.",
+    "total_colaboradores_amarelos": "Localize a tabela de raça/etnia e identifique a categoria 'Amarelos'. Se os dados estiverem distribuídos por níveis hierárquicos ou áreas, realize o cálculo da soma de todos os valores para formar o total geral. Se o valor final não estiver claro e for porcentagem, deixe em branco.",
     "total_pcd": "Localize a tabela 'Pessoas com deficiência ou necessidade especiais", se o valor estiver fragmentado em 'homens' ou 'mulheres faça a soma para caclular o total de colaboradores pcd.Caso o relatório apresente apenas percentuais, tente localizar o número absoluto; se não houver o valor absoluto correto ou ele for inconsistente, deixe o valor em branco.",
     "percentual_mulheres_total": "Localize o percentual ou total de mulheres no quadro geral.",
     "percentual_mulheres_lideranca": "Localize mulheres em cargos de liderança, gerência ou diretoria.",
@@ -57,6 +57,11 @@ Exemplo para soma: "Valor 1.500 obtido somando 1.200 (Homens Integral) e 300 (Ho
     "homens_etaria_abaixo_30": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR GENERO E FAIXA ETARIA' ou o código 'GRI 405-1'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Até 30 anos' e realize a soma: [Integral] + [Parcial].",
     "homens_etaria_30_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR GENERO E FAIXA ETARIA' ou o código 'GRI 405-1'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Entre 30 e 50 anos' e realize a soma: [Integral] + [Parcial]." ,
     "homens_etaria_acima_50": "INSTRUÇÃO: Procure o bloco de dados que contenha explicitamente o título 'EMPREGADOS POR GENERO E FAIXA ETARIA' ou o código 'GRI 405-1'. REJEITE qualquer tabela que mencione 'NOVAS CONTRATAÇÕES', 'TURNOVER' ou 'GRI 401-1'. Localize 'Homens' -> 'Acima de 50' e realize a soma: [Integral] + [Parcial]." ,
+    "horas_treinamento_direitos humanos" : " Localize a tabela sobre 'Treinamento de direitos humanos'. Retorne o número total de horas de treinamento em {ano}",
+    "media_horas_treinamento_conselho" : " Localize a tabela sobre "Média de Horas de treinamento do conselho de administração'. Retorne a média de horas de treinamento do conselho de administração em {ano}",
+    "media_horas_treinamento_geral": "Localize a tabela sobre 'Média de horas de treinamento'. Retorne a média geral de horas de treinamento em {ano}."
+
+
 }}
 
 Contexto: {context}

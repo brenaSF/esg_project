@@ -1,5 +1,8 @@
 import re
 import os
+
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_chroma import Chroma
 from langchain_core.prompts import PromptTemplate
@@ -13,29 +16,25 @@ import json
 import time
 import asyncio
 from dotenv import load_dotenv
-from langchain_classic.retrievers import MultiQueryRetriever
-load_dotenv() 
+from langchain.retrievers.multi_query import MultiQueryRetriever
 import pandas as pd
 from datasets import Dataset
 from ragas import evaluate
-
+from langchain_community.vectorstores import Qdrant
 from ragas.metrics import faithfulness, context_recall
 import nest_asyncio
+from dotenv import load_dotenv
+
+load_dotenv() 
+
 nest_asyncio.apply()
 VALOR_PADRAO = os.getenv("VALOR_PADRAO", "GRI_400") 
 EVAL_RAGAS = False
 
-ADAPTIVE_QUERY_PROMPT = PromptTemplate(
-    input_variables=["empresa", "ano"],
-    template="""Com base nas métricas GRI 400 (Diversidade, Raça, Faixa Etária e Pessoal), 
-    gere 5 buscas específicas para o relatório da {empresa} em {ano}.
-    Exemplos de termos de busca:
-    1. "Tabela de empregados por gênero e idade GRI 2-7 {ano}"
-    2. "Quadro de colaboradores por raça e etnia {ano}"
-    3. "Composição da alta governança e liderança {ano}"
-    4. "Número total de empregados período integral e parcial"
-    """
-)
+llm_model = ChatOpenAI(model="gpt-4o-mini")
+embeddings=OpenAIEmbeddings(model='text-embedding-3-large')
+
+
 
 
 class ESGMetricProcessor:
@@ -180,6 +179,13 @@ class ESGMetricProcessor:
         df_chunks = pd.DataFrame(dados_para_exibicao)
         return df_chunks
 
+    def _formatar_percentual(self, valor):
+        try:
+            numero = float(valor) * 10
+            return f"{numero:.1f} %".replace('.', ',')
+        except (ValueError, TypeError):
+            return valor
+
     
     async def _processar_metrica_individual(self, metrica, dados, retriever, discovery_prompt, empresa, ano):
         """
@@ -227,116 +233,88 @@ class ESGMetricProcessor:
                 print(f"❌ Erro na métrica {metrica}: {e}")
                 return None
 
-    async def _calcular_metricas_reais(self, tabela_auditoria, contextos_recuperados):
-        if not tabela_auditoria:
-            return {"faithfulness": 0.0, "context_recall": 0.0}
-
-        data = {
-            "question": [f"Qual o valor da métrica {m.get('Metrica', 'N/A')}?" for m in tabela_auditoria],
-            "answer": [str(m.get('Valor', '')) for m in tabela_auditoria],
-            "contexts": [contextos_recuperados for _ in tabela_auditoria],
-            "ground_truth": [m.get('Evidencia', '') for m in tabela_auditoria]
-        }
-
-        def processar_ragas_sync(dataset_dict):
-            from datasets import Dataset
-            from ragas import evaluate
-            
-            dataset = Dataset.from_dict(dataset_dict)
-            resultado = evaluate(
-                dataset=dataset,
-                metrics=[faithfulness, context_recall]
-            )
-            return resultado
-
-        try:
-            loop = asyncio.get_event_loop()
-            resultado = await loop.run_in_executor(None, processar_ragas_sync, data)
-
-            import pandas as pd
-            df_scores = pd.DataFrame(resultado.scores)
-            
-            print("\n" + "="*50)
-            print("📊 SCORES DETALHADOS DO RAGAS")
-            print(df_scores) 
-            print("="*50 + "\n")
-
-            
-            medias = df_scores.mean(numeric_only=True).to_dict()
-
-            return {
-                "faithfulness": round(medias.get("faithfulness", 0.0), 2),
-                "context_recall": round(medias.get("context_recall", 0.0), 2)
-            }
-        except Exception as e:
-            print(f"❌ Erro ao extrair scores do Ragas: {e}")
-            if 'resultado' in locals():
-                print(f"Estrutura do objeto resultado.scores: {type(resultado.scores)}")
-                return {"faithfulness": 0.0, "context_recall": 0.0}
+    def format_docs(self,docs):
+        if not docs:
+            return "Nenhum contexto localizado."
+        formated_blocks = []
+        for doc in docs:
+            pagina = doc.metadata.get("source") or doc.metadata.get("pagina") or doc.metadata.get("page") or "N/A"
+            formated_blocks.append(f"[FONTE: Página {pagina}]\n{doc.page_content}")
+        return "\n\n--- Novo Trecho ---\n\n".join(formated_blocks)
 
     async def _extrair_com_rag(self, vector_store, empresa, ano):
+            
             start_time = time.time()
-            
-            print(f"📡 Fase 1: Planejando busca técnica para {empresa}...")
-            template_texto = DISCOVERY_PROMPT_TEMPLATE_400 if VALOR_PADRAO == "GRI_400" else DISCOVERY_PROMPT_TEMPLATE_300
-            chain_planejamento = ADAPTIVE_QUERY_PROMPT | self.model
-            plano_de_busca = await chain_planejamento.ainvoke({
-                "template": template_texto, "empresa": empresa, "ano": ano
-            })
-            
-            print(f"🔍 Fase 2: Executando Multi-Query...")
+            ano_filtro = int(ano) 
+
             base_retriever = vector_store.as_retriever(
-                search_kwargs={"k": 8, "filter": {"$and": [{"empresa": {"$eq": empresa}}, {"ano": {"$eq": int(ano)}}]}}
+                search_kwargs={
+                    "k": 4, 
+                    "filter": {
+                        "$and": [
+                            {"empresa": {"$eq": empresa}},
+                            {"ano": {"$eq": ano_filtro}} 
+                        ]
+                    }
+                }
+            ) 
+            MultiQueryRetriever.from_llm(retriever=base_retriever,llm=llm_model)
+
+
+            print(f"📡 Fase 1: Planejando busca técnica avançada (Multi-Query RAG) para {empresa} ({ano})...")
+           
+            retriever_multi = MultiQueryRetriever.from_llm(
+                retriever=base_retriever, 
+                llm=self.model
             )
-            docs_recuperados = await base_retriever.ainvoke(plano_de_busca.content)
+
+            prompt_template = DISCOVERY_PROMPT_TEMPLATE_400 if VALOR_PADRAO == "GRI_400" else DISCOVERY_PROMPT_TEMPLATE_300
+            discovery_prompt = ChatPromptTemplate.from_template(prompt_template)
+
+            rag_chain_multi = (
+                {
+                    "context": lambda x: format_docs(retriever_multi.get_relevant_documents(x["question"])), 
+                    "question": lambda x: x["question"]
+                }
+                | discovery_prompt
+                | self.model
+                | StrOutputParser()
+            )
+            print(f"🔍 Fase 2: Consolidando contexto para auditoria integral...")
+            pergunta_ampla = "Indicadores sociais, diversidade, gênero, raça, funcionários, treinamento e direitos humanos"
             
-            vistos = set()
-            docs_unicos = [d for d in docs_recuperados if not (hash(d.page_content) in vistos or vistos.add(hash(d.page_content)))]
-            contexto_com_paginas = []
-            for doc in docs_unicos:
-                num_pagina = doc.metadata.get("source", "desconhecida")
-                texto_formatado = f"[PÁGINA {num_pagina}]: {doc.page_content}"
-                contexto_com_paginas.append(texto_formatado)
+            try:
+                docs_relevantes = await retriever_multi.ainvoke(pergunta_ampla)
+                
+                contexto_consolidado = self.format_docs(docs_relevantes)
+                print(f"📚 Contexto consolidado com sucesso ({len(docs_relevantes)} trechos localizados).")
+                
+            except Exception as e:
+                print(f"❌ Falha crítica na busca do RAG: {str(e)}")
+                return [{"Erro": f"Erro interno no processamento do RAG: {str(e)}"}]
 
-            contexto_consolidado = "\n\n".join(contexto_com_paginas)
+            print(f"🧠 Fase 3: Executando Extração Estruturada...")
+            
+            instricoes_do_parser = self.parser.get_format_instructions()
 
-            print(f"🧠 Fase 3: Extraindo métricas do contexto filtrado...")
-            discovery_prompt = PromptTemplate(
-                template=template_texto,
-                input_variables=["context", "ano", "empresa"],
-                partial_variables={"format_instructions": self.parser.get_format_instructions()}
-            )
-
+            # 2. Executa a extração passando todas as 4 variáveis esperadas
             metricas_finais = await (discovery_prompt | self.model | self.parser).ainvoke({
-                "context": contexto_consolidado, "empresa": empresa, "ano": ano
+                "context": contexto_consolidado, 
+                "empresa": empresa, 
+                "ano": ano,
+                "format_instructions": instricoes_do_parser  # <-- Injeta a variável que faltava!
             })
 
-            faltantes = [m for m, d in metricas_finais.items() 
-                        if d.get("valor") is None or "Omissão" in str(d.get("status"))]
-
-            if faltantes:
-                print(f"🔄 Tentativa de recuperação para: {len(faltantes)} métricas...")
-                query_repescagem = f"Valores e detalhes sobre: {', '.join(faltantes)} - {empresa} {ano}"
-                docs_repescagem = await base_retriever.ainvoke(query_repescagem)
-                
-                docs_unicos.extend(docs_repescagem)
-                contexto_repescagem = "\n\n".join([d.page_content for d in docs_repescagem])
-
-                metricas_recuperadas = await (discovery_prompt | self.model | self.parser).ainvoke({
-                    "context": contexto_repescagem, "empresa": empresa, "ano": ano
-                })
-
-                for m in faltantes:
-                    if m in metricas_recuperadas and metricas_recuperadas[m].get("valor") is not None:
-                        metricas_finais[m] = metricas_recuperadas[m]
-
-       
             tabela_auditoria = []
             for metrica, dados in metricas_finais.items():
                 valor_raw = dados.get("valor")
-                valor_final = str(valor_raw) if valor_raw is not None else "Não encontrado"
-                
-               
+
+                if valor_raw is not None and "percentual" in metrica.lower():
+                    valor_final = self._formatar_percentual(valor_raw)
+                else:
+                    valor_final = str(valor_raw) if valor_raw is not None else "Não encontrado"
+                                
+                            
                 pag_raw = str(dados.get("página") or dados.get("pagina") or dados.get("Página") or "N/A")
                 
                 pag_limpa = "".join(filter(str.isdigit, pag_raw)) if any(c.isdigit() for c in pag_raw) else pag_raw
@@ -365,14 +343,6 @@ class ESGMetricProcessor:
                     "Status_Auditoria": dados.get("status") or ("Omissão" if valor_raw is None else "Coletado")
                 })
 
-            # --- AVALIAÇÃO RAGAS ---
-            EVAL_RAGAS = False
-            contextos_usados = [doc.page_content for doc in docs_unicos]
-            
-            if EVAL_RAGAS:
-                scores_ragas = await self._calcular_metricas_reais(tabela_auditoria, contextos_usados)
-            else:
-                scores_ragas = {"faithfulness": 0.0, "context_recall": 0.0}
 
      
             if tabela_auditoria:

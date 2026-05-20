@@ -2,6 +2,8 @@
 
 venv_tcc/
 
+ambiente_teste_tcc/
+
 **/__pycache__/
 *.py[cod]
 *$py.class

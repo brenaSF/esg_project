@@ -10,11 +10,15 @@ from ragas.metrics import faithfulness, answer_relevancy,context_precision,conte
 
 from datasets import Dataset
 from langchain_openai import ChatOpenAI
-
+from ragas import RunConfig
 load_dotenv()
 DIR_OUTPUT = os.getenv("DIR_OUTPUT")
 llm_model = os.getenv("llm_model")
 METRICAS_PDF = os.getenv("METRICAS_PDF")
+
+
+
+
 
 color_map = {
     'Crítico': '#EF553B', 
@@ -29,7 +33,7 @@ def detectar_status(df):
     return df
 
 def categorizar_status(valor):
-    if valor < 70:
+    if valor < 60:
         return 'Crítico'
     elif valor < 80:
         return 'Regular'
@@ -56,26 +60,22 @@ def obter_relatorio_ragas(dataframe):
     return executar_avaliacao_ragas(df_para_ragas)
 
 
-
 def executar_avaliacao_ragas(df_preparado):
     evaluator_llm = ChatOpenAI(model="gpt-4o-mini")
     
     dataset = Dataset.from_dict(df_preparado[[
-        "question", "answer", "contexts","ground_truth"
+        "question", "answer", "contexts", "ground_truth"
     ]].to_dict('list'))
     
-   
     result = evaluate(
         dataset=dataset,
         metrics=[
             faithfulness,       
-            answer_relevancy, 
-            context_precision,
-            context_recall
+            context_recall,
+            context_precision  # Adicione aqui para poder exibir depois
         ],
         llm=evaluator_llm
     )
-    
     return result.to_pandas()
 
 def preparar_dataframe_para_ragas(df):
@@ -92,7 +92,7 @@ def preparar_dataframe_para_ragas(df):
         "Gabarito": "ground_truth"
     })
     
-    df_ragas["contexts"] = df_ragas["contexts"].apply(lambda x: [str(x)] if pd.notnull(x) else [""])
+    df_ragas["contexts"] = df_ragas["contexts"].apply(lambda x: [str(x)] if pd.notnull(x) else ["Informação não encontrada"])
     df_ragas["ground_truth"] = df_ragas["ground_truth"].fillna("").astype(str)
     
     df_ragas = df_ragas.fillna("N/A")
@@ -265,7 +265,7 @@ def render_acuracia_extracao(arquivo_selecionado):
         st.plotly_chart(fig_rec, use_container_width=True)
 
     with c4:
-        st.markdown("### Acurácia", help="Recall: De tudo que existia para extrair, quanto a IA conseguiu encontrar?")
+        st.markdown("### F1-Score", help="Recall: De tudo que existia para extrair, quanto a IA conseguiu encontrar?")
         fig_rec = px.bar(
         df_results, 
         x="Empresa", 
@@ -311,13 +311,14 @@ def render_acuracia_extracao(arquivo_selecionado):
     
     if st.button("Gerar Relatório de Qualidade Ragas"):
         with st.spinner("Analisando fidelidade dos dados com GPT-4o-mini..."):
-            df_para_ragas = preparar_dataframe_para_ragas(df)
-            df_ragas_final = executar_avaliacao_ragas(df_para_ragas)
+            df_ragas_final = obter_relatorio_ragas(df)
+
             
             cols = st.columns(4)
             cols[0].metric("Fidelidade", f"{df_ragas_final['faithfulness'].mean():.2f}")
-            cols[1].metric("Relevância", f"{df_ragas_final['answer_relevancy'].mean():.2f}")
             cols[2].metric("Context Recall", f"{df_ragas_final['context_recall'].mean():.2f}")
+
+            
             cols[3].metric("Context Precision", f"{df_ragas_final['context_precision'].mean():.2f}")
         
             
